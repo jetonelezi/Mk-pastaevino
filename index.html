@@ -30,6 +30,29 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+
+<style>
+      .language-selector {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            margin: 20px;
+            
+        }
+        .language-selector img {
+            cursor: pointer;
+            width: 30px; /* Gjatësia e flamurit */
+            height: 20px; /* Lartësia e flamurit */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .language-selector img:hover {
+            opacity: 0.7;
+        }
+</style>
+
+
 </head>
 
 <body>
@@ -55,31 +78,25 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0 pe-4">
-                        <a href="index.html" class="nav-item nav-link active">Home</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
-                        <a href="service.html" class="nav-item nav-link">Service</a>
-                        <a href="menu.html" class="nav-item nav-link">Menu</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu m-0">
-                                <a href="booking.html" class="dropdown-item">Booking</a>
-                                <a href="team.html" class="dropdown-item">Our Team</a>
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                            </div>
-                        </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <div  class="language-selector">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Flag_of_Germany_%28WFB_2004%29.gif" alt="Gjermanisht" title="Gjermanisht" onclick="setLanguage('Gjermanisht')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="Anglisht" title="Anglisht" onclick="setLanguage('Anglisht')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Flag_of_Italy_%28WFB_2013%29.gif/640px-Flag_of_Italy_%28WFB_2013%29.gif" alt="Italisht" title="Italisht" onclick="setLanguage('Italisht')">
+  </div>
                     </div>
-                    <a href="" class="btn btn-primary py-2 px-4">Book A Table</a>
+                
                 </div>
             </nav>
-
+ 
             <div class="container-xxl py-5 bg-dark hero-header mb-5">
+           
                 <div class="container my-5 py-5">
                     <div class="row align-items-center g-5">
                         <div class="col-lg-6 text-center text-lg-start">
-                            <h1 class="display-3 text-white animated slideInLeft">Enjoy Our<br>Delicious Meal</h1>
-                            <p class="text-white animated slideInLeft mb-4 pb-2">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                            <a href="" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft">Book A Table</a>
+                            <h1 class="display-3 text-white animated slideInLeft"   data-translate-key="shijo">Genießen Sie unser<br>Delicious Meal</h1>
+                            
+                            <a style="margin-left: 20px;" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft"   data-translate-key="book">Book A Table</a>
+                        <br>
                         </div>
                         <div class="col-lg-6 text-center text-lg-end overflow-hidden">
                             <img class="img-fluid" src="img\istockphoto-908165344-612x612.png" alt="">
@@ -91,111 +108,15 @@
         <!-- Navbar & Hero End -->
 
 
-        <!-- Service Start -->
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-4">
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="service-item rounded pt-3">
-                            <div class="p-4">
-                                <i class="fa fa-3x fa-user-tie text-primary mb-4"></i>
-                                <h5>Master Chefs</h5>
-                                <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="service-item rounded pt-3">
-                            <div class="p-4">
-                                <i class="fa fa-3x fa-utensils text-primary mb-4"></i>
-                                <h5>Quality Food</h5>
-                                <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="service-item rounded pt-3">
-                            <div class="p-4">
-                                <i class="fa fa-3x fa-cart-plus text-primary mb-4"></i>
-                                <h5>Online Order</h5>
-                                <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <div class="service-item rounded pt-3">
-                            <div class="p-4">
-                                <i class="fa fa-3x fa-headset text-primary mb-4"></i>
-                                <h5>24/7 Service</h5>
-                                <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Service End -->
 
-
-        <!-- About Start -->
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-5 align-items-center">
-                    <div class="col-lg-6">
-                        <div class="row g-3">
-                            <div class="col-6 text-start">
-                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="img/about-1.jpg">
-                            </div>
-                            <div class="col-6 text-start">
-                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="img/about-2.jpg" style="margin-top: 25%;">
-                            </div>
-                            <div class="col-6 text-end">
-                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="img/about-3.jpg">
-                            </div>
-                            <div class="col-6 text-end">
-                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="img/about-4.jpg">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">About Us</h5>
-                        <h1 class="mb-4">Welcome to <i class="fa fa-utensils text-primary me-2"></i>Restoran</h1>
-                        <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos erat ipsum et lorem et sit, sed stet lorem sit.</p>
-                        <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                        <div class="row g-4 mb-4">
-                            <div class="col-sm-6">
-                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
-                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">15</h1>
-                                    <div class="ps-4">
-                                        <p class="mb-0">Years of</p>
-                                        <h6 class="text-uppercase mb-0">Experience</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
-                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">50</h1>
-                                    <div class="ps-4">
-                                        <p class="mb-0">Popular</p>
-                                        <h6 class="text-uppercase mb-0">Master Chefs</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="btn btn-primary py-3 px-5 mt-2" href="">Read More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- About End -->
 
 
         <!-- Menu Start -->
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Food Menu</h5>
-                    <h1 class="mb-5">Most Popular Items</h1>
+                    <h5 class="section-title ff-secondary text-center text-primary fw-normal"     data-translate-key="Food-Menu">Speisenkarte</h5>
+    <hr>
                 </div>
                 <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.1s">
                     <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
@@ -203,27 +124,26 @@
                             <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3 active" data-bs-toggle="pill" href="#tab-1">
                                 <i class="fa fa-coffee fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Popular</small>
-                                    <h6 class="mt-n1 mb-0">Aperitifs</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0"  >Aperitifs</h6>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="d-flex align-items-center text-start mx-3 pb-3" data-bs-toggle="pill" href="#tab-2">
-                                <i class="fa fa-hamburger fa-2x text-primary"></i>
+                                <i class="fas fa-utensils fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Special</small>
-                                    <h6 class="mt-n1 mb-0">Antipasti - Vorspeisen
-</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0" >Antipasti - Vorspeisen</h6>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-3">
-                                <i class="fa fa-utensils fa-2x text-primary"></i>
+                                <i class="fas fa-mug-hot fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Lovely</small>
-                                    <h6 class="mt-n1 mb-0"> Minestre - Suppen</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0" data-translate-key="sup"> Minestre - Suppen</h6>
                                 </div>
                             </a>
                         </li>
@@ -232,18 +152,18 @@
                             <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-4">
                                 <i class="fa fa-utensils fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Lovely</small>
-                                    <h6 class="mt-n1 mb-0">Bambino - Kindergerichte</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0" data-translate-key="bamb">Bambino - Kindergerichte</h6>
                                 </div>
                             </a>
                         </li>
 
                          <li class="nav-item">
                             <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-5">
-                                <i class="fa fa-utensils fa-2x text-primary"></i>
+                                <i class="fas fa-seedling fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Lovely</small>
-                                    <h6 class="mt-n1 mb-0"> Insalate - Salate</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0"     data-translate-key="salad"> Insalate - Salate</h6>
                                 </div>
                             </a>
                         </li>
@@ -251,10 +171,10 @@
 
                          <li class="nav-item">
                             <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-6">
-                                <i class="fa fa-utensils fa-2x text-primary"></i>
+                                <i class="fas fa-pizza-slice fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Lovely</small>
-                                    <h6 class="mt-n1 mb-0">Steinofen-Pizza</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0"   data-translate-key="piza">Steinofen-Pizza</h6>
                                 </div>
                             </a>
                         </li>
@@ -262,10 +182,10 @@
 
                           <li class="nav-item">
                             <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-7">
-                                <i class="fa fa-utensils fa-2x text-primary"></i>
+                                <i class="fas fa-utensils fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Lovely</small>
-                                    <h6 class="mt-n1 mb-0">Pasta - Nudelgerichte</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0"   data-translate-key="pasta"  >Pasta - Nudelgerichte</h6>
                                 </div>
                             </a>
                         </li>
@@ -274,8 +194,8 @@
                             <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-8">
                                 <i class="fa fa-utensils fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Lovely</small>
-                                    <h6 class="mt-n1 mb-0">Carne - Fleischgerichte</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0"   data-translate-key="carne"   >Carne - Fleischgerichte</h6>
                                 </div>
                             </a>
                         </li>
@@ -284,8 +204,8 @@
                             <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-9">
                                 <i class="fa fa-utensils fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Lovely</small>
-                                    <h6 class="mt-n1 mb-0"> Dolci - Dessert</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0"  data-translate-key="desert"   > Dolci - Dessert</h6>
                                 </div>
                             </a>
                         </li>
@@ -293,10 +213,10 @@
 
                         <li class="nav-item">
                             <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-10">
-                                <i class="fa fa-utensils fa-2x text-primary"></i>
+                                <i class="fas fa-mug-hot fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Lovely</small>
-                                    <h6 class="mt-n1 mb-0">Bevande Calde</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0"     data-translate-key="pije-nx"     >Heiße Getränke</h6>
                                 </div>
                             </a>
                         </li>
@@ -304,10 +224,10 @@
 
                          <li class="nav-item">
                             <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-11">
-                                <i class="fa fa-utensils fa-2x text-primary"></i>
+                                <i class="fas fa-wine-glass fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Lovely</small>
-                                    <h6 class="mt-n1 mb-0"> Birre - Biere</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0"  data-translate-key="bira" >Biere</h6>
                                 </div>
                             </a>
                         </li>
@@ -320,10 +240,10 @@
 
                          <li class="nav-item">
                             <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-12">
-                                <i class="fa fa-utensils fa-2x text-primary"></i>
+                                <i class="fas fa-wine-glass fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Lovely</small>
-                                    <h6 class="mt-n1 mb-0"> Bevande Fredde 0,20 l 0,40 l</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0"   data-translate-key="pije-f" > Kalte Getränke 0,20 l 0,40 l</h6>
                                 </div>
                             </a>
                         </li>
@@ -331,20 +251,20 @@
 
                          <li class="nav-item">
                             <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-13">
-                                <i class="fa fa-utensils fa-2x text-primary"></i>
+                                <i class="fas fa-glass-martini-alt fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Lovely</small>
-                                    <h6 class="mt-n1 mb-0">Alcolici - Spirituosen</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0" data-translate-key="alk" >Alkohol</h6>
                                 </div>
                             </a>
                         </li>
 
                          <li class="nav-item">
                             <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-14">
-                                <i class="fa fa-utensils fa-2x text-primary"></i>
+                                <i class="fas fa-glass-martini-alt fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Lovely</small>
-                                    <h6 class="mt-n1 mb-0"> Vini Aperti</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0" data-translate-key="vini" > Vini Aperti</h6>
                                 </div>
                             </a>
                         </li>
@@ -352,10 +272,10 @@
 
                          <li class="nav-item">
                             <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-15">
-                                <i class="fa fa-utensils fa-2x text-primary"></i>
+                                <i class="fas fa-cocktail fa-2x text-primary"></i>
                                 <div class="ps-3">
-                                    <small class="text-body">Lovely</small>
-                                    <h6 class="mt-n1 mb-0"> Longdrinks</h6>
+                                    <small class="text-body"></small>
+                                    <h6 class="mt-n1 mb-0"  data-translate-key="longd"> Longdrinks</h6>
                                 </div>
                             </a>
                         </li>
@@ -378,7 +298,7 @@
                                                 <span> Aperol Spritz</span>
                                                 <span class="text-primary">6.50€</span>
                                             </h5>
-                                            <small class="fst-italic"> Aperol Spritz mit Prosecco, Mineralwasser und frischer Minze (0.20l)</small>
+                                            <small class="fst-italic"   data-translate-key="ap"> Aperol Spritz mit Prosecco, Mineralwasser und frischer Minze (0.20l)</small>
                                         </div>
                                     </div>
                                 </div>
@@ -390,7 +310,7 @@
                                                 <span>Sarti Spritz</span>
                                                 <span class="text-primary">6.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Sarti mit Prosecco, Mineralwasser, Limette und frischer Minze (0.20l)</small>
+                                            <small class="fst-italic"  data-translate-key="ap-1">Sarti mit Prosecco, Mineralwasser, Limette und frischer Minze (0.20l)</small>
                                         </div>
                                     </div>
                                 </div>
@@ -402,7 +322,7 @@
                                                 <span> Rosato Spritz</span>
                                                 <span class="text-primary">6.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Ramazzotti Rosé mit Prosecco, Mineralwasser und Basilikum (0.20l)</small>
+                                            <small class="fst-italic"    data-translate-key="ap-2">Ramazzotti Rosé mit Prosecco, Mineralwasser und Basilikum (0.20l)</small>
                                         </div>
                                     </div>
                                 </div>
@@ -414,7 +334,7 @@
                                                 <span>Limoncello Spritz</span>
                                                 <span class="text-primary">6.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Limoncello mitMaracujanektar, Prosecco, Mineralwasser, Limette und Minze (0.20l)</small>
+                                            <small class="fst-italic"  data-translate-key="ap-3" > Limoncello mitMaracujanektar, Prosecco, Mineralwasser, Limette und Minze (0.20l)</small>
                                         </div>
                                     </div>
                                 </div>
@@ -426,7 +346,7 @@
                                                 <span>Hugo</span>
                                                 <span class="text-primary">6.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Prosecco mit Holunderblütensirup, Limette, frischer Minze und Mineralwasser (0.20l)</small>
+                                            <small class="fst-italic"  data-translate-key="ap-4" >Prosecco mit Holunderblütensirup, Limette, frischer Minze und Mineralwasser (0.20l)</small>
                                         </div>
                                     </div>
                                 </div>
@@ -474,7 +394,7 @@
                                                 <span>Martini </span>
                                                 <span class="text-primary">5.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Bianco, Rosso oder Dry (5cl)</small>
+                                            <small class="fst-italic"  data-translate-key="ap-5">Weiß, Rot oder Trocken (5cl)</small>
                                         </div>
                                     </div>
                                 </div>
@@ -507,7 +427,7 @@
                                         <img class="flex-shrink-0 img-fluid rounded" src="Products/Bruscheta.jpeg" alt="" style="width: 80px;">
                                         <div class="w-100 d-flex flex-column text-start ps-4">
                                             <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                                <span> Bruschetta 4 Stück</span>
+                                                <span  data-translate-key="ap-6"> Bruschetta 4 Stück</span>
                                                 <span class="text-primary">6.00€</span>
                                             </h5>
                                             <small class="fst-italic"></small>
@@ -522,7 +442,7 @@
                                                 <span>Mozzarella di Bufala</span>
                                                 <span class="text-primary">10.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Büffelmozzarella mit Cherrytomaten und Basilikumpesto auf Rucolasalat</small>
+                                            <small class="fst-italic"  data-translate-key="ap-7"  >Büffelmozzarella mit Cherrytomaten und Basilikumpesto auf Rucolasalat</small>
                                         </div>
                                     </div>
                                 </div>
@@ -535,7 +455,7 @@
                                                 <span> Vitello Tonnato alla Piemontese</span>
                                                 <span class="text-primary">11.90€</span>
                                             </h5>
-                                            <small class="fst-italic">dünnes Kalbfleisch mit Kapern in Thunfischcreme</small>
+                                            <small class="fst-italic   "  data-translate-key="ap-8">dünnes Kalbfleisch mit Kapern in Thunfischcreme</small>
                                         </div>
                                     </div>
                                 </div>
@@ -547,7 +467,7 @@
                                                 <span> Carpaccio di Manzo</span>
                                                 <span class="text-primary">12.90€</span>
                                             </h5>
-                                            <small class="fst-italic">hauchdünnes rohes Rinderfilet auf Rucola mit Parmesan und einer Spezialsauce</small>
+                                            <small class="fst-italic"  data-translate-key="ap-9">hauchdünnes rohes Rinderfilet auf Rucola mit Parmesan und einer Spezialsauce</small>
                                         </div>
                                     </div>
                                 </div>
@@ -568,7 +488,7 @@
                                                 <span> Zuppa d‘Aglio</span>
                                                 <span class="text-primary">6.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Knoblauchsuppe mit Ei</small>
+                                            <small class="fst-italic" data-translate-key="ap-10">Knoblauchsuppe mit Ei</small>
                                         </div>
                                     </div>
                                 </div>
@@ -580,7 +500,7 @@
                                                 <span> Minestrone </span>
                                                 <span class="text-primary">6.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Gemüsesuppe</small>
+                                            <small class="fst-italic" data-translate-key="ap-11" >Gemüsesuppe</small>
                                         </div>
                                     </div>
                                 </div>
@@ -592,7 +512,7 @@
                                                 <span> Crema di Pomodoro</span>
                                                 <span class="text-primary">6.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatencremesuppe</small>
+                                            <small class="fst-italic" data-translate-key="ap-12">Tomatencremesuppe</small>
                                         </div>
                                     </div>
                                 </div>
@@ -626,7 +546,7 @@
                                                 <span>  Pizza Bambino</span>
                                                 <span class="text-primary">6.00€</span>
                                             </h5>
-                                            <small class="fst-italic">mit Salami oder Champignons</small>
+                                            <small class="fst-italic" data-translate-key="ap-13">mit Salami oder Champignons</small>
                                         </div>
                                     </div>
                                 </div>
@@ -638,7 +558,7 @@
                                                 <span>  Spaghetti Pomodoro  </span>
                                                 <span class="text-primary">6.00€</span>
                                             </h5>
-                                            <small class="fst-italic">mit Tomatensauce</small>
+                                            <small class="fst-italic"  data-translate-key="ap-14">mit Tomatensauce</small>
                                         </div>
                                     </div>
                                 </div>
@@ -650,7 +570,7 @@
                                                 <span> Milanese Bambino</span>
                                                 <span class="text-primary">8.90€</span>
                                             </h5>
-                                            <small class="fst-italic">Hähnchenschnitzel mit Kartoffeln</small>
+                                            <small class="fst-italic" data-translate-key="ap-15">Hähnchenschnitzel mit Kartoffeln</small>
                                         </div>
                                     </div>
                                 </div>
@@ -675,7 +595,7 @@
                                                 <span>Insalata Pomodori</span>
                                                 <span class="text-primary">6.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatensalat mit roten Zwiebeln</small>
+                                            <small class="fst-italic" data-translate-key="ap-16">Tomatensalat mit roten Zwiebeln</small>
                                         </div>
                                     </div>
                                 </div>
@@ -687,7 +607,7 @@
                                                 <span>Insalata Tonno e Pecorino </span>
                                                 <span class="text-primary">10.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Wildkräutersalat mit Thunfischstücken und Schafskäse</small>
+                                            <small class="fst-italic" data-translate-key="ap-17" >Wildkräutersalat mit Thunfischstücken und Schafskäse</small>
                                         </div>
                                     </div>
                                 </div>
@@ -699,7 +619,7 @@
                                                 <span> Insalata Mista Pollo</span>
                                                 <span class="text-primary">12.90€</span>
                                             </h5>
-                                            <small class="fst-italic">Wildkräutersalat mit gebratenen Hähnchenbruststreifen und Champignons</small>
+                                            <small class="fst-italic"  data-translate-key="ap-18"  >  Wildkräutersalat mit gebratenen Hähnchenbruststreifen und Champignons</small>
                                         </div>
                                     </div>
                                 </div>
@@ -711,7 +631,7 @@
                                                 <span> Insalata Pasta e Vino</span>
                                                 <span class="text-primary">13.90€</span>
                                             </h5>
-                                            <small class="fst-italic">Wildkräutersalat mit eingelegten Lachsstreifen, Artischocken, Cherrytomaten und Oliven</small>
+                                            <small class="fst-italic"   data-translate-key="ap-19"    >Wildkräutersalat mit eingelegten Lachsstreifen, Artischocken, Cherrytomaten und Oliven</small>
                                         </div>
                                     </div>
                                 </div>
@@ -723,7 +643,7 @@
                                                 <span> Insalata Rucola</span>
                                                 <span class="text-primary">10.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Rucolasalat mit Cherrytomaten</small>
+                                            <small class="fst-italic"    data-translate-key="ap-20"   >Rucolasalat mit Cherrytomaten</small>
                                         </div>
                                     </div>
                                 </div>
@@ -748,7 +668,7 @@
                                                 <span>Pizza Margherita</span>
                                                 <span class="text-primary">8.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatensoße, Fior di Latte Mozzarella und Basilikum</small>
+                                            <small class="fst-italic"    data-translate-key="ap-21"        >Tomatensoße, Fior di Latte Mozzarella und Basilikum</small>
                                         </div>
                                     </div>
                                 </div>
@@ -760,7 +680,7 @@
                                                 <span>Pizza Salami </span>
                                                 <span class="text-primary">9.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatensoße, Fior di Latte Mozzarella und Salami</small>
+                                            <small class="fst-italic"   data-translate-key="ap-22" >Tomatensoße, Fior di Latte Mozzarella und Salami</small>
                                         </div>
                                     </div>
                                 </div>
@@ -772,7 +692,7 @@
                                                 <span>Pizza Napoli</span>
                                                 <span class="text-primary">9.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatensoße, Fior di Latte Mozzarella, Kapern, Oliven, Sardellen und Knoblauch</small>
+                                            <small class="fst-italic"  data-translate-key="ap-23" >Tomatensoße, Fior di Latte Mozzarella, Kapern, Oliven, Sardellen und Knoblauch</small>
                                         </div>
                                     </div>
                                 </div>
@@ -784,7 +704,7 @@
                                                 <span>Pizza Tonno</span>
                                                 <span class="text-primary">10.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatensoße, Fior di Latte Mozzarella, Thunfisch und rote Zwiebeln</small>
+                                            <small class="fst-italic"  data-translate-key="ap-24" >Tomatensoße, Fior di Latte Mozzarella, Thunfisch und rote Zwiebeln</small>
                                         </div>
                                     </div>
                                 </div>
@@ -796,7 +716,7 @@
                                                 <span> Pizza Quattro Formaggi</span>
                                                 <span class="text-primary">11.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatensoße und vier verschiedene Käsesorten</small>
+                                            <small class="fst-italic"  data-translate-key="ap-25" >Tomatensoße und vier verschiedene Käsesorten</small>
                                         </div>
                                     </div>
                                 </div>
@@ -809,7 +729,7 @@
                                                 <span> Pizza della Casa</span>
                                                 <span class="text-primary">13.90€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatensoße, Fior di Latte Mozzarella, Parmaschinken, Rucola und Parmesansplitter</small>
+                                            <small class="fst-italic"  data-translate-key="ap-26">Tomatensoße, Fior di Latte Mozzarella, Parmaschinken, Rucola und Parmesansplitter</small>
                                         </div>
                                     </div>
                                 </div>
@@ -821,7 +741,7 @@
                                                 <span> Pizza Mista</span>
                                                 <span class="text-primary">11.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatensoße, Fior di Latte Mozzarella, Salami, Champignons, Peperoni und italienischer Spianata Salami</small>
+                                            <small class="fst-italic" data-translate-key="ap-27">Tomatensoße, Fior di Latte Mozzarella, Salami, Champignons, Peperoni und italienischer Spianata Salami</small>
                                         </div>
                                     </div>
                                 </div>
@@ -833,7 +753,7 @@
                                                 <span> Pizza Vegetariana</span>
                                                 <span class="text-primary">10.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatensoße, Fior di Latte Mozzarella und Gemüse der Saison</small>
+                                            <small class="fst-italic" data-translate-key="ap-28">Tomatensoße, Fior di Latte Mozzarella und Gemüse der Saison</small>
                                         </div>
                                     </div>
                                 </div>
@@ -845,7 +765,7 @@
                                                 <span> Pizza Scampi</span>
                                                 <span class="text-primary">14.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatensoße, Fior di Latte Mozzarella, Scampi und Knoblauch</small>
+                                            <small class="fst-italic"  data-translate-key="ap-29">Tomatensoße, Fior di Latte Mozzarella, Scampi und Knoblauch</small>
                                         </div>
                                     </div>
                                 </div>
@@ -869,7 +789,7 @@
                                                 <span>Spaghetti Aglio, Olio e Peperoncino</span>
                                                 <span class="text-primary">9.50€</span>
                                             </h5>
-                                            <small class="fst-italic">mit Knoblauch, Olivenöl und Peperoncini (scharf)</small>
+                                            <small class="fst-italic"   data-translate-key="ap-30">mit Knoblauch, Olivenöl und Peperoncini (scharf)</small>
                                         </div>
                                     </div>
                                 </div>
@@ -881,7 +801,7 @@
                                                 <span>Spaghetti Carbonara</span>
                                                 <span class="text-primary">11.90€</span>
                                             </h5>
-                                            <small class="fst-italic">mit Speckwürfeln, Ei und Parmesan</small>
+                                            <small class="fst-italic"  data-translate-key="ap-31">mit Speckwürfeln, Ei und Parmesan</small>
                                         </div>
                                     </div>
                                 </div>
@@ -893,7 +813,7 @@
                                                 <span> Spaghetti della Casa </span>
                                                 <span class="text-primary">14.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Rinderfiletspitzen und Champignons in Rahmsauce</small>
+                                            <small class="fst-italic"  data-translate-key="ap-32">Rinderfiletspitzen und Champignons in Rahmsauce</small>
                                         </div>
                                     </div>
                                 </div>
@@ -905,7 +825,7 @@
                                                 <span>Penne Pollo e Funghi</span>
                                                 <span class="text-primary">13.90€</span>
                                             </h5>
-                                            <small class="fst-italic">kurze Nudeln mit Hähnchenbrustfiletstreifen und frischen Champignons in Macchiato Creme</small>
+                                            <small class="fst-italic"  data-translate-key="ap-33">kurze Nudeln mit Hähnchenbrustfiletstreifen und frischen Champignons in Macchiato Creme</small>
                                         </div>
                                     </div>
                                 </div>
@@ -917,7 +837,7 @@
                                                 <span>Penne Vegetariana</span>
                                                 <span class="text-primary">12.90€</span>
                                             </h5>
-                                            <small class="fst-italic">kurze Nudeln mit Gemüse in Tomaten-Basilikumsauce</small>
+                                            <small class="fst-italic"  data-translate-key="ap-34">kurze Nudeln mit Gemüse in Tomaten-Basilikumsauce</small>
                                         </div>
                                     </div>
                                 </div>
@@ -930,7 +850,7 @@
                                                 <span>Penne all’Arrabbiata</span>
                                                 <span class="text-primary">10.00€</span>
                                             </h5>
-                                            <small class="fst-italic">kurze Nudeln mit scharfer Tomatensoße, Zwiebeln und Oliven</small>
+                                            <small class="fst-italic" data-translate-key="ap-35">kurze Nudeln mit scharfer Tomatensoße, Zwiebeln und Oliven</small>
                                         </div>
                                     </div>
                                 </div>
@@ -942,7 +862,7 @@
                                                 <span> Tagliatelle dello Zio</span>
                                                 <span class="text-primary">13.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Bandnudeln mit getrockneten Tomaten, Oliven, Rucola und Parmesan</small>
+                                            <small class="fst-italic"  data-translate-key="ap-36">Bandnudeln mit getrockneten Tomaten, Oliven, Rucola und Parmesan</small>
                                         </div>
                                     </div>
                                 </div>
@@ -954,7 +874,7 @@
                                                 <span>Tagliatelle con Scampi</span>
                                                 <span class="text-primary">15.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Bandnudeln mit Garnelen und Cherrytomaten in Kräuter-Weißweinsoße</small>
+                                            <small class="fst-italic" data-translate-key="ap-37">Bandnudeln mit Garnelen und Cherrytomaten in Kräuter-Weißweinsoße</small>
                                         </div>
                                     </div>
                                 </div>
@@ -966,7 +886,7 @@
                                                 <span> Tagliatelle Salmone</span>
                                                 <span class="text-primary">14.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Bandnudeln mit Lachs in Hummer-Sahnesoße</small>
+                                            <small class="fst-italic" data-translate-key="ap-38">Bandnudeln mit Lachs in Hummer-Sahnesoße</small>
                                         </div>
                                     </div>
                                 </div>
@@ -995,7 +915,7 @@
                                                 <span> Petto di Pollo all‘ Aglio</span>
                                                 <span class="text-primary">17.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Hähnchenbrustfilet mit feiner Knoblauchsoße</small>
+                                            <small class="fst-italic" data-translate-key="ap-39">Hähnchenbrustfilet mit feiner Knoblauchsoße</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1007,7 +927,7 @@
                                                 <span>Petto di Pollo al Gorgonzola</span>
                                                 <span class="text-primary">19.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Hähnchenbrustfilet mit Gorgonzola-Sahnesoße</small>
+                                            <small class="fst-italic"  data-translate-key="ap-40">Hähnchenbrustfilet mit Gorgonzola-Sahnesoße</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1019,7 +939,7 @@
                                                 <span> Petto di Pollo al Pepe</span>
                                                 <span class="text-primary">18.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Hähnchenbrustfilet mit grünem Pfeffer in Sahnesoße</small>
+                                            <small class="fst-italic" data-translate-key="ap-41">Hähnchenbrustfilet mit grünem Pfeffer in Sahnesoße</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1031,7 +951,7 @@
                                                 <span> Filetti di Maiale con Funghi Trifolati</span>
                                                 <span class="text-primary">19.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Schweinemedaillons mit gebratenen Champignons</small>
+                                            <small class="fst-italic" data-translate-key="ap-42">Schweinemedaillons mit gebratenen Champignons</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1043,7 +963,7 @@
                                                 <span> Filetti di Maiale alla Mostarda</span>
                                                 <span class="text-primary">19.50€</span>
                                             </h5>
-                                            <small class="fst-italic">chweinemedaillons mit Pommery Senf-Sahnesauce</small>
+                                            <small class="fst-italic" data-translate-key="ap-43">chweinemedaillons mit Pommery Senf-Sahnesauce</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1056,7 +976,7 @@
                                                 <span>Saltimbocca alla Romana</span>
                                                 <span class="text-primary">20.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Kalbsmedaillons mit Parmaschinken in Weißweinsoße</small>
+                                            <small class="fst-italic" data-translate-key="ap-44">Kalbsmedaillons mit Parmaschinken in Weißweinsoße</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1068,7 +988,7 @@
                                                 <span> Pizza Mista</span>
                                                 <span class="text-primary">11.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatensoße, Fior di Latte Mozzarella, Salami, Champignons, Peperoni und italienischer Spianata Salami</small>
+                                            <small class="fst-italic" data-translate-key="ap-45">Tomatensoße, Fior di Latte Mozzarella, Salami, Champignons, Peperoni und italienischer Spianata Salami</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1080,7 +1000,7 @@
                                                 <span> Pizza Vegetariana</span>
                                                 <span class="text-primary">10.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatensoße, Fior di Latte Mozzarella und Gemüse der Saison</small>
+                                            <small class="fst-italic" data-translate-key="ap-46"> Tomatensoße, Fior di Latte Mozzarella und Gemüse der Saison</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1092,7 +1012,7 @@
                                                 <span> Pizza Scampi</span>
                                                 <span class="text-primary">14.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Tomatensoße, Fior di Latte Mozzarella, Scampi und Knoblauch</small>
+                                            <small class="fst-italic"  data-translate-key="ap-47">Tomatensoße, Fior di Latte Mozzarella, Scampi und Knoblauch</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1202,7 +1122,7 @@
                                                 <span>Espresso</span>
                                                 <span class="text-primary">3.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Tasse</small>
+                                            <small class="fst-italic" data-translate-key="ap-48">Tasse</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1214,7 +1134,7 @@
                                                 <span>Caffé Créma </span>
                                                 <span class="text-primary">3.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Tasse</small>
+                                            <small class="fst-italic" data-translate-key="ap-48">Tasse</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1226,7 +1146,7 @@
                                                 <span> Cappuccino</span>
                                                 <span class="text-primary">3.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Tasse</small>
+                                            <small class="fst-italic" data-translate-key="ap-48">Tasse</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1238,7 +1158,7 @@
                                                 <span>Latte Macchiato</span>
                                                 <span class="text-primary">4.00€</span>
                                             </h5>
-                                            <small class="fst-italic">Glas</small>
+                                            <small class="fst-italic" data-translate-key="ap-49">Glas</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1250,7 +1170,7 @@
                                                 <span> Tee</span>
                                                 <span class="text-primary">3.50€</span>
                                             </h5>
-                                            <small class="fst-italic">verschiedene Sorten   Tasse </small>
+                                            <small class="fst-italic" data-translate-key="ap-50">verschiedene Sorten   Tasse </small>
                                         </div>
                                     </div>
                                 </div>
@@ -1365,7 +1285,7 @@
                                                 <span> Berliner Weisse</span>
                                                 <span class="text-primary">4.80€</span>
                                             </h5>
-                                            <small class="fst-italic"> rot oder grün    (Fl 0.33l)</small>
+                                            <small class="fst-italic" data-translate-key="ap-51"> rot oder grün    (Fl 0.33l)</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1439,7 +1359,7 @@
                                                 <span> Acqua Panna</span>
                                                 <span class="text-primary">3.00€ / 5.50€</span>
                                             </h5>
-                                            <small class="fst-italic">stilles italienisches Mineralwasser  Fl. (0.25l - 3.00€)  / Fl.(0.75l - 5.50€) </small>
+                                            <small class="fst-italic" data-translate-key="ap-52">stilles italienisches Mineralwasser  Fl. (0.25l - 3.00€)  / Fl.(0.75l - 5.50€) </small>
                                         </div>
                                     </div>
                                 </div>
@@ -1464,7 +1384,7 @@
                                                 <span>KiBa</span>
                                                 <span class="text-primary">3.20€ / 4.50€</span>
                                             </h5>
-                                            <small class="fst-italic">(Kirschfruchtsaft-Bananenfruchtsaft)  0.20l (3.20€) / 0.40l (4.50€) </small>
+                                            <small class="fst-italic" data-translate-key="ap-53">(Kirschfruchtsaft-Bananenfruchtsaft)  0.20l (3.20€) / 0.40l (4.50€) </small>
                                         </div>
                                     </div>
                                 </div>
@@ -1610,7 +1530,7 @@
                                                 <span> Bianco della Casa</span>
                                                 <span class="text-primary">6.00€ / 12.50€</span>
                                             </h5>
-                                            <small class="fst-italic"> Weißwein, trocken   0.20l (6.00€) / 0.50l (12.50€)</small>
+                                            <small class="fst-italic" data-translate-key="ap-54"> Weißwein, trocken   0.20l (6.00€) / 0.50l (12.50€)</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1622,7 +1542,7 @@
                                                 <span> Rosato della Casa</span>
                                                 <span class="text-primary">6.00€ / 12.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Roséwein, trocken  0.20l (6.00€) / 0.50l (12.50€)</small>
+                                            <small class="fst-italic" data-translate-key="ap-55">Roséwein, trocken  0.20l (6.00€) / 0.50l (12.50€)</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1634,7 +1554,7 @@
                                                 <span> Rosso della Casa</span>
                                                 <span class="text-primary">6.00€ / 12.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Rotwein, trocken  0.20l (6.00€) / 0.50l (12.50€)</small>
+                                            <small class="fst-italic" data-translate-key="ap-56">Rotwein, trocken  0.20l (6.00€) / 0.50l (12.50€)</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1646,7 +1566,7 @@
                                                 <span>Lambrusco</span>
                                                 <span class="text-primary">6.00€ / 12.50€</span>
                                             </h5>
-                                            <small class="fst-italic">Rotwein, lieblich 0.20l (6.00€) / 0.50l (12.50€)</small>
+                                            <small class="fst-italic"  data-translate-key="ap-57">Rotwein, lieblich 0.20l (6.00€) / 0.50l (12.50€)</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1748,82 +1668,50 @@
 
 
         <!-- Reservation Start -->
-        <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
-            <div class="row g-0">
-                <div class="col-md-6">
-                    <div class="video">
-                        <button type="button" class="btn-play" data-bs-toggle="modal" data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-bs-target="#videoModal">
-                            <span></span>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-md-6 bg-dark d-flex align-items-center">
-                    <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
-                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">Reservation</h5>
-                        <h1 class="text-white mb-4">Book A Table Online</h1>
-                        <form>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                        <label for="name">Your Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                        <label for="email">Your Email</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating date" id="date3" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" id="datetime" placeholder="Date & Time" data-target="#date3" data-toggle="datetimepicker" />
-                                        <label for="datetime">Date & Time</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <select class="form-select" id="select1">
-                                          <option value="1">People 1</option>
-                                          <option value="2">People 2</option>
-                                          <option value="3">People 3</option>
-                                        </select>
-                                        <label for="select1">No Of People</label>
-                                      </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Special Request" id="message" style="height: 100px"></textarea>
-                                        <label for="message">Special Request</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Book Now</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+<div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="row g-0">
+        <div class="col-md-6">
+            <div class="video position-relative">
+                <!-- Foto që shfaqet para videos -->
+                <img src="ft/ffff.png" class="img-fluid w-100" alt="Video Thumbnail" style="object-fit: cover; height: 100%;">
+
+                <!-- Butoni play mbi foto -->
+                <button type="button" class="btn-play position-absolute top-50 start-50 translate-middle"
+                        data-bs-toggle="modal" data-bs-target="#videoModal">
+                    <span></span>
+                </button>
             </div>
         </div>
 
-        <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- 16:9 aspect ratio -->
-                        <div class="ratio ratio-16x9">
-                            <iframe class="embed-responsive-item" src="" id="video" allowfullscreen allowscriptaccess="always"
-                                allow="autoplay"></iframe>
-                        </div>
-                    </div>
+        <div class="col-md-6 bg-dark d-flex align-items-center">
+            <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
+                <h5 class="section-title ff-secondary text-start text-primary fw-normal" data-translate-key="ap-59">Rezervim</h5>
+                <h1 class="text-white mb-4" data-translate-key="ap-58">Rezervo tavolinën online</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal për videon -->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content rounded-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Video nga PC</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="stopVideo()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ratio ratio-16x9">
+                    <!-- Këtu vendos videon tënde -->
+                    <video id="localVideo" controls>
+                        <source src="ft/vid1.mp4" type="video/mp4">
+                        Browseri yt nuk e mbështet videon.
+                    </video>
                 </div>
             </div>
         </div>
+    </div>
+</div>
         <!-- Reservation Start -->
 
 
@@ -1831,21 +1719,21 @@
         <div class="container-xxl pt-5 pb-3">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Team Members</h5>
-                    <h1 class="mb-5">Our Master Chefs</h1>
+                    <h5 class="section-title ff-secondary text-center text-primary fw-normal" data-translate-key="ap-60">Teammitglieder</h5>
+                    <h1 class="mb-5" data-translate-key="ap-61">Our Master Chefs</h1>
                 </div>
                 <div class="row g-4">
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="team-item text-center rounded overflow-hidden">
                             <div class="rounded-circle overflow-hidden m-4">
-                                <img class="img-fluid" src="img/team-1.jpg" alt="">
+                                <img class="img-fluid" src="Products\Untitled-1.png" alt="">
                             </div>
-                            <h5 class="mb-0">Full Name</h5>
-                            <small>Designation</small>
-                            <div class="d-flex justify-content-center mt-3">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                            <h5 class="mb-0">Mateo Karimani</h5>
+                            <small data-translate-key="ap-74">Direktorin</small>
+                
+                               <br>
+                               <br>
+                               <br>
                             </div>
                         </div>
                     </div>
@@ -1854,12 +1742,12 @@
                             <div class="rounded-circle overflow-hidden m-4">
                                 <img class="img-fluid" src="img/team-2.jpg" alt="">
                             </div>
-                            <h5 class="mb-0">Full Name</h5>
-                            <small>Designation</small>
-                            <div class="d-flex justify-content-center mt-3">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                          <h5 class="mb-0">Mateo Karimani</h5>
+                            <small data-translate-key="ap-62">Kellner</small>
+                
+                               <br>
+                               <br>
+                               <br>
                             </div>
                         </div>
                     </div>
@@ -1868,12 +1756,12 @@
                             <div class="rounded-circle overflow-hidden m-4">
                                 <img class="img-fluid" src="img/team-3.jpg" alt="">
                             </div>
-                            <h5 class="mb-0">Full Name</h5>
-                            <small>Designation</small>
-                            <div class="d-flex justify-content-center mt-3">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                            <h5 class="mb-0">Mateo Karimani</h5>
+                            <small data-translate-key="ap-62">Kellner</small>
+                
+                               <br>
+                               <br>
+                               <br>
                             </div>
                         </div>
                     </div>
@@ -1882,12 +1770,12 @@
                             <div class="rounded-circle overflow-hidden m-4">
                                 <img class="img-fluid" src="img/team-4.jpg" alt="">
                             </div>
-                            <h5 class="mb-0">Full Name</h5>
-                            <small>Designation</small>
-                            <div class="d-flex justify-content-center mt-3">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                            <h5 class="mb-0">Mateo Karimani</h5>
+                            <small data-translate-key="ap-62">Kellner</small>
+                
+                               <br>
+                               <br>
+                               <br>
                             </div>
                         </div>
                     </div>
@@ -1897,61 +1785,161 @@
         <!-- Team End -->
 
 
-        <!-- Testimonial Start -->
-        <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="container-xxl py-5">
             <div class="container">
-                <div class="text-center">
-                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Testimonial</h5>
-                    <h1 class="mb-5">Our Clients Say!!!</h1>
-                </div>
-                <div class="owl-carousel testimonial-carousel">
-                    <div class="testimonial-item bg-transparent border rounded p-4">
-                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                        <p>Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded-circle" src="img/testimonial-1.jpg" style="width: 50px; height: 50px;">
-                            <div class="ps-3">
-                                <h5 class="mb-1">Client Name</h5>
-                                <small>Profession</small>
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6">
+                        <div class="row g-3">
+                            <div class="col-6 text-start">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="ft/1.jpg">
+                            </div>
+                            <div class="col-6 text-start">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="ft/2.jpg" style="margin-top: 25%;">
+                            </div>
+                            <div class="col-6 text-end">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="ft/5.jpg">
+                            </div>
+                            <div class="col-6 text-end">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="ft/3.jpg">
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-6 text-start">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="ft/6.jpg">
+                            </div>
+                            <div class="col-6 text-start">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="ft/7.jpg" style="margin-top: 25%;">
+                            </div>
+                            <div class="col-6 text-end">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="ft/8.jpg">
+                            </div>
+                            <div class="col-6 text-end">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="ft/9.jpg">
                             </div>
                         </div>
                     </div>
-                    <div class="testimonial-item bg-transparent border rounded p-4">
-                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                        <p>Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded-circle" src="img/testimonial-2.jpg" style="width: 50px; height: 50px;">
-                            <div class="ps-3">
-                                <h5 class="mb-1">Client Name</h5>
-                                <small>Profession</small>
+                    <div class="col-lg-6">
+                        <div class="row g-4 mb-4">
+                            <div class="col-sm-6">
+                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">30</h1>
+                                    <div class="ps-4">
+                                        <p class="mb-0">Jahre Erfahrung</p>
+                                        <h6 class="text-uppercase mb-0">Experience</h6>
+                                    </div>
+                                </div>
                             </div>
+             
                         </div>
-                    </div>
-                    <div class="testimonial-item bg-transparent border rounded p-4">
-                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                        <p>Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded-circle" src="img/testimonial-3.jpg" style="width: 50px; height: 50px;">
-                            <div class="ps-3">
-                                <h5 class="mb-1">Client Name</h5>
-                                <small>Profession</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-transparent border rounded p-4">
-                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                        <p>Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded-circle" src="img/testimonial-4.jpg" style="width: 50px; height: 50px;">
-                            <div class="ps-3">
-                                <h5 class="mb-1">Client Name</h5>
-                                <small>Profession</small>
-                            </div>
-                        </div>
+   
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Testimonial Start -->
+        <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="container">
+                <div class="text-center">
+                    <h5 class="section-title ff-secondary text-center text-primary fw-normal" data-translate-key="ap-63">Zeugnis</h5>
+                    <h1 class="mb-5" data-translate-key="ap-64">Unsere Kunden sagen!!!</h1>
+                </div>
+                <div class="owl-carousel testimonial-carousel">
+                    <div class="testimonial-item bg-transparent border rounded p-4">
+                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p data-translate-key="ap-66">Sehr leckeres Essen!
+Mahlzeitenart
+Abendessen
+Preis pro Person
+10–20 €
+Essen: 5
+Service: 5
+Atmosphäre: 5</p>
+                        <div class="d-flex align-items-center">
+                            <img class="img-fluid flex-shrink-0 rounded-circle" src="img/adem nafiu.png" style="width: 50px; height: 50px;">
+                            <div class="ps-3">
+                                <small> * * * * *</small>
+                                <h5 class="mb-1">Adem Nafiu</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-item bg-transparent border rounded p-4">
+                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p data-translate-key="ap-65">Das Essen ist wirklich köstlich und authentisch italienisch. Und der Service ist sehr freundlich… Es gibt sogar eine Eisdiele 😋. Aber es ist definitiv einer der schönsten Orte in der Gegend… Eine traumhafte Kulisse 🤗 Service Essen im Restaurant Preis pro Person 10–20 € Essen: 5 Service: 5 Atmosphäre: 5 Geräuschpegel Sehr ruhig</p>
+                        <div class="d-flex align-items-center">
+                            <img class="img-fluid flex-shrink-0 rounded-circle" src="img/p1.png" style="width: 50px; height: 50px;">
+                            <div class="ps-3">
+                                <small> * * * * * </small>
+                                <h5 class="mb-1">
+Michael Blaumeiser</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-item bg-transparent border rounded p-4">
+                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p>Wir sind froh, dass das wirklich unfreundliche Personal von (Mocca and Juice) nach nur wenigen Monaten geschlossen hat und dass das kleine italienische Restaurant nun die Freundlichkeit des schmerzlich vermissten (Café Sunar) wieder aufleben lässt. Das Essen ist gut, preiswert und reichlich. Der Service ist sehr freundlich. Ich wünsche dem Restaurant alles Gute für den Winter. Die Terrasse ist herrlich, wenn die Sonne scheint! Preis pro Person 10–20 € Essen: 4 Service: 5 Atmosphäre: 5 Reservierung Nicht erforderlich Wartezeit Keine Wartezeit</p>
+                        <div class="d-flex align-items-center">
+                            <img class="img-fluid flex-shrink-0 rounded-circle" src="img/benita.png" style="width: 50px; height: 50px;">
+                            <div class="ps-3">
+                                <small>* * * * </small>
+                                <h5 class="mb-1">
+Benita Langecker</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+                                    <a href="https://www.google.com/maps/place/MK+PASTA+E+VINO/@52.4882161,13.3597022,18z/data=!4m16!1m7!3m6!1s0x47a851003413854d:0xcb11962b0958e5f9!2sMK+PASTA+E+VINO!8m2!3d52.4882161!4d13.3607966!16s%2Fg%2F11wvkr8z4z!3m7!1s0x47a851003413854d:0xcb11962b0958e5f9!8m2!3d52.4882161!4d13.3607966!9m1!1b1!16s%2Fg%2F11wvkr8z4z?entry=ttu&g_ep=EgoyMDI1MTAyOS4yIKXMDSoASAFQAw%3D%3D"; style="margin-left: 30%;" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft"   data-translate-key="ap68">Mehr anzeigen</a>
+
         <!-- Testimonial End -->
         
 
@@ -1959,61 +1947,39 @@
         <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container py-5">
                 <div class="row g-5">
+              
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Company</h4>
-                        <a class="btn btn-link" href="">About Us</a>
-                        <a class="btn btn-link" href="">Contact Us</a>
-                        <a class="btn btn-link" href="">Reservation</a>
-                        <a class="btn btn-link" href="">Privacy Policy</a>
-                        <a class="btn btn-link" href="">Terms & Condition</a>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
-                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4" data-translate-key="ap-69">Kontakt</h4>
+                      <a href="https://maps.app.goo.gl/n4cYXM9JPyKqBdXb7">  <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Helmstraße 7, 10827 Berlin, Germany</p></a>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+4917632415912</p>
                         <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
                         <div class="d-flex pt-2">
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="https://www.instagram.com/mkpastaevino?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><i class="fab fa-instagram"></i></a>
                             <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+       
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Opening</h4>
-                        <h5 class="text-light fw-normal">Monday - Saturday</h5>
-                        <p>09AM - 09PM</p>
-                        <h5 class="text-light fw-normal">Sunday</h5>
-                        <p>10AM - 08PM</p>
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4" data-translate-key="ap-70">Öffnung</h4>
+                        <h5 class="text-light fw-normal" data-translate-key="ap-70">Dienstag - Sonntag</h5>
+                        <p>11:00 - 23:00</p>
+                        <h5 class="text-light fw-normal" data-translate-key="ap-71">Montag</h5>
+                        <p style="color: red;">geschlossen</p>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Newsletter</h4>
-                        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-                        <div class="position-relative mx-auto" style="max-width: 400px;">
-                            <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                            <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="container">
                 <div class="copyright">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved. 
+                            &copy; <a class="border-bottom" href="https://mk-pastaevino.com">MK-PASTAEVINO.COM</a>, All Right Reserved. 
 							
 							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-							Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a><br><br>
-                            Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+<br><br>
+                            Design By <a class="border-bottom" href="https://jeton-elezi.info" target="_blank">Jeton Elezi</a>
                         </div>
-                        <div class="col-md-6 text-center text-md-end">
-                            <div class="footer-menu">
-                                <a href="">Home</a>
-                                <a href="">Cookies</a>
-                                <a href="">Help</a>
-                                <a href="">FQAs</a>
-                            </div>
-                        </div>
+      
                     </div>
                 </div>
             </div>
@@ -2025,6 +1991,574 @@
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 <script>
+
+
+
+    const translations = {
+        "shijo": {
+            "Gjermanisht": "Genießen Sie unser Essen",
+            "Anglisht": "Enjoy Our food",
+            "Italisht": "Godetevi il nostro cibo"
+        },
+
+        "home": {
+            "Gjermanisht": "heim",
+            "Anglisht": "Home",
+            "Italisht": "Casa"
+        },
+
+        "about": {
+            "Gjermanisht": "Um",
+            "Anglisht": "About",
+            "Italisht": "Di"
+        },
+        "service": {
+            "Gjermanisht": "Dienstleistungen",
+            "Anglisht": "Service",
+            "Italisht": "servizio"
+        },
+        "menu": {
+            "Gjermanisht": "Speisekarte",
+            "Anglisht": "Menu",
+            "Italisht": "menu"
+        },
+        "our-team": {
+            "Gjermanisht": "Unser Team",
+            "Anglisht": "Our Team",
+            "Italisht": "la nostra squadra"
+        },
+        "contact": {
+            "Gjermanisht": "Kontakt",
+            "Anglisht": "Contact",
+            "Italisht": "contatto"
+        },
+        "book": {
+            "Gjermanisht": "Reservieren Sie einen Tisch",
+            "Anglisht": "Book A Table",
+            "Italisht": "Prenota un tavolo"
+        },
+         "Food-Menu": {
+            "Gjermanisht": "Speisenkarte",
+            "Anglisht": "Food Menu",
+            "Italisht": "Menù del cibo"
+        },
+    
+         "sup": {
+            "Gjermanisht": "Suppen",
+            "Anglisht": "Soups",
+            "Italisht": "Minestre"
+        },
+         "bamb": {
+            "Gjermanisht": "Bambino - Kindergerichte",
+            "Anglisht": "Bambino - Children's Menus",
+            "Italisht": "Bambino - Menù per bambini"
+        },
+         "salad": {
+            "Gjermanisht": "Salate",
+            "Anglisht": "Salads",
+            "Italisht": "Insalate"
+        },
+         "piza": {
+            "Gjermanisht": "Steinofen-Pizza",
+            "Anglisht": "Pizza",
+            "Italisht": "Pizza cotta su pietra"
+        },
+         "pasta": {
+            "Gjermanisht": "Nudelgerichte",
+            "Anglisht": "Pasta",
+            "Italisht": "Pasta"
+        },
+         "carne": {
+            "Gjermanisht": "Fleischgerichte",
+            "Anglisht": "Meat dishes",
+            "Italisht": "Carne"
+        },
+         "desert": {
+            "Gjermanisht": "Dessert",
+            "Anglisht": "Dessert",
+            "Italisht": "Dolci"
+        },
+         "pije-nx": {
+            "Gjermanisht": "Heiße Getränke",
+            "Anglisht": "Hot Drinks",
+            "Italisht": "Bevande Calde"
+        },
+         "bira": {
+            "Gjermanisht": "Biere",
+            "Anglisht": "Beers",
+            "Italisht": "Birre"
+        },
+         "pije-f": {
+            "Gjermanisht": "Kalte Getränke",
+            "Anglisht": "Cold drinks",
+            "Italisht": "Bevande fredde"
+        },
+
+
+
+         "alk": {
+            "Gjermanisht": "Alkohol",
+            "Anglisht": "Alcohol",
+            "Italisht": "Alcolici"
+        },
+        "vini": {
+            "Gjermanisht": "Aperitifweine",
+            "Anglisht": "aperitif wines",
+            "Italisht": "vini aperitivi"
+        },
+
+        "longd": {
+            "Gjermanisht": "Longdrinks",
+            "Anglisht": "Long rinks",
+            "Italisht": "Bevande lunghe"
+        },
+
+        "ap": {
+            "Gjermanisht": "Aperol Spritz mit Prosecco, Mineralwasser und frischer Minze (0.20l)",
+            "Anglisht": "Aperol Spritz with Prosecco, mineral water and fresh mint (0.20l)",
+            "Italisht": "Aperol Spritz con Prosecco, acqua minerale e menta fresca (0,20l)"
+        },
+
+        "ap-1": {
+            "Gjermanisht": "Sarti mit Prosecco, Mineralwasser, Limette und frischer Minze (0.20l)",
+            "Anglisht": "Sarti with Prosecco, mineral water, lime and fresh mint (0.20l)",
+            "Italisht": "Sarti con Prosecco, acqua minerale, lime e menta fresca (0,20l)"
+        },
+
+        "ap-2": {
+            "Gjermanisht": "Ramazzotti Rosé mit Prosecco, Mineralwasser und Basilikum (0.20l)",
+            "Anglisht": "Ramazzotti Rosé with Prosecco, mineral water and basil (0.20l)",
+            "Italisht": "Ramazzotti Rosé con Prosecco, acqua minerale e basilico (0,20l)"
+        },
+
+        "ap-3": {
+            "Gjermanisht": "Limoncello mitMaracujanektar, Prosecco, Mineralwasser, Limette und Minze (0.20l)",
+            "Anglisht": "Limoncello with passion fruit nectar, Prosecco, mineral water, lime and mint (0.20l)",
+            "Italisht": "Limoncello con nettare di frutto della passione, Prosecco, acqua minerale, lime e menta (0,20l)"
+        },
+
+        "ap-4": {
+            "Gjermanisht": "Prosecco mit Holunderblütensirup, Limette, frischer Minze und Mineralwasser (0.20l)",
+            "Anglisht": "Prosecco with elderflower syrup, lime, fresh mint and mineral water (0.20l)",
+            "Italisht": "Prosecco con sciroppo di fiori di sambuco, lime, menta fresca e acqua minerale (0,20 l)"
+        },
+
+        "ap-5": {
+            "Gjermanisht": "Weiß, Rot oder Trocken (5cl)",
+            "Anglisht": "White, Red or Dry (5cl)",
+            "Italisht": "Bianco, Rosso o Secco (5cl)"
+        },
+
+        "ap-6": {
+            "Gjermanisht": "Bruschetta",
+            "Anglisht": "Bruschetta (4 pieces)",
+            "Italisht": "Bruschetta (4 pezzi)"
+        },
+
+        "ap-7": {
+            "Gjermanisht": "Büffelmozzarella mit Cherrytomaten und Basilikumpesto auf Rucolasalat",
+            "Anglisht": "Buffalo mozzarella with cherry tomatoes and basil pesto on arugula salad",
+            "Italisht": "Mozzarella di bufala con pomodorini e pesto di basilico su insalata di rucola"
+        },
+
+        "ap-8": {
+            "Gjermanisht": "dünnes Kalbfleisch mit Kapern in Thunfischcreme",
+            "Anglisht": "thin veal with capers in tuna cream sauce",
+            "Italisht": "vitello sottile con capperi in salsa di crema di tonno"
+        },
+
+        "ap-9": {
+            "Gjermanisht": "hauchdünnes rohes Rinderfilet auf Rucola mit Parmesan und einer Spezialsauce",
+            "Anglisht": "paper-thin raw beef fillet on arugula with Parmesan and a special sauce",
+            "Italisht": "filetto di manzo crudo sottilissimo su rucola con parmigiano e una salsa speciale"
+        },
+
+        "ap-10": {
+            "Gjermanisht": "Knoblauchsuppe mit Ei",
+            "Anglisht": "Garlic soup with egg",
+            "Italisht": "Zuppa d'aglio con uova"
+        },
+
+        "ap-11": {
+            "Gjermanisht": "Gemüsesuppe",
+            "Anglisht": "Vegetable soup",
+            "Italisht": "Zuppa di verdure"
+        },
+
+     
+
+        "ap-12": {
+            "Gjermanisht": "Tomatencremesuppe",
+            "Anglisht": "Tomato cream soup",
+            "Italisht": "Zuppa di crema di pomodoro"
+        },
+
+        "ap-13": {
+            "Gjermanisht": "mit Salami oder Champignons",
+            "Anglisht": "with salami or mushrooms",
+            "Italisht": "con salame o funghi"
+        },
+
+        "ap-14": {
+            "Gjermanisht": "mit Tomatensauce",
+            "Anglisht": "with tomato sauce",
+            "Italisht": "con salsa di pomodoro"
+        },
+
+        "ap-15": {
+            "Gjermanisht": "Hähnchenschnitzel mit Kartoffeln",
+            "Anglisht": "Chicken schnitzel with potatoes",
+            "Italisht": "Cotoletta di pollo con patate"
+        },
+
+        "ap-16": {
+            "Gjermanisht": "Tomatensalat mit roten Zwiebeln",
+            "Anglisht": "Tomato salad with red onions",
+            "Italisht": "Insalata di pomodori con cipolle rosse"
+        },
+
+        "ap-17": {
+            "Gjermanisht": "Wildkräutersalat mit Thunfischstücken und Schafskäse",
+            "Anglisht": "Wild herb salad with pieces of tuna and sheep's cheese",
+            "Italisht": "Insalata di erbe selvatiche con pezzetti di tonno e formaggio di pecora"
+        },
+
+        "ap-18": {
+            "Gjermanisht": "Wildkräutersalat mit gebratenen Hähnchenbruststreifen und Champignons",
+            "Anglisht": "Wild herb salad with fried chicken breast strips and mushrooms",
+            "Italisht": "Insalata di erbe selvatiche con striscioline di petto di pollo fritto e funghi"
+        },
+
+        "ap-19": {
+            "Gjermanisht": "Wildkräutersalat mit eingelegten Lachsstreifen, Artischocken, Cherrytomaten und Oliven",
+            "Anglisht": "Wild herb salad with pickled salmon strips, artichokes, cherry tomatoes and olives",
+            "Italisht": "Insalata di erbe selvatiche con striscioline di salmone marinato, carciofi, pomodorini e olive"
+        },
+
+        "ap-20": {
+            "Gjermanisht": "Rucolasalat mit Cherrytomaten",
+            "Anglisht": "Arugula salad with cherry tomatoes",
+            "Italisht": "Insalata di rucola con pomodorini"
+        },
+
+        "ap-21": {
+            "Gjermanisht": "Tomatensoße, Fior di Latte Mozzarella und Basilikum",
+            "Anglisht": "Tomato sauce, Fior di Latte mozzarella and basil",
+            "Italisht": "Salsa di pomodoro, mozzarella Fior di Latte e basilico"
+        },
+
+        "ap-22": {
+            "Gjermanisht": "Tomatensoße, Fior di Latte Mozzarella und Salami",
+            "Anglisht": "Tomato sauce, Fior di Latte mozzarella and salami",
+            "Italisht": "Salsa di pomodoro, mozzarella Fior di Latte e salame"
+        },
+
+        "ap-23": {
+            "Gjermanisht": "Tomatensoße, Fior di Latte Mozzarella, Kapern, Oliven, Sardellen und Knoblauch",
+            "Anglisht": "Tomato sauce, Fior di Latte mozzarella, capers, olives, anchovies and garlic",
+            "Italisht": "Salsa di pomodoro, mozzarella Fior di Latte, capperi, olive, acciughe e aglio"
+        },
+
+        "ap-24": {
+            "Gjermanisht": "Tomatensoße, Fior di Latte Mozzarella, Thunfisch und rote Zwiebeln",
+            "Anglisht": "Tomato sauce, Fior di Latte mozzarella, tuna and red onions",
+            "Italisht": "Salsa di pomodoro, mozzarella Fior di Latte, tonno e cipolle rosse"
+        },
+         "ap-24": {
+            "Gjermanisht": "Reservierung",
+            "Anglisht": "Reservation",
+            "Italisht": "prenotazione"
+        },
+
+        "ap-25":{
+            "Gjermanisht":"Tomatensoße und vier verschiedene Käsesorten ",
+            "Anglisht":" Tomato sauce and four different types of cheese",
+            "Italisht":"Salsa di pomodoro e quattro tipi diversi di formaggio",
+        },
+        "ap-26":{
+            "Gjermanisht":"Tomatensoße, Fior di Latte Mozzarella, Parmaschinken, Rucola und Parmesansplitter",
+            "Anglisht":"Tomato sauce, Fior di Latte mozzarella, Parma ham, arugula and Parmesan shavings",
+            "Italisht":"Salsa di pomodoro, mozzarella Fior di Latte, prosciutto di Parma, rucola e scaglie di parmigiano",
+        },
+        "ap-27":{
+            "Gjermanisht":"Tomatensoße, Fior di Latte Mozzarella, Salami, Champignons, Peperoni und italienischer Spianata Salami",
+            "Anglisht":"Tomato sauce, Fior di Latte mozzarella, salami, mushrooms, pepperoni and Italian Spianata salami",
+            "Italisht":"Salsa di pomodoro, mozzarella Fior di Latte, salame, funghi, peperoni e salame spianata italiana",
+        },
+        "ap-28":{
+            "Gjermanisht":"Tomatensoße, Fior di Latte Mozzarella und Gemüse der Saison",
+            "Anglisht":"Tomato sauce, Fior di Latte mozzarella and seasonal vegetables",
+            "Italisht":"Salsa di pomodoro, mozzarella Fior di Latte e verdure di stagione",
+        },
+        "ap-29":{
+            "Gjermanisht":"Tomatensoße, Fior di Latte Mozzarella, Scampi und Knoblauch",
+            "Anglisht":"Tomato sauce, Fior di Latte mozzarella, scampi and garlic",
+            "Italisht":"Salsa di pomodoro, mozzarella Fior di Latte, scampi e aglio",
+        },
+        "ap-30":{
+            "Gjermanisht":"mit Knoblauch, Olivenöl und Peperoncini (scharf)",
+            "Anglisht":"with garlic, olive oil and chili peppers (spicy)",
+            "Italisht":"con aglio, olio d'oliva e peperoncino (piccante)",
+        },
+        "ap-31":{
+            "Gjermanisht":"mit Speckwürfeln, Ei und Parmesan",
+            "Anglisht":"with bacon cubes, egg and Parmesan cheese",
+            "Italisht":"con cubetti di pancetta, uovo e parmigiano",
+        },
+        "ap-32":{
+            "Gjermanisht":"Rinderfiletspitzen und Champignons in Rahmsauce",
+            "Anglisht":"Beef fillet tips and mushrooms in cream sauce",
+            "Italisht":"Punte di filetto di manzo e funghi in salsa cremosa",
+        },
+        "ap-33":{
+            "Gjermanisht":"kurze Nudeln mit Hähnchenbrustfiletstreifen und frischen Champignons in Macchiato Creme",
+            "Anglisht":"short pasta with chicken breast strips and fresh mushrooms in macchiato cream",
+            "Italisht":"pasta corta con striscioline di petto di pollo e funghi freschi in crema macchiata",
+        },
+        "ap-34":{
+            "Gjermanisht":"kurze Nudeln mit Gemüse in Tomaten-Basilikumsauce",
+            "Anglisht":"short pasta with vegetables in tomato-basil sauce",
+            "Italisht":"pasta corta con verdure in salsa di pomodoro e basilico",
+        },
+        "ap-35":{
+            "Gjermanisht":"kurze Nudeln mit scharfer Tomatensoße, Zwiebeln und Oliven",
+            "Anglisht":"short pasta with spicy tomato sauce, onions and olives",
+            "Italisht":"pasta corta con salsa di pomodoro piccante, cipolle e olive",
+        },
+        "ap-36":{
+            "Gjermanisht":"Bandnudeln mit getrockneten Tomaten, Oliven, Rucola und Parmesan",
+            "Anglisht":"Ribbon pasta with sun-dried tomatoes, olives, arugula and Parmesan cheese",
+            "Italisht":"Pasta a nastro con pomodori secchi, olive, rucola e parmigiano",
+        },
+        "ap-37":{
+            "Gjermanisht":"Bandnudeln mit Garnelen und Cherrytomaten in Kräuter-Weißweinsoße",
+            "Anglisht":"Ribbon pasta with shrimp and cherry tomatoes in a herb and white wine sauce",
+            "Italisht":"Pasta a nastro con gamberi e pomodorini in salsa di erbe aromatiche e vino bianco",
+        },
+        "ap-38":{
+            "Gjermanisht":"Bandnudeln mit Lachs in Hummer-Sahnesoße",
+            "Anglisht":"Ribbon pasta with salmon in lobster cream sauce",
+            "Italisht":"Pasta a nastro con salmone in salsa cremosa all'astice",
+        },
+        "ap-39":{
+            "Gjermanisht":"Hähnchenbrustfilet mit feiner Knoblauchsoße",
+            "Anglisht":"Chicken breast fillet with a delicate garlic sauce",
+            "Italisht":"Filetto di petto di pollo con delicata salsa all'aglio",
+        },
+        "ap-40":{
+            "Gjermanisht":"Hähnchenbrustfilet mit Gorgonzola-Sahnesoße",
+            "Anglisht":"Chicken breast fillet with Gorgonzola cream sauce",
+            "Italisht":"Filetto di petto di pollo con salsa cremosa al gorgonzola",
+        },
+        "ap-41":{
+            "Gjermanisht":"Hähnchenbrustfilet mit grünem Pfeffer in Sahnesoße",
+            "Anglisht":"Chicken breast fillet with green pepper in cream sauce",
+            "Italisht":"Filetto di petto di pollo con peperone verde in salsa di panna",
+        },
+        "ap-42":{
+            "Gjermanisht":"Schweinemedaillons mit gebratenen Champignonsc",
+            "Anglisht":"Pork medallions with fried mushrooms",
+            "Italisht":"Medaglioni di maiale con funghi fritti",
+        },
+        "ap-43":{
+            "Gjermanisht":"chweinemedaillons mit Pommery Senf-Sahnesauce",
+            "Anglisht":"pork medallions with Pommery mustard cream sauce",
+            "Italisht":"medaglioni di maiale con salsa cremosa alla senape Pommery",
+        },
+        "ap-44":{
+            "Gjermanisht":"Kalbsmedaillons mit Parmaschinken in Weißweinsoße",
+            "Anglisht":"Veal medallions with Parma ham in white wine sauce",
+            "Italisht":"Medaglioni di vitello con prosciutto di Parma in salsa al vino bianco",
+        },
+        "ap-45":{
+            "Gjermanisht":"Tomatensoße, Fior di Latte Mozzarella, Salami, Champignons, Peperoni und italienischer Spianata Salami",
+            "Anglisht":"Tomato sauce, Fior di Latte mozzarella, salami, mushrooms, pepperoni and Italian Spianata salami",
+            "Italisht":"Salsa di pomodoro, mozzarella Fior di Latte, salame, funghi, peperoni e salame spianata italiana",
+        },
+        "ap-46":{
+            "Gjermanisht":"Tomatensoße, Fior di Latte Mozzarella und Gemüse der Saison",
+            "Anglisht":"Tomato sauce, Fior di Latte mozzarella and seasonal vegetables",
+            "Italisht":"Salsa di pomodoro, mozzarella Fior di Latte e verdure di stagione",
+        },
+        "ap-47":{
+            "Gjermanisht":"Tomatensoße, Fior di Latte Mozzarella, Scampi und Knoblauch",
+            "Anglisht":"Tomato sauce, Fior di Latte mozzarella, scampi and garlic",
+            "Italisht":"Salsa di pomodoro, mozzarella Fior di Latte, scampi e aglio",
+        },
+        "ap-48":{
+            "Gjermanisht":"Tasse",
+            "Anglisht":"cup",
+            "Italisht":"tazza",
+        },
+        "ap-49":{
+            "Gjermanisht":"Glas",
+            "Anglisht":"Glass",
+            "Italisht":"Bicchiere",
+        },
+        "ap-50":{
+            "Gjermanisht":"verschiedene Sorten   Tasse ",
+            "Anglisht":"different types of cup",
+            "Italisht":"diversi tipi di tazza",
+        },
+        "ap-51":{
+            "Gjermanisht":"rot oder grün    (Fl 0.33l)",
+            "Anglisht":"red or green (0.33l bottle)",
+            "Italisht":"rosso o verde (bottiglia da 0,33 l)",
+        },
+        "ap-52":{
+            "Gjermanisht":"stilles italienisches Mineralwasser  Fl. (0.25l - 3.00€)  / Fl.(0.75l - 5.50€)",
+            "Anglisht":"Still Italian mineral water (0.25l bottle - €3.00) / (0.75l bottle - €5.50)",
+            "Italisht":"Acqua minerale naturale italiana (bottiglia da 0,25 l - € 3,00) / (bottiglia da 0,75 l - € 5,50)",
+        },
+        "ap-53":{
+            "Gjermanisht":"(Kirschfruchtsaft-Bananenfruchtsaft)  0.20l (3.20€) / 0.40l (4.50€) ",
+            "Anglisht":"(Cherry fruit juice - banana fruit juice) 0.20l (€3.20) / 0.40l (€4.50)",
+            "Italisht":"(Succo di ciliegia - succo di banana) 0,20l (3,20 €) / 0,40l (4,50 €)",
+        },
+        "ap-54":{
+            "Gjermanisht":"Weißwein, trocken   0.20l (6.00€) / 0.50l (12.50€)",
+            "Anglisht":"White wine, dry 0.20l (€6.00) / 0.50l (€12.50)",
+            "Italisht":"Vino bianco secco 0,20l (€6,00) / 0,50l (€12,50)",
+        },
+        "ap-55":{
+            "Gjermanisht":"Roséwein, trocken  0.20l (6.00€) / 0.50l (12.50€)",
+            "Anglisht":"Rosé wine, dry 0.20l (€6.00) / 0.50l (€12.50)",
+            "Italisht":"Vino rosato secco 0,20l (€6,00) / 0,50l (€12,50)",
+        },
+        "ap-56":{
+            "Gjermanisht":"Rotwein, trocken  0.20l (6.00€) / 0.50l (12.50€)",
+            "Anglisht":"Red wine, dry 0.20l (€6.00) / 0.50l (€12.50)",
+            "Italisht":"Vino rosso secco 0,20l (€6,00) / 0,50l (€12,50)",
+        },
+        "ap-57":{
+            "Gjermanisht":"Rotwein, lieblich 0.20l (6.00€) / 0.50l (12.50€)",
+            "Anglisht":"Red wine, sweet 0.20l (€6.00) / 0.50l (€12.50)",
+            "Italisht":"Vino rosso dolce 0,20l (€6,00) / 0,50l (€12,50)",
+        },
+        "ap-59":{
+            "Gjermanisht":"Reservierung",
+            "Anglisht":"reservation",
+            "Italisht":"prenotazione",
+        },
+        "ap-58":{
+            "Gjermanisht":"Tisch online reservieren",
+            "Anglisht":"Book A Table Online",
+            "Italisht":"Prenota un tavolo online",
+        },
+        "ap-60":{
+            "Gjermanisht":"Teammitglieder",
+            "Anglisht":"Team Members",
+            "Italisht":"Membri del team",
+        },
+        "ap-61":{
+            "Gjermanisht":"unser bestes Team",
+            "Anglisht":"our best team",
+            "Italisht":"la nostra migliore squadra",
+        },
+        "ap-62":{
+            "Gjermanisht":"Kellner",
+            "Anglisht":"Waiter",
+            "Italisht":"Cameriere",
+        },
+        "ap-63":{
+            "Gjermanisht":"Zeugnis",
+            "Anglisht":"Testimonial",
+            "Italisht":"Testimonianza",
+        },
+        "ap-64":{
+            "Gjermanisht":"Unsere Kunden sagen!!!",
+            "Anglisht":"Our Clients Say!!!",
+            "Italisht":"Cosa dicono i nostri clienti!!!",
+        },
+        "ap-65":{
+            "Gjermanisht":"Das Essen ist wirklich köstlich und authentisch italienisch. Und der Service ist sehr freundlich… Es gibt sogar eine Eisdiele 😋. Aber es ist definitiv einer der schönsten Orte in der Gegend… Eine traumhafte Kulisse 🤗 Service Essen im Restaurant Preis pro Person 10–20 € Essen: 5 Service: 5 Atmosphäre: 5 Geräuschpegel Sehr ruhig",
+            "Anglisht":"The food is truly delicious and authentically Italian. And the service is very friendly… There's even an ice cream parlor 😋. But its definitely one of the most beautiful spots in the neighborhood… A picture-perfect setting 🤗 Service Dine in Price per person €10–20 Food: 5 Service: 5 Atmosphere: 5 Noise level Very quiet",
+            "Italisht":"Il cibo è davvero delizioso e autenticamente italiano. E il servizio è molto cordiale... C'è persino una gelateria 😋. Ma è sicuramente uno dei posti più belli del quartiere... Un ambiente da cartolina 🤗 Servizio Consumazione sul posto Prezzo a persona €10–20 Cibo: 5 Servizio: 5 Atmosfera: 5 Livello di rumore Molto silenzioso",
+        },
+        "ap-66":{
+            "Gjermanisht":"Sehr leckeres Essen! Mahlzeitenart Abendessen Preis pro Person 10–20 € Essen: 5 Service: 5 Atmosphäre: 5",
+            "Anglisht":"Very tasty food ! Meal type Dinner Price per person €10–20 Food: 5 Service: 5 Atmosphere: 5",
+            "Italisht":"Cibo davvero delizioso! Tipo di pasto Cena Prezzo a persona €10–20 Cibo: 5 Servizio: 5 Atmosfera: 5",
+        },
+        "ap-67":{
+            "Gjermanisht":"Wir sind froh, dass das wirklich unfreundliche Personal von (Mocca and Juice) nach nur wenigen Monaten geschlossen hat und dass das kleine italienische Restaurant nun die Freundlichkeit des schmerzlich vermissten (Café Sunar) wieder aufleben lässt. Das Essen ist gut, preiswert und reichlich. Der Service ist sehr freundlich. Ich wünsche dem Restaurant alles Gute für den Winter. Die Terrasse ist herrlich, wenn die Sonne scheint!  Preis pro Person  10–20 €  Essen: 4  Service: 5  Atmosphäre: 5  Reservierung  Nicht erforderlich  Wartezeit  Keine Wartezeit",
+            "Anglisht":"We're glad that the truly unfriendly staff at (Mocca and Juice) closed down after just a few months, and that the small Italian restaurant is now recapturing the friendliness of the sorely missed )Café Sunar) The food is good, reasonably priced, and plentiful. The service is very friendly. I wish the restaurant all the best in surviving the winter. The outdoor terrace is wonderful when the sun is shining! Price per person €10–20 Food: 4 Service: 5 Atmosphere: 5 Reservation Reservations not required Wait time No wait",
+            "Italisht":"Siamo lieti che il personale davvero scortese del (Mocca and Juice) abbia chiuso dopo pochi mesi e che il piccolo ristorante italiano stia ora ritrovando la cordialità del tanto rimpianto (Café Sunar). Il cibo è buono, a prezzi ragionevoli e abbondante. Il servizio è molto cordiale. Auguro al ristorante tutto il meglio per superare l'inverno. La terrazza esterna è meravigliosa quando splende il sole! Prezzo a persona €10–20 Piatto: 4 Servizio: 5 Atmosfera: 5 Prenotazione Prenotazione non richiesta Tempo di attesa Nessuna attesa",
+        },
+        "ap-68":{
+            "Gjermanisht":"Mehr anzeigen",
+            "Anglisht":"See more",
+            "Italisht":"vedi di più",
+        },
+        "ap-69":{
+            "Gjermanisht":"Kontakt",
+            "Anglisht":"Contact",
+            "Italisht":"Contatto",
+        },
+        "ap-70":{
+            "Gjermanisht":"Öffnung",
+            "Anglisht":"Opening",
+            "Italisht":"Apertura",
+        },
+"ap-71":{
+            "Gjermanisht":"Dienstag - Sonntag",
+            "Anglisht":"tuesday - sunday",
+            "Italisht":"Tuesday - Sunday",
+        },
+"ap-71":{
+            "Gjermanisht":"Montag",
+            "Anglisht":"Monday",
+            "Italisht":"Lunedi",
+        },
+"ap-72":{
+            "Gjermanisht":"geschlossen",
+            "Anglisht":"closed",
+            "Italisht":"Chiuso",
+        },
+
+     "ap-73":{
+            "Gjermanisht":"Jahre Erfahrung",
+            "Anglisht":"Years of Experienceosed",
+            "Italisht":"Anni di esperienza",
+        },
+
+           "ap-74":{
+            "Gjermanisht":"Direktorin",
+            "Anglisht":"director",
+            "Italisht":"direttrice",
+        },
+
+     
+    };
+
+    // Variabli që ruan gjuhën aktuale
+    let currentLanguage = "Gjermanisht";  // Gjuhën e paracaktuar (Shqip)
+
+    // Funksioni për të vendosur gjuhën
+    function setLanguage(language) {
+        currentLanguage = language;  // Përdorimi i gjuhës së zgjedhur
+
+        // Ndrysho tekstin në të gjithë faqen që ka atributin data-translate-key
+        const elements = document.querySelectorAll("[data-translate-key]");  // Gjej të gjitha elementet që kanë atributin data-translate-key
+        elements.forEach(element => {
+            const key = element.getAttribute("data-translate-key");  // Merr çelësin përkthimi
+            const translation = translations[key];  // Merr përkthimin për çelësin
+            if (translation) {
+                element.innerText = translation[currentLanguage];  // Ndrysho tekstin në element
+            }
+        });
+    }
+
+    // Funksioni për të ndërruar gjuhën në fillim kur faqja ngarkohet
+    window.onload = function() {
+        setLanguage(currentLanguage);  // Vendos gjuhën e paracaktuar kur faqja hapet
+    }
+
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", function() {
   const links = document.querySelectorAll('.nav-item a[data-bs-toggle="pill"]');
   
@@ -2042,7 +2576,28 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 });
+
 </script>
+
+
+
+
+
+
+
+
+
+
+<script>
+function stopVideo() {
+    const video = document.getElementById('localVideo');
+    video.pause();
+    video.currentTime = 0;
+}
+</script>
+
+
+
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
