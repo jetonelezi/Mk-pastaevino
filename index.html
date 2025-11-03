@@ -50,6 +50,33 @@
         .language-selector img:hover {
             opacity: 0.7;
         }
+
+
+
+
+
+
+
+
+        #contactBox {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f8f9fa;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  width: fit-content;
+  margin-left: 20px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+#contactBox.show {
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
+}
 </style>
 
 
@@ -95,8 +122,14 @@
                         <div class="col-lg-6 text-center text-lg-start">
                             <h1 class="display-3 text-white animated slideInLeft"   data-translate-key="shijo">Genießen Sie unser<br>Delicious Meal</h1>
                             
-                            <a style="margin-left: 20px;" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft"   data-translate-key="book">Book A Table</a>
-                        <br>
+<a id="contactBtn" style="margin-left: 20px;" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft" data-translate-key="book">
+  Book A Table
+</a>
+
+<div id="contactBox" class="hidden">
+  <p><strong>📞 Tel:</strong> +4917632415912</p>
+  <p><strong>📸 Instagram:</strong> <a href="https://www.instagram.com/mkpastaevino?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">@mkpastaevino</a></p>
+</div>                        <br>
                         </div>
                         <div class="col-lg-6 text-center text-lg-end overflow-hidden">
                             <img class="img-fluid" src="img\istockphoto-908165344-612x612.png" alt="">
@@ -1705,7 +1738,7 @@
                     <!-- Këtu vendos videon tënde -->
                     <video id="localVideo" controls>
                         <source src="ft/vid1.mp4" type="video/mp4">
-                        Browseri yt nuk e mbështet videon.
+                       ! error404 !
                     </video>
                 </div>
             </div>
@@ -1926,7 +1959,7 @@ Benita Langecker</h5>
                     <div class="col-lg-3 col-md-6">
                         <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4" data-translate-key="ap-70">Öffnung</h4>
                         <h5 class="text-light fw-normal" data-translate-key="ap-70">Dienstag - Sonntag</h5>
-                        <p>11:00 - 23:00</p>
+                        <p>12:00 - 23:00</p>
                         <h5 class="text-light fw-normal" data-translate-key="ap-71">Montag</h5>
                         <p style="color: red;">geschlossen</p>
                     </div>
@@ -2547,7 +2580,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+<script>
+  const btn = document.getElementById('contactBtn');
+  const box = document.getElementById('contactBox');
 
+  btn.addEventListener('click', () => {
+    // nëse është fshehur, shfaqe
+    if (box.classList.contains('hidden')) {
+      box.classList.remove('hidden');
+      setTimeout(() => box.classList.add('show'), 10);
+    } 
+    // nëse është e hapur, fshije
+    else {
+      box.classList.remove('show');
+      setTimeout(() => box.classList.add('hidden'), 400);
+    }
+  });
+</script>
 
 
 
