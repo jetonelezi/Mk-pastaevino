@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101b2d">
+    <title>Administrata — AutoParts Tetov</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --ink:#142238; --muted:#718096; --blue:#2864e8; --line:#e7ebf1; --bg:#f5f7fb; }
+        * { box-sizing:border-box; }
+        body { margin:0; background:var(--bg); color:var(--ink); font-family:"DM Sans",sans-serif; }
+        button,input { font:inherit; }
+        .topbar { padding:0 20px; background:#101b2d; color:#fff; }
+        .topbar-inner { width:min(1120px,100%); min-height:70px; margin:auto; display:flex; align-items:center; justify-content:space-between; gap:15px; }
+        .brand { color:#fff; text-decoration:none; font:800 18px Manrope,sans-serif; }
+        .brand span { color:#9db8ff; }
+        .top-actions { display:flex; align-items:center; gap:14px; }
+        .top-actions a { color:#c4d0e1; font-size:12px; text-decoration:none; }
+        .top-actions button { border:1px solid #40516a; border-radius:8px; padding:8px 11px; background:transparent; color:#fff; cursor:pointer; }
+        .language-select { border:1px solid #40516a; border-radius:8px; padding:8px 10px; background:#17263d; color:#fff; font-size:12px; }
+        main { width:min(1120px,calc(100% - 32px)); margin:34px auto 60px; }
+        .panel { padding:clamp(18px,4vw,28px); border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 14px 36px rgba(22,39,68,.07); }
+        h1,h2,h3 { font-family:Manrope,sans-serif; }
+        h1 { margin:0 0 8px; font-size:25px; }
+        h2 { margin:0; font-size:19px; }
+        p { color:var(--muted); font-size:13px; line-height:1.6; }
+        .header-row { display:flex; justify-content:space-between; align-items:center; gap:15px; flex-wrap:wrap; margin-bottom:18px; }
+        .notice { margin:16px 0 20px; padding:12px 14px; border:1px solid #dbe7ff; border-radius:10px; background:#f3f7ff; color:#405c8b; font-size:12px; line-height:1.55; }
+        .fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; }
+        .field.full { grid-column:1/-1; }
+        label { display:block; margin:0 0 6px; color:#34445a; font-size:12px; font-weight:800; }
+        input { display:block; width:100%; min-height:42px; padding:9px 11px; border:1px solid #dce3ed; border-radius:8px; outline:0; }
+        input:focus { border-color:#82a6ff; box-shadow:0 0 0 3px rgba(40,100,232,.1); }
+        .primary,.secondary,.danger { min-height:39px; padding:0 13px; border:0; border-radius:8px; font-size:12px; font-weight:800; cursor:pointer; }
+        .primary { background:var(--blue); color:#fff; }
+        .secondary { border:1px solid #dce3ed; background:#fff; color:#40516a; }
+        .danger { background:#fff0f0; color:#b44242; }
+        .actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+        .message { min-height:18px; margin-top:11px; color:#128451; font-size:12px; font-weight:700; }
+        .message.error { color:#bd3f3f; }
+        .summary { display:flex; gap:9px; flex-wrap:wrap; color:var(--muted); font-size:12px; }
+        .summary span { padding:7px 10px; border:1px solid var(--line); border-radius:20px; background:#fff; }
+        .company-list { display:grid; gap:15px; }
+        .company-card { overflow:hidden; border:1px solid var(--line); border-radius:13px; background:white; }
+        .company-top { display:flex; justify-content:space-between; align-items:flex-start; gap:14px; padding:17px; }
+        .company-top h3 { margin:0 0 5px; font-size:16px; }
+        .company-top p { margin:4px 0; font-size:12px; }
+        .part-row { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:11px 17px; border-top:1px solid var(--line); font-size:12px; }
+        .part-row span { line-height:1.5; }
+        .password-reset { padding:0 17px 14px; }
+        .password-reset summary { width:fit-content; color:#40516a; font-size:12px; font-weight:800; cursor:pointer; }
+        .password-reset-form { display:flex; align-items:end; flex-wrap:wrap; gap:9px; margin-top:12px; }
+        .password-reset-form .field { flex:1 1 220px; }
+        .password-reset-form .field label { margin-bottom:5px; }
+        .empty { padding:34px 18px; border:1px dashed #d6deea; border-radius:12px; color:var(--muted); text-align:center; font-size:13px; }
+        .empty strong { display:block; margin-bottom:5px; color:var(--ink); }
+        .login { width:min(460px,100%); margin:45px auto; }
+        .login .field { margin-top:13px; }
+        footer { padding:0 20px 30px; color:#8793a4; text-align:center; font-size:12px; }
+        [hidden] { display:none !important; }
+        @media(max-width:580px) {
+            .fields { grid-template-columns:1fr; }
+            .field.full { grid-column:auto; }
+            .company-top { flex-direction:column; }
+            .part-row { align-items:flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="index.html">AUTOPARTS<span> TETOV / ADMIN</span></a>
+            <div class="top-actions">
+                <a href="otpadet.html">Faqja publike</a>
+                <select id="languageSelect" class="language-select" aria-label="Gjuha">
+                    <option value="sq">Shqip</option>
+                    <option value="mk">Македонски</option>
+                </select>
+                <button id="logoutButton" type="button" hidden><i class="fa-solid fa-right-from-bracket"></i> Dil</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="panel login" id="loginPanel">
+            <h1>Hyrja e administratorit</h1>
+            <p>Hyr me numrin dhe fjalëkalimin e administratorit.</p>
+            <div class="notice">Llogaria e administratorit konfigurohet privatisht në server. Nuk ka fjalëkalim të paracaktuar në këtë faqe.</div>
+            <form id="loginForm">
+                <div class="field">
+                    <label for="phone">Numri i administratorit</label>
+                    <input id="phone" type="tel" required maxlength="30" autocomplete="username">
+                </div>
+                <div class="field">
+                    <label for="password">Fjalëkalimi</label>
+                    <input id="password" type="password" required maxlength="128" autocomplete="current-password">
+                </div>
+                <button class="primary" style="margin-top:15px" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Hyr</button>
+                <div class="message" id="loginMessage" role="status" aria-live="polite"></div>
+            </form>
+        </section>
+
+        <section id="dashboard" hidden>
+            <div class="header-row">
+                <div><h1>Menaxhimi i kompanive</h1><p>Ndrysho të dhënat e kompanive, menaxho pjesët ose fshi regjistrime.</p></div>
+                <div class="summary"><span id="companyCount"></span><span id="partCount"></span></div>
+            </div>
+            <div class="notice"><i class="fa-solid fa-shield-halved"></i> Veprimet kryhen nga serveri. Fshirja e një kompanie fshin edhe llogarinë dhe të gjitha pjesët e saj.</div>
+            <div class="actions" style="margin:0 0 16px">
+                <button class="secondary" id="refreshButton" type="button"><i class="fa-solid fa-rotate"></i> Rifresko</button>
+                <button class="danger" id="deleteAllButton" type="button"><i class="fa-solid fa-trash"></i> Fshi të gjitha kompanitë</button>
+            </div>
+            <div class="message" id="dashboardMessage" role="status" aria-live="polite"></div>
+            <div class="company-list" id="companyList"></div>
+        </section>
+
+        <section class="panel" id="editCompanyPanel" hidden style="margin-top:20px">
+            <div class="header-row"><h2 id="editCompanyHeading">Ndrysho kompaninë</h2><button class="secondary" id="cancelEditCompany" type="button">Mbyll</button></div>
+            <form id="editCompanyForm">
+                <div class="fields">
+                    <div class="field"><label for="editName">Emri i kompanisë</label><input id="editName" required maxlength="100"></div>
+                    <div class="field"><label for="editOwner">Udhëheqësi</label><input id="editOwner" required maxlength="100"></div>
+                    <div class="field"><label for="editPhone">Numri i kontaktit / hyrjes</label><input id="editPhone" type="tel" required maxlength="30"></div>
+                    <div class="field"><label for="editPhone2">Numri i dytë</label><input id="editPhone2" type="tel" maxlength="30"></div>
+                    <div class="field full"><label for="editLocation">Lokacioni / adresa</label><input id="editLocation" required maxlength="300"></div>
+                    <div class="field"><label for="editLat">Gjerësia gjeografike (opsionale)</label><input id="editLat" type="number" step="any" min="-90" max="90"></div>
+                    <div class="field"><label for="editLng">Gjatësia gjeografike (opsionale)</label><input id="editLng" type="number" step="any" min="-180" max="180"></div>
+                    <div class="field full"><label for="editLogo">Logo e re (opsionale, maksimumi 500 KB)</label><input id="editLogo" type="file" accept="image/*"></div>
+                </div>
+                <div class="actions"><button class="primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Ruaj ndryshimet</button></div>
+                <div class="message" id="editCompanyMessage" role="status" aria-live="polite"></div>
+            </form>
+        </section>
+
+        <section class="panel" id="editPartPanel" hidden style="margin-top:20px">
+            <div class="header-row"><h2 id="editPartHeading">Ndrysho pjesën</h2><button class="secondary" id="cancelEditPart" type="button">Mbyll</button></div>
+            <form id="editPartForm">
+                <div class="fields">
+                    <div class="field"><label for="partMake">Marka</label><input id="partMake" required maxlength="60"></div>
+                    <div class="field"><label for="partModel">Modeli</label><input id="partModel" required maxlength="80"></div>
+                    <div class="field"><label for="partEngine">Kubikazha (opsionale)</label><input id="partEngine" maxlength="40"></div>
+                    <div class="field"><label for="partName">Emri i pjesës</label><input id="partName" required maxlength="100"></div>
+                    <div class="field"><label for="partYearFrom">Nga viti</label><input id="partYearFrom" type="number" required min="1950" max="2099"></div>
+                    <div class="field"><label for="partYearTo">Deri në vit</label><input id="partYearTo" type="number" required min="1950" max="2099"></div>
+                    <div class="field full"><label for="partDescription">Përshkrimi</label><input id="partDescription" maxlength="400"></div>
+                    <div class="field full"><label for="partPhoto">Foto e re (opsionale, maksimumi 500 KB)</label><input id="partPhoto" type="file" accept="image/*"></div>
+                </div>
+                <div class="actions"><button class="primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Ruaj pjesën</button></div>
+                <div class="message" id="editPartMessage" role="status" aria-live="polite"></div>
+            </form>
+        </section>
+    </main>
+    <footer><a href="otpadet.html">Kthehu te faqja e kompanive</a></footer>
+
+    <script>
+        (() => {
+            "use strict";
+            const byId = (id) => document.getElementById(id);
+            const apiOrigin = (["localhost", "127.0.0.1"].includes(window.location.hostname) &&
+                window.location.port === "5500")
+                ? `${window.location.protocol}//${window.location.hostname}:3000`
+                : "";
+            const state = { companies: [], editingCompanyId: null, editingPart: null };
+            const translations = {
+                "Faqja publike": "Јавна страница",
+                "Hyrja e administratorit": "Најава за администратор",
+                "Hyr me numrin dhe fjalëkalimin e administratorit.": "Најавете се со телефонскиот број и лозинката на администраторот.",
+                "Llogaria e administratorit konfigurohet privatisht në server. Nuk ka fjalëkalim të paracaktuar në këtë faqe.": "Администраторската сметка се конфигурира приватно на серверот. Нема стандардна лозинка на оваа страница.",
+                "Numri i administratorit": "Телефонски број на администраторот",
+                "Fjalëkalimi": "Лозинка",
+                "Hyr": "Најави се",
+                "Menaxhimi i kompanive": "Управување со компании",
+                "Ndrysho të dhënat e kompanive, menaxho pjesët ose fshi regjistrime.": "Изменете ги податоците на компаниите, управувајте со деловите или избришете записи.",
+                "Veprimet kryhen nga serveri. Fshirja e një kompanie fshin edhe llogarinë dhe të gjitha pjesët e saj.": "Дејствата се извршуваат на серверот. Бришењето компанија ја брише и сметката и сите нејзини делови.",
+                "Rifresko": "Освежи",
+                "Fshi të gjitha kompanitë": "Избриши ги сите компании",
+                "Ndrysho kompaninë": "Измени компанија",
+                "Mbyll": "Затвори",
+                "Emri i kompanisë": "Име на компанијата",
+                "Udhëheqësi": "Сопственик",
+                "Numri i kontaktit / hyrjes": "Телефонски број / најава",
+                "Numri i dytë": "Втор телефонски број",
+                "Lokacioni / adresa": "Локација / адреса",
+                "Gjerësia gjeografike (opsionale)": "Географска ширина (незадолжително)",
+                "Gjatësia gjeografike (opsionale)": "Географска должина (незадолжително)",
+                "Logo e re (opsionale, maksimumi 500 KB)": "Ново лого (незадолжително, максимум 500 KB)",
+                "Ruaj ndryshimet": "Зачувај промени",
+                "Marka": "Марка",
+                "Modeli": "Модел",
+                "Kubikazha (opsionale)": "Мотор (незадолжително)",
+                "Emri i pjesës": "Име на делот",
+                "Nga viti": "Од година",
+                "Deri në vit": "До година",
+                "Përshkrimi": "Опис",
+                "Foto e re (opsionale, maksimumi 500 KB)": "Нова фотографија (незадолжително, максимум 500 KB)",
+                "Ruaj pjesën": "Зачувај дел",
+                "Pjesë të publikuara": "Објавени делови",
+                "Ndrysho": "Измени",
+                "Fshi": "Избриши",
+                "Shfaq": "Прикажи",
+                "Fshih": "Сокриј",
+                "Ndrysho fjalëkalimin (nuk mund të shihen fjalëkalimet ekzistuese)": "Промени лозинка (постојните лозинки не може да се видат)",
+                "Fjalëkalim i ri (minimumi 8 karaktere)": "Нова лозинка (најмалку 8 знаци)",
+                "Ruaj fjalëkalimin e ri": "Зачувај нова лозинка",
+                "Dil": "Одјави се",
+                "Nuk ka kompani të regjistruara": "Нема регистрирани компании",
+                "Regjistrimet e reja do të shfaqen këtu.": "Новите регистрации ќе се прикажат тука.",
+                "Fshi kompaninë": "Избриши компанија",
+                "kompani": "компании",
+                "pjesë": "делови"
+            };
+            const originalTextNodes = new WeakMap();
+            let language = localStorage.getItem("otpadet-language") === "mk" ? "mk" : "sq";
+
+            function escapeHtml(value) {
+                return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+                    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+                })[character]);
+            }
+
+            function setMessage(element, value, error = false) {
+                element.textContent = value;
+                element.classList.toggle("error", error);
+                applyLanguage();
+            }
+
+            function applyLanguage() {
+                document.documentElement.lang = language;
+                byId("languageSelect").value = language;
+                const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+                let node;
+                while ((node = walker.nextNode())) {
+                    const original = originalTextNodes.get(node) ?? node.nodeValue;
+                    originalTextNodes.set(node, original);
+                    const trimmed = original.trim();
+                    const translated = language === "mk" ? (translations[trimmed] || trimmed) : trimmed;
+                    node.nodeValue = original.replace(trimmed, translated);
+                }
+            }
+
+            async function api(url, options = {}) {
+                let response;
+                try {
+                    response = await fetch(`${apiOrigin}${url}`, {
+                        credentials: "include",
+                        ...options,
+                        headers: {
+                            ...(options.body ? { "Content-Type": "application/json" } : {}),
+                            ...options.headers
+                        }
+                    });
+                } catch (error) {
+                    if (error instanceof TypeError) {
+                        throw new Error("Nuk mund të lidhemi me serverin. Nise `node server.cjs` në terminal dhe hape http://localhost:3000/admin.html. Për hyrje admin, cakto ADMIN_PHONE dhe ADMIN_PASSWORD para nisjes; Live Server nuk e nis serverin API.");
+                    }
+                    throw error;
+                }
+                const responseText = await response.text();
+                let result;
+                try {
+                    result = JSON.parse(responseText);
+                } catch {
+                    throw new Error("Serveri nuk ktheu përgjigje JSON. Hape http://localhost:3000/admin.html dhe sigurohu që serveri Node.js është duke punuar (mos e hap me Live Server ose direkt si skedar).");
+                }
+                if (!response.ok) throw new Error(result.error || "Kërkesa dështoi.");
+                return result;
+            }
+
+            function readImage(file) {
+                return new Promise((resolve, reject) => {
+                    if (!file) return resolve("");
+                    if (!file.type.startsWith("image/")) return reject(new Error("Zgjidh një skedar imazhi."));
+                    if (file.size > 500 * 1024) return reject(new Error("Imazhi duhet të jetë maksimumi 500 KB."));
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(String(reader.result));
+                    reader.onerror = () => reject(new Error("Imazhi nuk mund të lexohet."));
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            async function loadCompanies() {
+                const result = await api("/api/admin/companies");
+                state.companies = result.companies;
+                renderCompanies();
+            }
+
+            function renderCompanies() {
+                const totalParts = state.companies.reduce((sum, company) => sum + company.parts.length, 0);
+                byId("companyCount").textContent = `${state.companies.length} kompani`;
+                byId("partCount").textContent = `${totalParts} pjesë`;
+                const list = byId("companyList");
+                if (!state.companies.length) {
+                    list.innerHTML = '<div class="empty"><strong>Nuk ka kompani të regjistruara</strong>Regjistrimet e reja do të shfaqen këtu.</div>';
+                    applyLanguage();
+                    return;
+                }
+                list.innerHTML = state.companies.map((company) => `
+                    <article class="company-card">
+                        <div class="company-top">
+                            <div>
+                                <h3>${escapeHtml(company.name)}</h3>
+                                <p><i class="fa-solid fa-user"></i> ${escapeHtml(company.owner)} · <i class="fa-solid fa-phone"></i> ${escapeHtml(company.phone)}</p>
+                                <p><i class="fa-solid fa-right-to-bracket"></i> Hyrja: ${escapeHtml(company.loginPhone)} · <i class="fa-solid fa-location-dot"></i> ${escapeHtml(company.location)}</p>
+                                <p>${company.partCount} pjesë të publikuara</p>
+                            </div>
+                            <div class="actions" style="margin:0">
+                                <button class="secondary" type="button" data-edit-company="${escapeHtml(company.id)}"><i class="fa-solid fa-pen"></i> Ndrysho kompaninë</button>
+                                <button class="danger" type="button" data-delete-company="${escapeHtml(company.id)}"><i class="fa-solid fa-trash"></i> Fshi kompaninë</button>
+                            </div>
+                        </div>
+                        <details class="password-reset">
+                            <summary>Ndrysho fjalëkalimin (nuk mund të shihen fjalëkalimet ekzistuese)</summary>
+                            <form class="password-reset-form" data-password-company="${escapeHtml(company.id)}">
+                                <div class="field">
+                                    <label for="new-password-${escapeHtml(company.id)}">Fjalëkalim i ri (minimumi 8 karaktere)</label>
+                                    <input id="new-password-${escapeHtml(company.id)}" name="password" type="password" required minlength="8" maxlength="128" autocomplete="new-password">
+                                </div>
+                                <button class="secondary" type="button" data-show-password="${escapeHtml(company.id)}">Shfaq</button>
+                                <button class="primary" type="submit">Ruaj fjalëkalimin e ri</button>
+                            </form>
+                        </details>
+                        ${company.parts.map((part) => `<div class="part-row">
+                            <span><strong>${escapeHtml(part.name)}</strong><br>${escapeHtml(part.make)} ${escapeHtml(part.model)}${part.engine ? ` · ${escapeHtml(part.engine)}` : ""} · ${part.yearFrom === part.yearTo ? part.yearFrom : `${part.yearFrom}–${part.yearTo}`}</span>
+                            <div class="actions" style="margin:0">
+                                <button class="secondary" type="button" data-edit-part="${escapeHtml(company.id)}|${escapeHtml(part.id)}"><i class="fa-solid fa-pen"></i> Ndrysho</button>
+                                <button class="danger" type="button" data-delete-part="${escapeHtml(company.id)}|${escapeHtml(part.id)}"><i class="fa-solid fa-trash"></i> Fshi</button>
+                            </div>
+                        </div>`).join("")}
+                    </article>`).join("");
+                applyLanguage();
+            }
+
+            function openCompanyEditor(company) {
+                state.editingCompanyId = company.id;
+                byId("editCompanyHeading").textContent = `Ndrysho kompaninë: ${company.name}`;
+                byId("editName").value = company.name;
+                byId("editOwner").value = company.owner;
+                byId("editPhone").value = company.phone;
+                byId("editPhone2").value = company.phone2 || "";
+                byId("editLocation").value = company.location;
+                byId("editLat").value = company.locationLat ?? "";
+                byId("editLng").value = company.locationLng ?? "";
+                byId("editLogo").value = "";
+                byId("editCompanyPanel").hidden = false;
+                byId("editPartPanel").hidden = true;
+                byId("editCompanyPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+                applyLanguage();
+            }
+
+            function openPartEditor(company, part) {
+                state.editingPart = { companyId: company.id, partId: part.id };
+                byId("editPartHeading").textContent = `Ndrysho pjesën: ${part.name}`;
+                byId("partMake").value = part.make;
+                byId("partModel").value = part.model;
+                byId("partEngine").value = part.engine || "";
+                byId("partName").value = part.name;
+                byId("partYearFrom").value = part.yearFrom;
+                byId("partYearTo").value = part.yearTo;
+                byId("partDescription").value = part.description || "";
+                byId("partPhoto").value = "";
+                byId("editPartPanel").hidden = false;
+                byId("editCompanyPanel").hidden = true;
+                byId("editPartPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+                applyLanguage();
+            }
+
+            byId("loginForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const message = byId("loginMessage");
+                setMessage(message, "");
+                try {
+                    const result = await api("/api/login", {
+                        method: "POST",
+                        body: JSON.stringify({ phone: byId("phone").value, password: byId("password").value })
+                    });
+                    if (result.role !== "admin") {
+                        await api("/api/logout", { method: "POST", body: "{}" });
+                        throw new Error("Kjo faqe është vetëm për administratorin.");
+                    }
+                    byId("loginPanel").hidden = true;
+                    byId("dashboard").hidden = false;
+                    byId("logoutButton").hidden = false;
+                    await loadCompanies();
+                } catch (error) {
+                    setMessage(message, error.message, true);
+                }
+            });
+
+            byId("languageSelect").addEventListener("change", (event) => {
+                language = event.target.value === "mk" ? "mk" : "sq";
+                localStorage.setItem("otpadet-language", language);
+                applyLanguage();
+                renderCompanies();
+            });
+
+            byId("logoutButton").addEventListener("click", async () => {
+                try {
+                    await api("/api/logout", { method: "POST", body: "{}" });
+                    window.location.reload();
+                } catch (error) {
+                    setMessage(byId("dashboardMessage"), error.message, true);
+                }
+            });
+            byId("refreshButton").addEventListener("click", () => loadCompanies().catch((error) => setMessage(byId("dashboardMessage"), error.message, true)));
+            byId("cancelEditCompany").addEventListener("click", () => { byId("editCompanyPanel").hidden = true; });
+            byId("cancelEditPart").addEventListener("click", () => { byId("editPartPanel").hidden = true; });
+
+            byId("companyList").addEventListener("click", async (event) => {
+                const passwordToggle = event.target.closest("[data-show-password]");
+                if (passwordToggle) {
+                    const password = byId(`new-password-${passwordToggle.dataset.showPassword}`);
+                    password.type = password.type === "password" ? "text" : "password";
+                    passwordToggle.textContent = password.type === "password" ? "Shfaq" : "Fshih";
+                    applyLanguage();
+                    return;
+                }
+                const editCompanyButton = event.target.closest("[data-edit-company]");
+                if (editCompanyButton) {
+                    const company = state.companies.find((item) => item.id === editCompanyButton.dataset.editCompany);
+                    if (company) openCompanyEditor(company);
+                    return;
+                }
+                const deleteCompanyButton = event.target.closest("[data-delete-company]");
+                if (deleteCompanyButton) {
+                    const company = state.companies.find((item) => item.id === deleteCompanyButton.dataset.deleteCompany);
+                    if (!company || !window.confirm(`Të fshihet kompania “${company.name}”, llogaria e saj dhe të gjitha pjesët? Ky veprim nuk kthehet.`)) return;
+                    try {
+                        await api(`/api/admin/companies/${encodeURIComponent(company.id)}`, { method: "DELETE" });
+                        setMessage(byId("dashboardMessage"), "Kompania, llogaria dhe pjesët e saj u fshinë.");
+                        await loadCompanies();
+                    } catch (error) {
+                        setMessage(byId("dashboardMessage"), error.message, true);
+                    }
+                    return;
+                }
+                const editPartButton = event.target.closest("[data-edit-part]");
+                if (editPartButton) {
+                    const [companyId, partId] = editPartButton.dataset.editPart.split("|");
+                    const company = state.companies.find((item) => item.id === companyId);
+                    const part = company && company.parts.find((item) => item.id === partId);
+                    if (company && part) openPartEditor(company, part);
+                    return;
+                }
+                const deletePartButton = event.target.closest("[data-delete-part]");
+                if (deletePartButton) {
+                    const [companyId, partId] = deletePartButton.dataset.deletePart.split("|");
+                    if (!window.confirm("Të fshihet kjo pjesë?")) return;
+                    try {
+                        await api(`/api/admin/companies/${encodeURIComponent(companyId)}/parts/${encodeURIComponent(partId)}`, { method: "DELETE" });
+                        setMessage(byId("dashboardMessage"), "Pjesa u fshi.");
+                        await loadCompanies();
+                    } catch (error) {
+                        setMessage(byId("dashboardMessage"), error.message, true);
+                    }
+                }
+            });
+
+            byId("companyList").addEventListener("submit", async (event) => {
+                const form = event.target.closest("[data-password-company]");
+                if (!form) return;
+                event.preventDefault();
+                const company = state.companies.find((item) => item.id === form.dataset.passwordCompany);
+                const password = form.elements.password.value;
+                if (!company || password.length < 8) return;
+                try {
+                    await api(`/api/admin/companies/${encodeURIComponent(company.id)}/password`, {
+                        method: "PUT",
+                        body: JSON.stringify({ password })
+                    });
+                    form.reset();
+                    byId(`new-password-${company.id}`).type = "password";
+                    form.querySelector("[data-show-password]").textContent = "Shfaq";
+                    setMessage(byId("dashboardMessage"), `Fjalëkalimi për "${company.name}" u ndryshua. Llogaria duhet të hyjë përsëri.`);
+                } catch (error) {
+                    setMessage(byId("dashboardMessage"), error.message, true);
+                }
+            });
+
+            byId("editCompanyForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const company = state.companies.find((item) => item.id === state.editingCompanyId);
+                if (!company) return;
+                const message = byId("editCompanyMessage");
+                setMessage(message, "");
+                try {
+                    const logo = await readImage(byId("editLogo").files[0]);
+                    const body = {
+                        name: byId("editName").value,
+                        owner: byId("editOwner").value,
+                        phone: byId("editPhone").value,
+                        phone2: byId("editPhone2").value,
+                        location: byId("editLocation").value,
+                        locationLat: byId("editLat").value || null,
+                        locationLng: byId("editLng").value || null,
+                        logo: logo || company.logo
+                    };
+                    await api(`/api/admin/companies/${encodeURIComponent(company.id)}`, {
+                        method: "PUT", body: JSON.stringify(body)
+                    });
+                    byId("editCompanyPanel").hidden = true;
+                    setMessage(byId("dashboardMessage"), "Të dhënat e kompanisë u ndryshuan.");
+                    await loadCompanies();
+                } catch (error) {
+                    setMessage(message, error.message, true);
+                }
+            });
+
+            byId("editPartForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                if (!state.editingPart) return;
+                const { companyId, partId } = state.editingPart;
+                const company = state.companies.find((item) => item.id === companyId);
+                const part = company && company.parts.find((item) => item.id === partId);
+                const message = byId("editPartMessage");
+                setMessage(message, "");
+                try {
+                    const photo = await readImage(byId("partPhoto").files[0]);
+                    const body = {
+                        make: byId("partMake").value,
+                        model: byId("partModel").value,
+                        engine: byId("partEngine").value,
+                        name: byId("partName").value,
+                        yearFrom: Number(byId("partYearFrom").value),
+                        yearTo: Number(byId("partYearTo").value),
+                        description: byId("partDescription").value,
+                        photo: photo || part.photo
+                    };
+                    await api(`/api/admin/companies/${encodeURIComponent(companyId)}/parts/${encodeURIComponent(partId)}`, {
+                        method: "PUT", body: JSON.stringify(body)
+                    });
+                    byId("editPartPanel").hidden = true;
+                    setMessage(byId("dashboardMessage"), "Pjesa u ndryshua.");
+                    await loadCompanies();
+                } catch (error) {
+                    setMessage(message, error.message, true);
+                }
+            });
+
+            byId("deleteAllButton").addEventListener("click", async () => {
+                if (!state.companies.length || !window.confirm(`Të fshihen të gjitha ${state.companies.length} kompanitë, llogaritë e tyre dhe pjesët? Ky veprim nuk kthehet.`)) return;
+                try {
+                    await api("/api/admin/companies", { method: "DELETE", body: "{}" });
+                    setMessage(byId("dashboardMessage"), "Të gjitha kompanitë, llogaritë dhe pjesët u fshinë.");
+                    await loadCompanies();
+                } catch (error) {
+                    setMessage(byId("dashboardMessage"), error.message, true);
+                }
+            });
+
+            applyLanguage();
+            api("/api/me").then((session) => {
+                if (!session.authenticated) return;
+                if (session.role !== "admin") {
+                    setMessage(byId("loginMessage"), "Kjo faqe është vetëm për administratorin. Dil nga llogaria tjetër dhe provo përsëri.", true);
+                    return;
+                }
+                byId("loginPanel").hidden = true;
+                byId("dashboard").hidden = false;
+                byId("logoutButton").hidden = false;
+                return loadCompanies();
+            }).catch((error) => setMessage(byId("loginMessage"), error.message, true));
+        })();
+    </script>
+</body>
+</html>

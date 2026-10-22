@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101b2d">
+    <title>AutoParts Tetov — Katalogu i pjesëve</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #142238;
+            --muted: #718096;
+            --blue: #2864e8;
+            --blue-dark: #1d4ed8;
+            --green: #16a36a;
+            --line: #e7ebf1;
+            --surface: #fff;
+            --background: #f5f7fb;
+            --shadow: 0 14px 36px rgba(22, 39, 68, .08);
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: var(--background); color: var(--ink); font-family: "DM Sans", sans-serif; }
+        button, input, select, textarea { font: inherit; }
+        button, a { -webkit-tap-highlight-color: transparent; }
+        a { color: inherit; }
+        .topbar { background: #101b2d; color: #fff; }
+        .topbar-inner { width: min(1160px, calc(100% - 40px)); min-height: 76px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font: 800 19px Manrope, sans-serif; letter-spacing: -.5px; }
+        .brand-icon { width: 40px; height: 40px; display: grid; place-items: center; background: var(--blue); border-radius: 12px; font-size: 18px; }
+        .brand span:last-child { color: #9db8ff; }
+        .top-note { color: #aeb9ca; font-size: 12px; }
+        .language-select { border: 1px solid #40516a; border-radius: 8px; padding: 8px 10px; background: #17263d; color: #fff; font-size: 12px; }
+        .wrap { width: min(1160px, calc(100% - 40px)); margin: 24px auto 60px; position: relative; }
+        .tabs { display: flex; gap: 8px; margin-bottom: 22px; padding: 7px; width: fit-content; max-width: 100%; background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
+        .tab { border: 0; border-radius: 10px; background: transparent; color: #64748b; padding: 12px 17px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .tab.active { background: var(--blue); color: white; }
+        .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+        .search-panel { padding: 22px; margin-bottom: 28px; }
+        .search-box { display: flex; align-items: center; gap: 13px; min-height: 58px; padding: 0 17px; border: 1px solid #dce3ed; border-radius: 12px; }
+        .search-box i { color: var(--blue); font-size: 17px; }
+        .search-box input { width: 100%; border: 0; outline: 0; color: var(--ink); font-size: 15px; background: transparent; }
+        .search-box input::placeholder { color: #98a3b3; }
+        .search-hint { margin: 12px 2px 0; color: var(--muted); font-size: 12px; }
+        .vehicle-panel { padding: 22px; margin-bottom: 22px; }
+        .vehicle-panel-header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
+        .vehicle-panel-header h2 { margin:0; font:800 20px Manrope,sans-serif; }
+        .vehicle-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; }
+        .vehicle-choice { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:48px; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:#fff; color:var(--ink); text-align:left; font-weight:800; cursor:pointer; }
+        .vehicle-choice:hover,.vehicle-choice.active { border-color:#a9c0ff; background:#edf3ff; color:#285dc5; }
+        .vehicle-choice small { color:var(--muted); font-size:11px; font-weight:600; }
+        .vehicle-back { border:0; padding:7px 0; background:transparent; color:var(--blue); font-size:12px; font-weight:800; cursor:pointer; }
+        .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin: 28px 2px 15px; }
+        .section-heading h2 { margin: 0; font: 800 21px Manrope, sans-serif; letter-spacing: -.5px; }
+        .result-count { color: var(--muted); font-size: 13px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 17px; }
+        .card { overflow: hidden; display: flex; flex-direction: column; min-width: 0; background: white; border: 1px solid var(--line); border-radius: 15px; box-shadow: 0 5px 18px rgba(22,39,68,.04); }
+        .part-image { display: grid; place-items: center; height: 175px; object-fit: cover; background: #f0f3f8; color: #a0acbd; font-size: 36px; }
+        .card-body { flex: 1; padding: 16px; }
+        .card h3 { margin: 9px 0 7px; font: 800 17px Manrope, sans-serif; }
+        .card p { margin: 5px 0; color: #66758a; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+        .chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; background: #edf3ff; color: #285dc5; border-radius: 20px; font-size: 11px; font-weight: 800; }
+        .company-name { color: var(--ink) !important; font-weight: 700; }
+        .card-actions { display: flex; gap: 8px; padding: 0 16px 16px; }
+        .action { flex: 1; min-height: 42px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 9px 11px; border: 0; border-radius: 9px; text-decoration: none; font-size: 12px; font-weight: 800; cursor: pointer; }
+        .action.phone { background: #e9f8f0; color: #128451; }
+        .action.maps { background: #f0f3f8; color: #526176; }
+        .empty { grid-column: 1/-1; padding: 42px 20px; text-align: center; color: var(--muted); background: white; border: 1px dashed #d6deea; border-radius: 14px; }
+        .empty i { display: block; margin-bottom: 12px; color: #9aa9be; font-size: 26px; }
+        .empty strong { display: block; margin-bottom: 5px; color: var(--ink); }
+        .form-panel { padding: clamp(18px, 4vw, 30px); }
+        .form-header { margin-bottom: 22px; }
+        .form-header h2 { margin: 0 0 7px; font: 800 23px Manrope, sans-serif; letter-spacing: -.6px; }
+        .form-header p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+        .notice { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; padding: 13px 15px; border: 1px solid #dbe7ff; border-radius: 11px; background: #f3f7ff; color: #405c8b; font-size: 12px; line-height: 1.55; }
+        .notice i { margin-top: 2px; color: var(--blue); }
+        .subheading { display: flex; align-items: center; gap: 9px; margin: 23px 0 13px; padding-bottom: 9px; border-bottom: 1px solid var(--line); font: 800 14px Manrope, sans-serif; }
+        .subheading i { color: var(--blue); }
+        .fields { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 15px; }
+        .field { min-width: 0; }
+        .field.full { grid-column: 1/-1; }
+        .field label { display: block; margin: 0 0 7px; color: #34445a; font-size: 12px; font-weight: 800; }
+        .required { color: #d34c4c; }
+        .field input, .field select, .field textarea { display: block; width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid #dce3ed; border-radius: 9px; outline: 0; background: #fff; color: var(--ink); font-size: 13px; }
+        .field textarea { min-height: 78px; resize: vertical; }
+        .field input:focus, .field select:focus, .field textarea:focus { border-color: #82a6ff; box-shadow: 0 0 0 3px rgba(40,100,232,.1); }
+        .field input[type="file"] { padding: 8px; color: #66758a; }
+        .help { margin: 6px 0 0; color: #8793a4; font-size: 11px; line-height: 1.45; }
+        .inline { display: flex; gap: 8px; }
+        .inline input { flex: 1; min-width: 0; }
+        .small-button { flex: 0 0 auto; border: 1px solid #dce3ed; border-radius: 9px; padding: 0 12px; background: #f5f7fb; color: #41536c; font-size: 12px; font-weight: 700; cursor: pointer; }
+        .primary-button { display: inline-flex; justify-content: center; align-items: center; gap: 9px; min-height: 46px; margin-top: 21px; padding: 0 20px; border: 0; border-radius: 10px; background: var(--blue); color: white; font-size: 13px; font-weight: 800; cursor: pointer; }
+        .primary-button:hover { background: var(--blue-dark); }
+        .secondary-button { min-height: 37px; padding: 0 12px; border: 1px solid #dce3ed; border-radius: 9px; background: white; color: #40516a; font-size: 12px; font-weight: 700; cursor: pointer; }
+        .danger-button { color: #b44242; }
+        .form-message { min-height: 0; margin-top: 12px; color: #128451; font-size: 13px; font-weight: 700; }
+        .form-message.error { color: #bd3f3f; }
+        .auth-switch { display: flex; gap: 8px; margin: 0 0 18px; }
+        .auth-switch .secondary-button.active { border-color: #b7caff; background: #edf3ff; color: #285dc5; }
+        .account-status { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 14px; border: 1px solid #dbe7ff; border-radius: 11px; background: #f3f7ff; color: #405c8b; font-size: 13px; }
+        .map-backdrop { position: fixed; z-index: 2000; inset: 0; display: grid; place-items: center; padding: 16px; background: rgba(10, 20, 36, .72); }
+        .map-dialog { width: min(850px, 100%); max-height: min(90vh, 820px); display: flex; flex-direction: column; overflow: hidden; background: white; border-radius: 16px; box-shadow: 0 25px 80px rgba(0,0,0,.25); }
+        .map-dialog-header { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 18px 20px; border-bottom: 1px solid var(--line); }
+        .map-dialog-header h2 { margin: 0; font: 800 18px Manrope, sans-serif; }
+        .map-close { width: 36px; height: 36px; border: 0; border-radius: 9px; background: #f0f3f8; color: #40516a; cursor: pointer; }
+        .map-dialog-content { overflow: auto; padding: 17px 20px 20px; }
+        .map-search { display: flex; gap: 8px; }
+        .map-search input { flex: 1; min-width: 0; min-height: 43px; padding: 9px 12px; border: 1px solid #dce3ed; border-radius: 9px; }
+        .map-results { display: grid; gap: 6px; margin: 9px 0; }
+        .map-result { padding: 9px 11px; border: 1px solid var(--line); border-radius: 8px; background: white; color: #34445a; text-align: left; font-size: 12px; cursor: pointer; }
+        #locationMap { height: min(52vh, 430px); min-height: 270px; margin-top: 12px; border: 1px solid var(--line); border-radius: 11px; }
+        .map-status { min-height: 18px; margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+        .map-status.error { color: #bd3f3f; }
+        .manage-card { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 15px; border-top: 1px solid var(--line); }
+        .manage-card span { font-size: 12px; font-weight: 700; }
+        .manage-card .secondary-button { flex: 0 0 auto; }
+        footer { padding: 22px 20px 35px; text-align: center; color: #8793a4; font-size: 12px; }
+        footer a { color: #536987; text-decoration: none; }
+        [hidden] { display: none !important; }
+        @media (max-width: 600px) {
+            .topbar-inner { width: calc(100% - 28px); min-height: 64px; }
+            .top-note { display: none; }
+            .wrap { width: calc(100% - 26px); }
+            .tabs { width: 100%; }
+            .tab { flex: 1; padding: 11px 8px; font-size: 12px; }
+            .search-panel { padding: 13px; }
+            .vehicle-panel { padding:15px; }
+            .fields { grid-template-columns: 1fr; gap: 13px; }
+            .field.full { grid-column: auto; }
+            .section-heading { align-items: start; flex-direction: column; gap: 5px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="index.html" aria-label="AutoParts Tetov - faqja kryesore">
+                <span class="brand-icon"><i class="fa-solid fa-car-side"></i></span>
+                <span>AUTOPARTS<span> TETOV</span></span>
+            </a>
+            <div style="display:flex;align-items:center;gap:14px">
+                <div class="top-note">Pjesët e veturave, më lehtë për t’u gjetur.</div>
+                <select id="languageSelect" class="language-select" aria-label="Gjuha">
+                    <option value="sq">Shqip</option>
+                    <option value="mk">Македонски</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <nav class="tabs" aria-label="Navigimi kryesor">
+            <button class="tab active" id="searchTab" type="button"><i class="fa-solid fa-magnifying-glass"></i> Kërko pjesë</button>
+            <button class="tab" id="companyTab" type="button"><i class="fa-solid fa-warehouse"></i> Kompania ime</button>
+        </nav>
+
+        <section id="searchView">
+            <section class="panel vehicle-panel" id="vehicleCatalog" aria-label="Katalogu i veturave">
+                <div class="vehicle-panel-header">
+                    <h2 id="vehicleCatalogTitle">Zgjidh markën e veturës</h2>
+                    <button class="vehicle-back" id="vehicleBack" type="button" hidden><i class="fa-solid fa-arrow-left"></i> Të gjitha markat</button>
+                </div>
+                <div class="vehicle-grid" id="vehicleCategoryGrid"></div>
+            </section>
+            <div class="panel search-panel">
+                <label class="search-box" for="partSearch">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input id="partSearch" type="search" placeholder="Shembull: Golf 7, motor 1.6, fener BMW..." autocomplete="off">
+                </label>
+                <p class="search-hint">Kërko sipas pjesës, markës, modelit, kubikazhit ose vitit.</p>
+            </div>
+            <div class="section-heading">
+                <h2 id="resultsTitle">Pjesët e publikuara</h2>
+                <span class="result-count" id="resultsCount"></span>
+            </div>
+            <div class="grid" id="partsGrid"></div>
+            <div class="section-heading">
+                <h2>Kompanitë</h2>
+                <span class="result-count" id="companiesCount"></span>
+            </div>
+            <div class="grid" id="companiesGrid"></div>
+        </section>
+
+        <section id="companyView" hidden>
+            <div class="panel form-panel" id="accountPanel">
+                <div class="form-header">
+                    <h2 id="accountHeading">Krijo llogarinë dhe regjistro kompaninë</h2>
+                    <p id="accountDescription">Regjistrohu me numrin e kontaktit dhe fjalëkalimin, pastaj plotëso të dhënat e kompanisë.</p>
+                </div>
+                <div class="notice">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>Llogaritë dhe pjesët ruhen në server. Çdo kompani mund të ndryshojë vetëm të dhënat e veta; administratorit i lejohet të menaxhojë të gjitha kompanitë.</span>
+                </div>
+                <div class="auth-switch" aria-label="Zgjedh llojin e hyrjes">
+                    <button class="secondary-button active" id="registerMode" type="button">Krijo llogari</button>
+                    <button class="secondary-button" id="loginMode" type="button">Kam llogari</button>
+                </div>
+                <form id="companyForm">
+                    <div class="subheading"><i class="fa-solid fa-building"></i> Të dhënat e kompanisë</div>
+                    <div class="fields">
+                        <div class="field">
+                            <label for="companyName">Emri i kompanisë <span class="required">*</span></label>
+                            <input id="companyName" name="companyName" required maxlength="100" placeholder="p.sh. Auto-Otpad Ardi">
+                        </div>
+                        <div class="field">
+                            <label for="ownerName">Emri dhe mbiemri i udhëheqësit <span class="required">*</span></label>
+                            <input id="ownerName" name="ownerName" required maxlength="100" placeholder="Emri Mbiemri">
+                        </div>
+                        <div class="field">
+                            <label for="phone">Numri i kontaktit <span class="required">*</span></label>
+                            <input id="phone" name="phone" type="tel" required maxlength="30" placeholder="+389 70 123 456">
+                        </div>
+                        <div class="field">
+                            <label for="createPassword">Fjalëkalimi <span class="required">*</span></label>
+                            <input id="createPassword" name="createPassword" type="password" required minlength="8" maxlength="128" autocomplete="new-password" placeholder="Të paktën 8 karaktere">
+                        </div>
+                        <div class="field">
+                            <label for="confirmPassword">Përsërit fjalëkalimin <span class="required">*</span></label>
+                            <input id="confirmPassword" name="confirmPassword" type="password" required minlength="8" maxlength="128" autocomplete="new-password" placeholder="Shkruaje përsëri">
+                        </div>
+                        <div class="field">
+                            <label for="phone2">Numri i dytë (sipas dëshirës)</label>
+                            <input id="phone2" name="phone2" type="tel" maxlength="30" placeholder="+389 71 123 456">
+                        </div>
+                        <div class="field full">
+                            <label for="location">Lokacioni / adresa e kompanisë <span class="required">*</span></label>
+                            <div class="inline">
+                                <input id="location" name="location" required maxlength="300" placeholder="Kërko adresën ose caktoje në hartë">
+                                <button class="small-button" id="openMapPicker" type="button"><i class="fa-solid fa-map-location-dot"></i> Zgjidh në hartë</button>
+                            </div>
+                            <input id="locationLat" name="locationLat" type="hidden">
+                            <input id="locationLng" name="locationLng" type="hidden">
+                            <p class="help">Kërko emrin e vendit/rrugës ose kliko në hartë për ta vendosur shenjuesin. Përdor hartën edhe nëse otpadi nuk figuron në Google Maps.</p>
+                        </div>
+                        <div class="field full">
+                            <label for="companyLogo">Logo (sipas dëshirës)</label>
+                            <input id="companyLogo" name="companyLogo" type="file" accept="image/*">
+                            <p class="help">Vetëm imazh, maksimumi 500 KB.</p>
+                        </div>
+                    </div>
+                    <button class="primary-button" type="submit"><i class="fa-solid fa-user-plus"></i> Krijo llogari dhe regjistro kompaninë</button>
+                    <div class="form-message" id="companyMessage" role="status" aria-live="polite"></div>
+                </form>
+                <form id="loginForm" hidden>
+                    <div class="subheading"><i class="fa-solid fa-right-to-bracket"></i> Hyr në llogari</div>
+                    <div class="fields">
+                        <div class="field full">
+                            <label for="loginPhone">Numri i kontaktit <span class="required">*</span></label>
+                            <input id="loginPhone" name="loginPhone" type="tel" required maxlength="30" autocomplete="username" placeholder="+389 70 123 456">
+                        </div>
+                        <div class="field full">
+                            <label for="loginPassword">Fjalëkalimi <span class="required">*</span></label>
+                            <input id="loginPassword" name="loginPassword" type="password" required maxlength="128" autocomplete="current-password">
+                        </div>
+                    </div>
+                    <button class="primary-button" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Hyr</button>
+                    <div class="form-message" id="loginMessage" role="status" aria-live="polite"></div>
+                </form>
+            </div>
+
+            <div class="panel form-panel" id="profilePanel" style="margin-top:20px" hidden>
+                <div class="form-header">
+                    <h2>Të dhënat e kompanisë sime</h2>
+                    <p>Ndryshimet shfaqen te kërkimi publik. Ndryshimi i numrit ndryshon edhe numrin për hyrje.</p>
+                </div>
+                <form id="profileForm">
+                    <div class="fields">
+                        <div class="field"><label for="profileName">Emri i kompanisë <span class="required">*</span></label><input id="profileName" required maxlength="100"></div>
+                        <div class="field"><label for="profileOwner">Emri dhe mbiemri i udhëheqësit <span class="required">*</span></label><input id="profileOwner" required maxlength="100"></div>
+                        <div class="field"><label for="profilePhone">Numri i kontaktit / hyrjes <span class="required">*</span></label><input id="profilePhone" type="tel" required maxlength="30"></div>
+                        <div class="field"><label for="profilePhone2">Numri i dytë (sipas dëshirës)</label><input id="profilePhone2" type="tel" maxlength="30"></div>
+                        <div class="field full">
+                            <label for="profileLocation">Lokacioni / adresa <span class="required">*</span></label>
+                            <div class="inline">
+                                <input id="profileLocation" required maxlength="300">
+                                <button class="small-button" id="editMapPicker" type="button"><i class="fa-solid fa-map-location-dot"></i> Ndrysho në hartë</button>
+                            </div>
+                            <input id="profileLocationLat" type="hidden">
+                            <input id="profileLocationLng" type="hidden">
+                        </div>
+                        <div class="field full"><label for="profileLogo">Logo e re (opsionale, maksimumi 500 KB)</label><input id="profileLogo" type="file" accept="image/*"></div>
+                    </div>
+                    <button class="primary-button" type="submit"><i class="fa-solid fa-floppy-disk"></i> Ruaj ndryshimet</button>
+                    <div class="form-message" id="profileMessage" role="status" aria-live="polite"></div>
+                </form>
+                <div style="margin-top:25px;padding-top:19px;border-top:1px solid var(--line)">
+                    <h3 style="margin:0 0 6px;font-size:16px">Fshi llogarinë dhe regjistrimin</h3>
+                    <p class="help">Ky veprim fshin kompaninë, llogarinë dhe të gjitha pjesët e publikuara. Nuk mund të kthehet.</p>
+                    <button class="secondary-button danger-button" id="deleteAccountButton" type="button"><i class="fa-solid fa-trash"></i> Fshi llogarinë dhe të gjitha të dhënat</button>
+                </div>
+            </div>
+
+            <div class="panel form-panel" id="inventoryPanel" style="margin-top:20px" hidden>
+                <div class="form-header">
+                    <h2>Menaxho pjesët</h2>
+                    <p>Shto veturën për të cilën përshtatet pjesa. Kubikazha është opsionale.</p>
+                </div>
+                <div class="account-status">
+                    <span id="signedInCompany"></span>
+                    <button class="secondary-button" id="logoutButton" type="button"><i class="fa-solid fa-right-from-bracket"></i> Dil nga llogaria</button>
+                </div>
+                <form id="partForm">
+                    <div class="subheading"><i class="fa-solid fa-car"></i> Veturë dhe pjesë</div>
+                    <div class="fields">
+                        <div class="field">
+                            <label for="make">Marka <span class="required">*</span></label>
+                            <input id="make" name="make" list="makeOptions" required maxlength="60" placeholder="p.sh. Volkswagen">
+                            <datalist id="makeOptions"></datalist>
+                        </div>
+                        <div class="field">
+                            <label for="model">Modeli <span class="required">*</span></label>
+                            <input id="model" name="model" list="modelOptions" required maxlength="80" placeholder="p.sh. Golf 7">
+                            <datalist id="modelOptions"></datalist>
+                        </div>
+                        <div class="field">
+                            <label for="engine">Tipi / motori (sipas dëshirës)</label>
+                            <input id="engine" name="engine" list="engineOptions" maxlength="40" placeholder="p.sh. 116d, 118i, 1.6 TDI, GTI">
+                            <datalist id="engineOptions"></datalist>
+                        </div>
+                        <div class="field">
+                            <label for="yearType">Viti i prodhimit</label>
+                            <select id="yearType" name="yearType">
+                                <option value="single">Një vit</option>
+                                <option value="range">Interval vitesh</option>
+                            </select>
+                        </div>
+                        <div class="field" id="yearFromField">
+                            <label for="yearFrom">Viti <span class="required">*</span></label>
+                            <input id="yearFrom" name="yearFrom" type="number" min="1950" max="2099" required placeholder="p.sh. 2017">
+                        </div>
+                        <div class="field" id="yearToField" hidden>
+                            <label for="yearTo">Deri në vit <span class="required">*</span></label>
+                            <input id="yearTo" name="yearTo" type="number" min="1950" max="2099" placeholder="p.sh. 2020">
+                        </div>
+                        <div class="field full">
+                            <label for="partName">Emri i pjesës <span class="required">*</span></label>
+                            <input id="partName" name="partName" required maxlength="100" placeholder="p.sh. Feneri i përparmë">
+                        </div>
+                        <div class="field full">
+                            <label for="description">Përshkrimi (sipas dëshirës)</label>
+                            <textarea id="description" name="description" maxlength="400" placeholder="Gjendja, ana e pjesës ose informata të tjera"></textarea>
+                        </div>
+                        <div class="field full">
+                            <label for="partPhoto">Foto (sipas dëshirës)</label>
+                            <input id="partPhoto" name="partPhoto" type="file" accept="image/*">
+                            <p class="help">Vetëm imazh, maksimumi 500 KB.</p>
+                        </div>
+                    </div>
+                    <button class="primary-button" type="submit"><i class="fa-solid fa-plus"></i> Publiko pjesën</button>
+                    <div class="form-message" id="partMessage" role="status" aria-live="polite"></div>
+                </form>
+                <div class="section-heading">
+                    <h2>Pjesët e kompanisë</h2>
+                    <span class="result-count" id="managedCount"></span>
+                </div>
+                <div class="panel form-panel" id="editPartPanel" style="margin-bottom:14px" hidden>
+                    <h3 style="margin:0 0 15px;font:800 17px Manrope,sans-serif">Ndrysho pjesën</h3>
+                    <form id="editPartForm">
+                        <div class="fields">
+                            <div class="field"><label for="editMake">Marka</label><input id="editMake" list="makeOptions" required maxlength="60"></div>
+                            <div class="field"><label for="editModel">Modeli</label><input id="editModel" list="editModelOptions" required maxlength="80"><datalist id="editModelOptions"></datalist></div>
+                            <div class="field"><label for="editEngine">Tipi / motori (sipas dëshirës)</label><input id="editEngine" list="editEngineOptions" maxlength="40"><datalist id="editEngineOptions"></datalist></div>
+                            <div class="field"><label for="editPartName">Emri i pjesës</label><input id="editPartName" required maxlength="100"></div>
+                            <div class="field"><label for="editYearFrom">Nga viti</label><input id="editYearFrom" type="number" required min="1950" max="2099"></div>
+                            <div class="field"><label for="editYearTo">Deri në vit</label><input id="editYearTo" type="number" required min="1950" max="2099"></div>
+                            <div class="field full"><label for="editDescription">Përshkrimi</label><textarea id="editDescription" maxlength="400"></textarea></div>
+                            <div class="field full"><label for="editPhoto">Foto e re (opsionale, maksimumi 500 KB)</label><input id="editPhoto" type="file" accept="image/*"></div>
+                        </div>
+                        <button class="primary-button" type="submit"><i class="fa-solid fa-floppy-disk"></i> Ruaj pjesën</button>
+                        <button class="secondary-button" id="cancelEditPart" type="button">Anulo</button>
+                        <div class="form-message" id="editPartMessage" role="status" aria-live="polite"></div>
+                    </form>
+                </div>
+                <div id="managedParts"></div>
+            </div>
+        </section>
+    </main>
+
+    <div class="map-backdrop" id="mapModal" hidden>
+        <section class="map-dialog" role="dialog" aria-modal="true" aria-labelledby="mapTitle">
+            <div class="map-dialog-header">
+                <h2 id="mapTitle">Zgjidh lokacionin e kompanisë</h2>
+                <button class="map-close" id="closeMap" type="button" aria-label="Mbyll hartën"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="map-dialog-content">
+                <form class="map-search" id="mapSearchForm">
+                    <input id="mapSearchInput" type="search" required maxlength="180" placeholder="Kërko adresë, fshat ose qytet">
+                    <button class="primary-button" style="margin:0" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Kërko</button>
+                </form>
+                <p class="help">Kërkimi dhe harta ofrohen nga OpenStreetMap. Teksti i kërkimit dërgohet te shërbimi publik Nominatim.</p>
+                <div class="map-results" id="mapResults"></div>
+                <div id="locationMap" role="application" aria-label="Harta e lokacionit"></div>
+                <p class="map-status" id="mapStatus" role="status" aria-live="polite">Kliko në hartë për të vendosur shenjuesin, pastaj zgjidh këtë lokacion.</p>
+                <button class="primary-button" id="confirmLocation" type="button" disabled><i class="fa-solid fa-location-dot"></i> Përdor këtë lokacion</button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <a href="index.html"><i class="fa-solid fa-arrow-left"></i> AutoParts Tetov</a>
+        &nbsp; · &nbsp; <a href="admin.html"><i class="fa-solid fa-shield-halved"></i> Hyrja e administratorit</a>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        (() => {
+            "use strict";
+            const MAX_IMAGE_SIZE = 500 * 1024;
+            const yearNow = new Date().getFullYear();
+            const byId = (id) => document.getElementById(id);
+            const searchTab = byId("searchTab");
+            const companyTab = byId("companyTab");
+            const searchView = byId("searchView");
+            const companyView = byId("companyView");
+            const partsGrid = byId("partsGrid");
+            const companiesGrid = byId("companiesGrid");
+            const companyForm = byId("companyForm");
+            const partForm = byId("partForm");
+            const accountPanel = byId("accountPanel");
+            const vehicleModels = {
+                "Abarth": ["500", "595", "695", "Punto"],
+                "Alfa Romeo": ["147", "156", "159", "Giulia", "Giulietta", "Stelvio"],
+                "Audi": ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "Q2", "Q3", "Q4 e-tron", "Q5", "Q7", "Q8", "TT"],
+                "BMW": ["Seria 1", "Seria 2", "Seria 3", "Seria 4", "Seria 5", "Seria 6", "Seria 7", "Seria 8", "M", "X", "Z", "2002", "i3", "i4", "i5", "i7", "i8", "iX", "iX1", "iX2", "iX3"],
+                "Chevrolet": ["Aveo", "Captiva", "Cruze", "Lacetti", "Matiz", "Spark"],
+                "Chrysler": ["300C", "Grand Voyager", "PT Cruiser", "Voyager"],
+                "Citroën": ["Berlingo", "C1", "C2", "C3", "C3 Picasso", "C4", "C4 Picasso", "C5", "C5 Aircross", "Jumper", "Jumpy"],
+                "Cupra": ["Ateca", "Born", "Formentor", "Leon"],
+                "Dacia": ["Dokker", "Duster", "Jogger", "Lodgy", "Logan", "Sandero", "Spring"],
+                "Daewoo": ["Kalos", "Lanos", "Leganza", "Matiz", "Nubira"],
+                "Daihatsu": ["Cuore", "Sirion", "Terios"],
+                "Dodge": ["Caliber", "Journey", "Nitro", "RAM"],
+                "Fiat": ["124", "500", "500L", "500X", "Bravo", "Doblo", "Ducato", "Grande Punto", "Panda", "Punto", "Stilo", "Tipo"],
+                "Ford": ["B-Max", "C-Max", "EcoSport", "Fiesta", "Focus", "Fusion", "Galaxy", "Kuga", "Mondeo", "Puma", "S-Max", "Transit", "Tourneo"],
+                "Honda": ["Accord", "Civic", "CR-V", "HR-V", "Jazz", "Prelude"],
+                "Hyundai": ["Accent", "Bayon", "i10", "i20", "i30", "i40", "Ioniq", "Kona", "Santa Fe", "Tucson"],
+                "Infiniti": ["EX", "FX", "Q30", "Q50", "QX"],
+                "Isuzu": ["D-Max", "Trooper"],
+                "Iveco": ["Daily", "EuroCargo"],
+                "Jaguar": ["E-Pace", "F-Pace", "S-Type", "XF", "XJ", "X-Type"],
+                "Jeep": ["Cherokee", "Compass", "Grand Cherokee", "Renegade", "Wrangler"],
+                "Kia": ["Carens", "Ceed", "Cerato", "Niro", "Picanto", "Rio", "Sorento", "Sportage", "Stonic"],
+                "Lancia": ["Delta", "Musa", "Thesis", "Ypsilon"],
+                "Land Rover": ["Defender", "Discovery", "Discovery Sport", "Freelander", "Range Rover", "Range Rover Evoque", "Range Rover Sport"],
+                "Lexus": ["CT", "ES", "IS", "NX", "RX"],
+                "Mazda": ["2", "3", "5", "6", "CX-3", "CX-5", "CX-7", "CX-30", "CX-60"],
+                "Mercedes-Benz": ["Klasa A", "Klasa B", "Klasa C", "Klasa E", "Klasa S", "CLA", "CLK", "CLS", "G-Class", "GLA", "GLB", "GLC", "GLE", "GLK", "ML", "Sprinter", "Vito"],
+                "MG": ["3", "4", "5", "ZS", "HS"],
+                "MINI": ["Clubman", "Cooper", "Countryman", "One"],
+                "Mitsubishi": ["ASX", "Carisma", "Colt", "L200", "Lancer", "Outlander", "Pajero", "Space Star"],
+                "Nissan": ["Almera", "Juke", "Micra", "Navara", "Note", "Qashqai", "X-Trail"],
+                "Opel": ["Agila", "Antara", "Astra", "Combo", "Corsa", "Crossland", "Grandland", "Insignia", "Meriva", "Mokka", "Vectra", "Zafira"],
+                "Peugeot": ["106", "107", "108", "206", "207", "208", "301", "307", "308", "407", "508", "2008", "3008", "5008", "Boxer", "Expert", "Partner", "Rifter"],
+                "Porsche": ["911", "Boxster", "Cayenne", "Macan", "Panamera"],
+                "Renault": ["Captur", "Clio", "Espace", "Kadjar", "Kangoo", "Koleos", "Laguna", "Master", "Megane", "Scenic", "Talisman", "Trafic", "Twingo"],
+                "Saab": ["9-3", "9-5"],
+                "SEAT": ["Alhambra", "Altea", "Arona", "Ateca", "Cordoba", "Ibiza", "Leon", "Toledo"],
+                "Škoda": ["Citigo", "Enyaq", "Fabia", "Kamiq", "Karoq", "Kodiaq", "Octavia", "Rapid", "Roomster", "Superb", "Yeti"],
+                "Smart": ["Forfour", "Fortwo"],
+                "Subaru": ["Forester", "Impreza", "Legacy", "Outback", "XV"],
+                "Suzuki": ["Alto", "Grand Vitara", "Ignis", "Jimny", "Swift", "SX4", "Vitara"],
+                "Tesla": ["Model 3", "Model S", "Model X", "Model Y"],
+                "Toyota": ["Auris", "Avensis", "Aygo", "C-HR", "Camry", "Corolla", "Hilux", "Land Cruiser", "Prius", "RAV4", "Verso", "Yaris"],
+                "Volkswagen": ["Amarok", "Arteon", "Beetle", "Bora", "Caddy", "Crafter", "Golf", "Golf Plus", "Golf Sportsvan", "ID.3", "ID.4", "ID.5", "ID.7", "Jetta", "Lupo", "Passat", "Phaeton", "Polo", "Scirocco", "Sharan", "T-Cross", "T-Roc", "Tiguan", "Touareg", "Touran", "Transporter", "Up!"],
+                "Volvo": ["C30", "S40", "S60", "S80", "S90", "V40", "V50", "V60", "V70", "V90", "XC40", "XC60", "XC70", "XC90"]
+            };
+            const vehicleVariants = {
+                "Volkswagen": {
+                    "Golf": ["Golf 1", "Golf 2", "Golf 3", "Golf 4", "Golf 5", "Golf 6", "Golf 7", "Golf 8"],
+                    "Passat": ["Passat B3", "Passat B4", "Passat B5", "Passat B6", "Passat B7", "Passat B8", "Passat B9"],
+                    "Polo": ["Polo 1", "Polo 2", "Polo 3", "Polo 4", "Polo 5", "Polo 6"],
+                    "Transporter": ["T1", "T2", "T3", "T4", "T5", "T6", "T6.1", "T7"],
+                    "ID.3": ["Pure", "Pro", "Pro S", "GTX"],
+                    "ID.4": ["Pure", "Pro", "Pro 4Motion", "GTX"],
+                    "Tiguan": ["1.4 TSI", "1.5 TSI", "2.0 TDI", "2.0 TSI", "eHybrid"],
+                    "T-Roc": ["1.0 TSI", "1.5 TSI", "2.0 TDI", "2.0 TSI", "T-Roc R"],
+                    "T-Cross": ["1.0 TSI", "1.5 TSI", "1.6 TDI"],
+                    "Touran": ["1.2 TSI", "1.4 TSI", "1.6 FSI", "1.6 TDI", "1.9 TDI", "2.0 TDI"],
+                    "Golf 1": ["1.1", "1.3", "1.5", "1.6 GTI", "1.6 D"],
+                    "Golf 2": ["1.3", "1.6", "1.6 D", "1.8 GTI", "1.8 16V"],
+                    "Golf 3": ["1.4", "1.6", "1.8", "1.9 D", "1.9 TD", "1.9 TDI", "2.0 GTI", "2.8 VR6"],
+                    "Golf 4": ["1.4", "1.6", "1.8T", "1.9 SDI", "1.9 TDI", "2.3 V5", "2.8 V6", "3.2 R32"],
+                    "Golf 5": ["1.4", "1.4 TSI", "1.6 FSI", "1.9 TDI", "2.0 FSI", "2.0 TDI", "2.0 GTI", "3.2 R32"],
+                    "Golf 6": ["1.2 TSI", "1.4 TSI", "1.6 TDI", "2.0 TDI", "2.0 GTI", "2.0 R"],
+                    "Golf 7": ["1.0 TSI", "1.2 TSI", "1.4 TSI", "1.5 TSI", "1.6 TDI", "2.0 TDI", "2.0 GTI", "2.0 R", "GTE"],
+                    "Golf 8": ["1.0 TSI", "1.5 TSI", "2.0 TDI", "2.0 GTI", "2.0 GTI Clubsport", "2.0 R", "eHybrid"],
+                    "Passat B5": ["1.6", "1.8", "1.8T", "1.9 TDI", "2.5 TDI"],
+                    "Passat B6": ["1.4 TSI", "1.8 TSI", "2.0 TDI", "2.0 TSI", "3.2 V6"],
+                    "Passat B7": ["1.4 TSI", "1.8 TSI", "2.0 TDI", "2.0 TSI", "3.6 V6"],
+                    "Passat B8": ["1.4 TSI", "1.5 TSI", "1.6 TDI", "2.0 TDI", "2.0 TSI", "GTE"],
+                    "Polo 4": ["1.2", "1.4", "1.4 TDI", "1.9 SDI", "1.9 TDI"],
+                    "Polo 5": ["1.2", "1.2 TSI", "1.4", "1.4 TDI", "1.6 TDI", "1.6 GTI"],
+                    "Polo 6": ["1.0 MPI", "1.0 TSI", "1.6 TDI", "2.0 GTI"],
+                    "Caddy": ["1.6 TDI", "2.0 SDI", "2.0 TDI", "2.0 TSI"]
+                },
+                "BMW": {
+                    "Seria 1": ["114", "116", "118", "120", "123", "125", "128", "130", "135", "140", "114d", "116d", "118d", "120d", "123d", "116i", "118i", "120i", "125i", "128ti", "130i", "M135i", "M140i"],
+                    "Seria 2": ["216", "218", "220", "225", "228", "230", "235", "240", "216d", "218d", "220d", "225d", "218i", "220i", "225i", "230i", "M235i", "M240i"],
+                    "Seria 3": ["316", "318", "320", "323", "325", "328", "330", "335", "340", "316i", "318i", "320i", "323i", "325i", "328i", "330i", "335i", "340i", "316d", "318d", "320d", "325d", "330d", "335d", "340d", "330e", "M3"],
+                    "Seria 4": ["418", "420", "428", "430", "435", "440", "418d", "420d", "430d", "420i", "430i", "440i", "M440i", "M4"],
+                    "Seria 5": ["518", "520", "523", "525", "528", "530", "535", "540", "545", "550", "518d", "520d", "525d", "530d", "535d", "540d", "520i", "530i", "540i", "530e", "M5"],
+                    "Seria 6": ["630", "640", "645", "650", "630d", "635d", "640d", "640i", "650i", "M6"],
+                    "Seria 7": ["725", "728", "730", "735", "740", "745", "750", "760", "730d", "740d", "750d", "740e", "i7", "M760"],
+                    "Seria 8": ["840", "850", "840d", "840i", "M850i", "M8"],
+                    "M": ["M1", "M2", "M3", "M4", "M5", "M6", "M8", "X3 M", "X5 M", "X6 M"],
+                    "X": ["X1", "X2", "X3", "X4", "X5", "X6", "X7", "XM"],
+                    "X1": ["sDrive18i", "sDrive18d", "sDrive20i", "sDrive20d", "xDrive20i", "xDrive20d", "xDrive25e"],
+                    "X2": ["sDrive18i", "sDrive18d", "sDrive20i", "xDrive20d", "M35i"],
+                    "X3": ["sDrive18d", "xDrive20i", "xDrive20d", "xDrive30i", "xDrive30d", "M40i", "M40d", "X3 M"],
+                    "X4": ["xDrive20i", "xDrive20d", "xDrive30i", "xDrive30d", "M40i", "X4 M"],
+                    "X5": ["xDrive30d", "xDrive40d", "xDrive40i", "xDrive45e", "xDrive50e", "M50d", "X5 M"],
+                    "X6": ["xDrive30d", "xDrive40d", "xDrive40i", "M50i", "X6 M"],
+                    "X7": ["xDrive40i", "xDrive40d", "M60i"],
+                    "Z": ["Z1", "Z3", "Z4", "Z8"],
+                    "2002": ["1502", "1602", "1802", "2002", "2002 ti", "2002 tii", "2002 Turbo"],
+                    "i3": ["60 Ah", "94 Ah", "120 Ah", "REx"],
+                    "i4": ["eDrive35", "eDrive40", "M50"],
+                    "i5": ["eDrive40", "M60"],
+                    "i7": ["eDrive50", "xDrive60", "M70"],
+                    "i8": ["Coupe", "Roadster"],
+                    "iX": ["xDrive40", "xDrive50", "M60"],
+                    "iX1": ["eDrive20", "xDrive30"],
+                    "iX2": ["eDrive20", "xDrive30"],
+                    "iX3": ["Impressive"]
+                },
+                "Mercedes-Benz": {
+                    "Klasa A": ["A140", "A150", "A160", "A170", "A180", "A190", "A200", "A210", "A220", "A250", "A160 CDI", "A170 CDI", "A180 CDI", "A200 CDI", "A180d", "A200d", "A220d", "A250e", "AMG A35", "AMG A45"],
+                    "Klasa B": ["B150", "B160", "B170", "B180", "B200", "B220", "B250", "B180 CDI", "B200 CDI", "B220 CDI", "B250e"],
+                    "Klasa C": ["C160", "C180", "C200", "C220", "C230", "C240", "C250", "C280", "C300", "C320", "C350", "C43 AMG", "C63 AMG", "C200 CDI", "C220 CDI", "C250 CDI", "C200d", "C220d", "C300de"],
+                    "Klasa E": ["E200", "E220", "E230", "E240", "E250", "E280", "E300", "E320", "E350", "E400", "E450", "E200 CDI", "E220 CDI", "E270 CDI", "E280 CDI", "E320 CDI", "E200d", "E220d", "E300de", "AMG E53", "AMG E63"],
+                    "Klasa S": ["S280", "S300", "S320", "S350", "S400", "S420", "S430", "S450", "S500", "S550", "S600", "S63 AMG", "S65 AMG"],
+                    "G-Class": ["G300", "G320", "G350", "G400", "G500", "G55 AMG", "G63 AMG"],
+                    "GLA": ["GLA 180", "GLA 200", "GLA 220", "GLA 250", "GLA 180d", "GLA 200d", "AMG GLA 35"],
+                    "GLC": ["GLC 200", "GLC 300", "GLC 350e", "GLC 200d", "GLC 220d", "GLC 300d", "AMG GLC 43"],
+                    "Sprinter": ["216 CDI", "311 CDI", "313 CDI", "316 CDI", "319 CDI"]
+                },
+                "Audi": {
+                    "A3": ["1.2 TFSI", "1.4 TFSI", "1.5 TFSI", "1.6", "1.6 TDI", "1.8 TFSI", "2.0 TDI", "2.0 TFSI", "S3", "RS3"],
+                    "A4": ["A4 B5", "A4 B6", "A4 B7", "A4 B8", "A4 B9"],
+                    "A6": ["A6 C4", "A6 C5", "A6 C6", "A6 C7", "A6 C8"],
+                    "A4 B5": ["1.6", "1.8", "1.8T", "2.4", "2.6", "2.8", "1.9 TDI", "2.5 TDI"],
+                    "A4 B6": ["1.6", "1.8T", "2.0", "2.4", "3.0", "1.9 TDI", "2.5 TDI"],
+                    "A4 B7": ["1.6", "1.8T", "2.0 TFSI", "3.2 FSI", "1.9 TDI", "2.0 TDI", "2.7 TDI", "3.0 TDI"],
+                    "A4 B8": ["1.8 TFSI", "2.0 TFSI", "3.2 FSI", "2.0 TDI", "2.7 TDI", "3.0 TDI", "S4", "RS4"],
+                    "A4 B9": ["1.4 TFSI", "2.0 TFSI", "2.0 TDI", "40 TDI", "45 TFSI", "S4"],
+                    "A6 C5": ["1.8T", "2.4", "2.7T", "2.8", "4.2", "1.9 TDI", "2.5 TDI"],
+                    "A6 C6": ["2.0 TFSI", "2.4", "2.8 FSI", "3.2 FSI", "4.2 FSI", "2.0 TDI", "2.7 TDI", "3.0 TDI"],
+                    "A6 C7": ["1.8 TFSI", "2.0 TFSI", "2.8 FSI", "3.0 TFSI", "2.0 TDI", "3.0 TDI", "S6", "RS6"],
+                    "A6 C8": ["2.0 TFSI", "3.0 TFSI", "2.0 TDI", "3.0 TDI", "55 TFSI e", "S6", "RS6"],
+                    "Q5": ["Q5 8R", "Q5 FY", "2.0 TFSI", "3.0 TFSI", "2.0 TDI", "3.0 TDI", "SQ5"],
+                    "A1": ["25 TFSI", "30 TFSI", "35 TFSI", "25 TDI", "30 TDI"],
+                    "A5": ["2.0 TFSI", "3.0 TFSI", "2.0 TDI", "3.0 TDI", "S5", "RS5"],
+                    "A7": ["45 TFSI", "55 TFSI", "45 TDI", "50 TDI", "S7", "RS7"],
+                    "Q3": ["35 TFSI", "40 TFSI", "45 TFSI", "35 TDI", "40 TDI", "RS Q3"],
+                    "Q7": ["45 TFSI", "55 TFSI", "45 TDI", "50 TDI", "60 TFSI e"]
+                },
+                "Opel": {
+                    "Astra": ["Astra F", "Astra G", "Astra H", "Astra J", "Astra K", "Astra L"],
+                    "Corsa": ["Corsa A", "Corsa B", "Corsa C", "Corsa D", "Corsa E", "Corsa F"],
+                    "Astra G": ["1.2", "1.4", "1.6", "1.8", "2.0 OPC", "1.7 DTI", "2.0 DTI"],
+                    "Astra H": ["1.4", "1.6", "1.8", "2.0 Turbo", "1.3 CDTI", "1.7 CDTI", "1.9 CDTI"],
+                    "Astra J": ["1.4", "1.4 Turbo", "1.6", "1.6 Turbo", "1.3 CDTI", "1.7 CDTI", "2.0 CDTI"],
+                    "Astra K": ["1.0 Turbo", "1.4 Turbo", "1.6 Turbo", "1.6 CDTI"],
+                    "Corsa C": ["1.0", "1.2", "1.4", "1.3 CDTI", "1.7 DI"],
+                    "Corsa D": ["1.0", "1.2", "1.4", "1.6 Turbo OPC", "1.3 CDTI", "1.7 CDTI"],
+                    "Corsa E": ["1.2", "1.4", "1.0 Turbo", "1.3 CDTI"],
+                    "Corsa F": ["1.2", "1.2 Turbo", "1.5 Diesel", "Electric"]
+                },
+                "Ford": {
+                    "Fiesta": ["Fiesta Mk1", "Fiesta Mk2", "Fiesta Mk3", "Fiesta Mk4", "Fiesta Mk5", "Fiesta Mk6", "Fiesta Mk7", "Fiesta Mk8", "1.0 EcoBoost", "1.1", "1.25", "1.4 TDCi", "1.5 TDCi"],
+                    "Focus": ["Focus Mk1", "Focus Mk2", "Focus Mk3", "Focus Mk4", "1.0 EcoBoost", "1.5 EcoBoost", "1.5 TDCi", "2.0 TDCi", "ST", "RS"],
+                    "Mondeo": ["Mondeo Mk1", "Mondeo Mk2", "Mondeo Mk3", "Mondeo Mk4", "Mondeo Mk5", "1.5 EcoBoost", "2.0 TDCi", "2.0 Hybrid"],
+                    "Kuga": ["1.5 EcoBoost", "1.5 TDCi", "2.0 TDCi", "2.5 Hybrid", "ST-Line"],
+                    "Transit": ["Transit Mk5", "Transit Mk6", "Transit Mk7", "Transit Mk8", "2.0 TDCi", "2.2 TDCi"]
+                },
+                "Renault": {
+                    "Clio": ["Clio I", "Clio II", "Clio III", "Clio IV", "Clio V", "1.2", "0.9 TCe", "1.0 TCe", "1.5 dCi"],
+                    "Megane": ["Megane I", "Megane II", "Megane III", "Megane IV", "1.3 TCe", "1.5 dCi", "1.6 dCi", "2.0 TCe"],
+                    "Captur": ["0.9 TCe", "1.0 TCe", "1.2 TCe", "1.3 TCe", "1.5 dCi", "E-Tech"],
+                    "Kangoo": ["1.2 TCe", "1.5 dCi", "1.6", "1.9 D"]
+                },
+                "SEAT": {
+                    "Ibiza": ["Ibiza 6K", "Ibiza 6L", "Ibiza 6J", "Ibiza 6P", "Ibiza 6F", "1.0 MPI", "1.0 TSI", "1.2 TSI", "1.4 TDI", "1.6 TDI"],
+                    "Leon": ["Leon 1M", "Leon 1P", "Leon 5F", "Leon KL", "1.2 TSI", "1.4 TSI", "1.5 TSI", "1.6 TDI", "2.0 TDI", "Cupra"]
+                },
+                "Škoda": {
+                    "Fabia": ["Fabia I", "Fabia II", "Fabia III", "Fabia IV", "1.0 MPI", "1.0 TSI", "1.2 HTP", "1.4 TDI", "1.6 TDI"],
+                    "Octavia": ["Octavia I", "Octavia II", "Octavia III", "Octavia IV", "1.0 TSI", "1.4 TSI", "1.5 TSI", "1.6 TDI", "2.0 TDI", "RS"],
+                    "Superb": ["Superb I", "Superb II", "Superb III", "Superb IV", "1.4 TSI", "1.5 TSI", "1.8 TSI", "2.0 TDI", "2.0 TSI"],
+                    "Kodiaq": ["1.5 TSI", "2.0 TSI", "2.0 TDI", "RS"]
+                },
+                "Toyota": {
+                    "Yaris": ["Yaris I", "Yaris II", "Yaris III", "Yaris IV", "1.0 VVT-i", "1.3 VVT-i", "1.4 D-4D", "1.5 Hybrid"],
+                    "Corolla": ["Corolla E90", "Corolla E100", "Corolla E110", "Corolla E120", "Corolla E150", "Corolla E180", "Corolla E210", "1.4 D-4D", "1.6 Valvematic", "1.8 Hybrid"],
+                    "Avensis": ["Avensis T22", "Avensis T25", "Avensis T27", "1.8 VVT-i", "2.0 D-4D", "2.2 D-CAT"],
+                    "RAV4": ["RAV4 I", "RAV4 II", "RAV4 III", "RAV4 IV", "RAV4 V", "2.0 D-4D", "2.2 D-CAT", "2.5 Hybrid"]
+                },
+                "Peugeot": {
+                    "206": ["1.1", "1.4", "1.6", "2.0 GTI", "1.4 HDi", "2.0 HDi"],
+                    "207": ["1.4", "1.6 VTi", "1.6 THP", "1.4 HDi", "1.6 HDi"],
+                    "208": ["1.2 PureTech", "1.4 HDi", "1.5 BlueHDi", "1.6 HDi", "e-208", "GTi"],
+                    "308": ["308 I", "308 II", "308 III", "1.2 PureTech", "1.5 BlueHDi", "1.6 HDi", "2.0 HDi"],
+                    "3008": ["3008 I", "3008 II", "3008 III", "1.2 PureTech", "1.5 BlueHDi", "1.6 HDi", "Hybrid"]
+                },
+                "Dacia": {
+                    "Duster": ["Duster I", "Duster II", "Duster III", "1.0 TCe", "1.2 TCe", "1.3 TCe", "1.5 dCi", "1.6 SCe"],
+                    "Logan": ["Logan I", "Logan II", "Logan III", "1.0 SCe", "1.0 TCe", "1.2", "1.5 dCi"],
+                    "Sandero": ["Sandero I", "Sandero II", "Sandero III", "1.0 SCe", "1.0 TCe", "1.2", "1.5 dCi", "Stepway"]
+                },
+                "Fiat": {
+                    "500": ["1.2", "0.9 TwinAir", "1.0 Hybrid", "1.3 Multijet", "Abarth"],
+                    "Punto": ["Punto I", "Punto II", "Grande Punto", "Punto Evo", "1.2", "1.3 Multijet", "1.4"],
+                    "Tipo": ["1.0 T3", "1.4", "1.4 T-Jet", "1.6 Multijet", "1.3 Multijet"]
+                },
+                "Honda": {
+                    "Civic": ["Civic EG", "Civic EK", "Civic EP", "Civic FN", "Civic FK", "Civic FC", "Civic FE", "1.4", "1.6 VTEC", "1.8 i-VTEC", "2.2 i-CTDi"],
+                    "Accord": ["Accord VI", "Accord VII", "Accord VIII", "Accord IX", "2.0 i-VTEC", "2.2 i-DTEC", "2.4 i-VTEC"],
+                    "CR-V": ["CR-V I", "CR-V II", "CR-V III", "CR-V IV", "CR-V V", "2.0 i-VTEC", "2.2 i-DTEC", "Hybrid"]
+                },
+                "Hyundai": {
+                    "i10": ["i10 I", "i10 II", "i10 III", "1.0", "1.1", "1.2"],
+                    "i20": ["i20 I", "i20 II", "i20 III", "1.0 T-GDi", "1.2", "1.4 CRDi"],
+                    "i30": ["i30 I", "i30 II", "i30 III", "1.0 T-GDi", "1.4 T-GDi", "1.6 CRDi", "2.0 T-GDi N"],
+                    "Tucson": ["Tucson I", "Tucson II", "Tucson III", "Tucson IV", "1.6 T-GDi", "1.6 CRDi", "2.0 CRDi", "Hybrid"]
+                },
+                "Kia": {
+                    "Ceed": ["Ceed I", "Ceed II", "Ceed III", "1.0 T-GDi", "1.4 T-GDi", "1.6 CRDi"],
+                    "Sportage": ["Sportage I", "Sportage II", "Sportage III", "Sportage IV", "Sportage V", "1.6 GDi", "1.6 T-GDi", "1.7 CRDi", "2.0 CRDi", "Hybrid"],
+                    "Rio": ["Rio I", "Rio II", "Rio III", "Rio IV", "1.0 T-GDi", "1.2", "1.4 CRDi"]
+                },
+                "Nissan": {
+                    "Qashqai": ["Qashqai J10", "Qashqai J11", "Qashqai J12", "1.2 DIG-T", "1.3 DIG-T", "1.5 dCi", "1.6 dCi", "e-Power"],
+                    "Micra": ["Micra K11", "Micra K12", "Micra K13", "Micra K14", "1.0", "1.2", "1.5 dCi"],
+                    "X-Trail": ["X-Trail T30", "X-Trail T31", "X-Trail T32", "X-Trail T33", "1.6 dCi", "2.0 dCi", "e-Power"]
+                },
+                "Mazda": {
+                    "3": ["Mazda 3 BK", "Mazda 3 BL", "Mazda 3 BM", "Mazda 3 BP", "1.6 MZ-CD", "2.0 Skyactiv-G", "2.2 Skyactiv-D"],
+                    "6": ["Mazda 6 GG", "Mazda 6 GH", "Mazda 6 GJ", "Mazda 6 GL", "2.0 Skyactiv-G", "2.2 Skyactiv-D"],
+                    "CX-5": ["CX-5 KE", "CX-5 KF", "2.0 Skyactiv-G", "2.2 Skyactiv-D"]
+                },
+                "Mitsubishi": {
+                    "Lancer": ["Lancer VIII", "Lancer IX", "Lancer X", "1.5", "1.6", "1.8", "2.0 DI-D", "Evolution"],
+                    "Outlander": ["Outlander I", "Outlander II", "Outlander III", "2.0 DI-D", "2.2 DI-D", "PHEV"],
+                    "Pajero": ["Pajero II", "Pajero III", "Pajero IV", "2.5 TD", "3.2 DI-D"]
+                },
+                "Volvo": {
+                    "S40": ["S40 I", "S40 II", "1.6", "1.6 D", "2.0 D", "T5"],
+                    "S60": ["S60 I", "S60 II", "S60 III", "D3", "D4", "D5", "T5", "T6"],
+                    "V50": ["1.6", "1.6D", "2.0D", "D5", "T5"],
+                    "XC60": ["XC60 I", "XC60 II", "D3", "D4", "D5", "T5", "T6", "T8"]
+                },
+                "Chevrolet": {
+                    "Aveo": ["Aveo T200", "Aveo T250", "1.2", "1.4", "1.3 D"],
+                    "Cruze": ["1.4 Turbo", "1.6", "1.7 D", "2.0 VCDi"]
+                },
+                "Citroën": {
+                    "C3": ["C3 I", "C3 II", "C3 III", "1.2 PureTech", "1.4 HDi", "1.6 HDi"],
+                    "C4": ["C4 I", "C4 II", "C4 III", "1.2 PureTech", "1.6 VTi", "1.6 HDi", "2.0 HDi"],
+                    "Berlingo": ["Berlingo I", "Berlingo II", "Berlingo III", "1.6 HDi", "1.5 BlueHDi"]
+                },
+                "Alfa Romeo": {
+                    "147": ["1.6 Twin Spark", "2.0 Twin Spark", "1.9 JTD", "GTA"],
+                    "156": ["1.6 Twin Spark", "1.8 Twin Spark", "2.0 JTS", "1.9 JTD", "2.4 JTD"],
+                    "Giulietta": ["1.4 TB", "1.4 MultiAir", "1.6 JTDm", "2.0 JTDm", "QV"]
+                },
+                "Jeep": {
+                    "Grand Cherokee": ["WJ", "WK", "WK2", "3.0 CRD", "3.6 V6", "5.7 V8"],
+                    "Compass": ["MK", "MP", "1.4 MultiAir", "1.6 Multijet", "2.0 Multijet", "e-Hybrid"],
+                    "Renegade": ["1.0 T-GDi", "1.3 T-GDi", "1.6 Multijet", "4xe"]
+                },
+                "Land Rover": {
+                    "Discovery": ["Discovery 2", "Discovery 3", "Discovery 4", "Discovery 5", "2.7 TDV6", "3.0 TDV6"],
+                    "Range Rover": ["L322", "L405", "L460", "3.0 TDV6", "4.4 TDV8", "P400"],
+                    "Range Rover Evoque": ["L538", "L551", "2.0 TD4", "2.0 Si4", "P300e"]
+                },
+                "Porsche": {
+                    "911": ["996", "997", "991", "992", "Carrera", "Carrera S", "Turbo", "GT3"],
+                    "Cayenne": ["955", "957", "958", "9Y0", "3.0 Diesel", "3.0 V6", "4.8 V8", "E-Hybrid"],
+                    "Macan": ["2.0", "3.0 S", "3.6 Turbo", "S Diesel", "Electric"]
+                },
+                "Subaru": {
+                    "Impreza": ["Impreza I", "Impreza II", "Impreza III", "Impreza IV", "1.5R", "2.0R", "WRX", "WRX STI"],
+                    "Forester": ["Forester I", "Forester II", "Forester III", "Forester IV", "2.0D", "2.0 XT", "2.5"]
+                },
+                "Suzuki": {
+                    "Swift": ["Swift II", "Swift III", "Swift IV", "1.2 Dualjet", "1.3 DDiS", "Sport"],
+                    "Vitara": ["Vitara I", "Vitara II", "1.4 Boosterjet", "1.6 DDiS", "AllGrip"],
+                    "Grand Vitara": ["Grand Vitara I", "Grand Vitara II", "1.9 DDiS", "2.0", "2.4"]
+                },
+                "Tesla": {
+                    "Model 3": ["Standard Range", "Long Range", "Performance"],
+                    "Model S": ["75D", "90D", "100D", "Long Range", "Performance"],
+                    "Model X": ["75D", "90D", "100D", "Long Range", "Performance"],
+                    "Model Y": ["RWD", "Long Range", "Performance"]
+                }
+            };
+            let selectedMake = "";
+            let selectedModel = "";
+            let selectedEngine = "";
+            const apiOrigin = (["localhost", "127.0.0.1"].includes(window.location.hostname) &&
+                window.location.port === "5500")
+                ? `${window.location.protocol}//${window.location.hostname}:3000`
+                : "";
+            const state = { companies: [] };
+            const translations = {
+                "Pjesët e veturave, më lehtë për t’u gjetur.": "Автомобилските делови, полесно за наоѓање.",
+                "Kërko pjesë": "Пребарај делови",
+                "Kompania ime": "Моја компанија",
+                "Zgjidh markën e veturës": "Изберете марка на автомобил",
+                "Të gjitha markat": "Сите марки",
+                "Kërko sipas pjesës, markës, modelit, kubikazhit ose vitit.": "Пребарувајте по дел, марка, модел, мотор или година.",
+                "Pjesët e publikuara": "Објавени делови",
+                "Kompanitë": "Компании",
+                "Modelet": "Модели",
+                "Pjesët": "Делови",
+                "Zgjidh markën dhe modelin": "Изберете марка и модел",
+                "Zgjidh modelin": "Изберете модел",
+                "Të gjitha modelet": "Сите модели",
+                "Të gjitha tipet": "Сите типови",
+                "Zgjidh tipin / motorin": "Изберете тип / мотор",
+                "tipi / motori": "тип / мотор",
+                "← Të gjitha markat": "← Сите марки",
+                "← Të gjitha modelet": "← Сите модели",
+                "← Të gjitha tipet": "← Сите типови",
+                "Zgjidh tipin ose motorin për të parë pjesët e përshtatshme.": "Изберете тип или мотор за да ги видите соодветните делови.",
+                "Zgjidh një model për të parë tipet dhe motorët.": "Изберете модел за да ги видите типовите и моторите.",
+                "Zgjidh modelin": "Изберете модел",
+                "Tipi / motori (sipas dëshirës)": "Тип / мотор (незадолжително)",
+                "Pa specifikim": "Без спецификација",
+                "Hap një markë për të parë modelet, pastaj pjesët e disponueshme.": "Отворете марка за да ги видите моделите, а потоа достапните делови.",
+                "Pjesët për këtë veturë do të shfaqen këtu.": "Деловите за овој автомобил ќе се прикажат тука.",
+                "Nuk ka ende pjesë për këtë model": "Сè уште нема делови за овој модел",
+                "Nuk u gjet asnjë pjesë": "Не е пронајден дел",
+                "Provo me një markë, model ose emër tjetër pjese.": "Обидете се со друга марка, модел или име на дел.",
+                "Rezultatet e kërkimit": "Резултати од пребарувањето",
+                "Krijo llogari": "Креирај сметка",
+                "Kam llogari": "Имам сметка",
+                "Krijo llogarinë dhe regjistro kompaninë": "Креирај сметка и регистрирај компанија",
+                "Regjistrohu me numrin e kontaktit dhe fjalëkalimin, pastaj plotëso të dhënat e kompanisë.": "Регистрирајте се со телефонски број и лозинка, потоа внесете ги податоците за компанијата.",
+                "Të dhënat e kompanisë": "Податоци за компанијата",
+                "Emri i kompanisë": "Име на компанијата",
+                "Emri dhe mbiemri i udhëheqësit": "Име и презиме на сопственикот",
+                "Numri i kontaktit": "Телефонски број",
+                "Fjalëkalimi": "Лозинка",
+                "Përsërit fjalëkalimin": "Повторете ја лозинката",
+                "Numri i dytë (sipas dëshirës)": "Втор телефонски број (незадолжително)",
+                "Lokacioni / adresa e kompanisë": "Локација / адреса на компанијата",
+                "Zgjidh në hartë": "Изберете на карта",
+                "Logo (sipas dëshirës)": "Лого (незадолжително)",
+                "Krijo llogari dhe regjistro kompaninë": "Креирај сметка и регистрирај компанија",
+                "Hyr në llogari": "Најави се",
+                "Hyr": "Најави се",
+                "Hyr në llogarinë e kompanisë": "Најави се на сметката на компанијата",
+                "Kërko pjesë sipas veturës": "Пребарај делови според автомобил",
+                "Hyr në llogari të kompanisë": "Најави се на сметката на компанијата",
+                "Të dhënat e kompanisë sime": "Податоци за мојата компанија",
+                "Menaxho pjesët": "Управувај со деловите",
+                "Shto veturën për të cilën përshtatet pjesa. Kubikazha është opsionale.": "Додајте автомобил за кој одговара делот. Моторот е незадолжителен.",
+                "Veturë dhe pjesë": "Автомобил и дел",
+                "Marka": "Марка",
+                "Modeli": "Модел",
+                "Kubikazha (sipas dëshirës)": "Мотор (незадолжително)",
+                "Viti i prodhimit": "Година на производство",
+                "Një vit": "Една година",
+                "Interval vitesh": "Опсег на години",
+                "Emri i pjesës": "Име на делот",
+                "Përshkrimi (sipas dëshirës)": "Опис (незадолжително)",
+                "Foto (sipas dëshirës)": "Фотографија (незадолжително)",
+                "Publiko pjesën": "Објави дел",
+                "Pjesët e kompanisë": "Делови на компанијата",
+                "Ndrysho pjesën": "Измени дел",
+                "Ruaj pjesën": "Зачувај дел",
+                "Anulo": "Откажи",
+                "Kontakto": "Контактирај",
+                "Harta": "Карта",
+                "Pjesët e kompanisë u ruajtën.": "Податоците за компанијата се зачувани.",
+                "Pjesa u publikua me sukses.": "Делот е успешно објавен.",
+                "Pjesa u ndryshua.": "Делот е изменет.",
+                "Pjesa u fshi.": "Делот е избришан.",
+                "Ndrysho në hartë": "Измени на карта",
+                "Dil nga llogaria": "Одјави се",
+                "Dil": "Одјави се",
+                "Llogaritë dhe pjesët ruhen në server. Çdo kompani mund të ndryshojë vetëm të dhënat e veta; administratorit i lejohet të menaxhojë të gjitha kompanitë.": "Сметките и деловите се чуваат на сервер. Секоја компанија може да ги менува само своите податоци; администраторот може да управува со сите компании.",
+                "Përdor numrin e kontaktit dhe fjalëkalimin e llogarisë.": "Користете го телефонскиот број и лозинката на сметката.",
+                "Ndryshimet shfaqen te kërkimi publik. Ndryshimi i numrit ndryshon edhe numrin për hyrje.": "Промените се прикажуваат во јавното пребарување. Промената на бројот го менува и бројот за најава.",
+                "Lokacioni / adresa": "Локација / адреса",
+                "Logo e re (opsionale, maksimumi 500 KB)": "Ново лого (незадолжително, максимум 500 KB)",
+                "Ruaj ndryshimet": "Зачувај промени",
+                "Fshi llogarinë dhe regjistrimin": "Избриши сметка и регистрација",
+                "Ky veprim fshin kompaninë, llogarinë dhe të gjitha pjesët e publikuara. Nuk mund të kthehet.": "Ова дејство ги брише компанијата, сметката и сите објавени делови. Не може да се врати.",
+                "Fshi llogarinë dhe të gjitha të dhënat": "Избриши сметка и сите податоци",
+                "Viti": "Година",
+                "Deri në vit": "До година",
+                "Përshkrimi": "Опис",
+                "Foto e re (opsionale, maksimumi 500 KB)": "Нова фотографија (незадолжително, максимум 500 KB)",
+                "Nuk ka ende kompani të regjistruara": "Сè уште нема регистрирани компании",
+                "Regjistro kompaninë tënde te skeda “Kompania ime”.": "Регистрирајте ја вашата компанија во табот „Моја компанија“.",
+                "Kjo kompani nuk ka pjesë të publikuara": "Оваа компанија нема објавени делови",
+                "Përdor formularin më sipër për të shtuar pjesën e parë.": "Користете го формуларот погоре за да го додадете првиот дел.",
+                "Pjesa u publikua me sukses.": "Делот е успешно објавен.",
+                "Pjesa u ndryshua.": "Делот е изменет.",
+                "Pjesa u fshi.": "Делот е избришан.",
+                "Të dhënat e kompanisë u ruajtën.": "Податоците за компанијата се зачувани.",
+                "Lokacioni u vendos në hartë.": "Локацијата е поставена на картата.",
+                "Fjalëkalimet nuk përputhen.": "Лозинките не се совпаѓаат.",
+                "Llogaria dhe kompania u regjistruan me sukses.": "Сметката и компанијата се успешно регистрирани.",
+                "Hyr në llogarinë e kompanisë para se të shtosh pjesë.": "Најавете се на сметката на компанијата пред да додадете делови.",
+                "Kjo faqe nuk mund të lidhet me serverin.": "Оваа страница не може да се поврзе со серверот.",
+                "Kërko adresë, fshat ose qytet": "Пребарајте адреса, село или град",
+                "Zgjidh lokacionin e kompanisë": "Изберете локација на компанијата",
+                "Përdor këtë lokacion": "Користи ја оваа локација",
+                "Po kërkohet në OpenStreetMap...": "Се пребарува на OpenStreetMap...",
+                "Nuk u gjet vend. Provo një emër tjetër ose kliko drejtpërdrejt në hartë.": "Местото не е пронајдено. Обидете се со друго име или кликнете директно на картата.",
+                "Nuk mund të lidhemi me serverin": "Не може да се поврзе со серверот",
+                "Nise aplikacionin në localhost dhe rifresko faqen.": "Стартувајте ја апликацијата на localhost и освежете ја страницата.",
+                "Serveri nuk është i disponueshëm": "Серверот не е достапен",
+                "Hyrja dështoi.": "Најавата не успеа.",
+                "Llogaria nuk mund të krijohej.": "Сметката не може да се креира.",
+                "Pjesa nuk mund të ruhej.": "Делот не може да се зачува.",
+                "Të dhënat nuk mund të ruheshin.": "Податоците не може да се зачуваат.",
+                "Llogaria dhe të gjitha të dhënat e kompanisë u fshinë.": "Сметката и сите податоци на компанијата се избришани.",
+                "Pjesa nuk mund të fshihej.": "Делот не може да се избрише.",
+                "Pjesa nuk mund të ndryshohej.": "Делот не може да се измени.",
+                "Kërko adresën ose caktoje në hartë": "Пребарајте адреса или поставете ја на картата",
+                "Shkruaje përsëri": "Внесете ја повторно",
+                "Të paktën 8 karaktere": "Најмалку 8 знаци",
+                "Shembull: Golf 7, motor 1.6, fener BMW...": "Пример: Golf 7, мотор 1.6, фар BMW..."
+            };
+            const originalTextNodes = new WeakMap();
+            const originalAttributes = new WeakMap();
+            let language = localStorage.getItem("otpadet-language") === "mk" ? "mk" : "sq";
+            let currentCompany = null;
+            let editingPartId = null;
+            let locationMap = null;
+            let locationMarker = null;
+            let pendingLocation = null;
+            let mapTarget = null;
+            let lastGeocodeRequestAt = 0;
+
+            async function api(url, options = {}) {
+                let response;
+                try {
+                    response = await fetch(`${apiOrigin}${url}`, {
+                        credentials: "include",
+                        ...options,
+                        headers: {
+                            ...(options.body ? { "Content-Type": "application/json" } : {}),
+                            ...options.headers
+                        }
+                    });
+                } catch (error) {
+                    if (error instanceof TypeError) {
+                        throw new Error("Nuk mund të lidhemi me serverin. Nise `node server.cjs` në terminal dhe hape faqen te http://localhost:3000/otpadet.html. Live Server vetëm shërben faqen; nuk e nis serverin API.");
+                    }
+                    throw error;
+                }
+                const responseText = await response.text();
+                let result;
+                try {
+                    result = JSON.parse(responseText);
+                } catch {
+                    throw new Error("Serveri nuk ktheu përgjigje JSON. Hape faqen nga http://localhost:3000/otpadet.html dhe sigurohu që serveri Node.js është duke punuar (mos e hap me Live Server ose direkt si skedar).");
+                }
+                if (!response.ok) throw new Error(result.error || "Kërkesa dështoi.");
+                return result;
+            }
+
+            async function refreshPublicData() {
+                const result = await api("/api/public");
+                state.companies = result.companies;
+                updateVehicleSuggestions();
+                renderSearch();
+            }
+
+            async function refreshCurrentCompany() {
+                const result = await api("/api/me/company");
+                currentCompany = result.company;
+                const index = state.companies.findIndex((company) => company.id === currentCompany.id);
+                if (index < 0) state.companies.push(currentCompany);
+                else state.companies[index] = currentCompany;
+                renderSearch();
+                renderDashboard();
+            }
+
+            function escapeHtml(value) {
+                return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+                    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+                })[character]);
+            }
+
+            function getCurrentCompany() {
+                return currentCompany;
+            }
+
+            function setMessage(element, message, isError = false) {
+                element.textContent = message;
+                element.classList.toggle("error", isError);
+                applyLanguage();
+            }
+
+            function setMapStatus(message, isError = false) {
+                const status = byId("mapStatus");
+                status.textContent = message;
+                status.classList.toggle("error", isError);
+                applyLanguage();
+            }
+
+            function translateText(value) {
+                return language === "mk" ? (translations[value] || value) : value;
+            }
+
+            function localizedCount(count, singularSq, pluralSq, singularMk, pluralMk) {
+                if (language === "mk") return `${count} ${count === 1 ? singularMk : pluralMk}`;
+                return `${count} ${count === 1 ? singularSq : pluralSq}`;
+            }
+
+            function applyLanguage() {
+                document.documentElement.lang = language;
+                byId("languageSelect").value = language;
+                const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+                let node;
+                while ((node = walker.nextNode())) {
+                    const original = originalTextNodes.get(node) ?? node.nodeValue;
+                    originalTextNodes.set(node, original);
+                    const trimmed = original.trim();
+                    const translated = translateText(trimmed);
+                    node.nodeValue = original.replace(trimmed, translated);
+                }
+                for (const element of document.querySelectorAll("[placeholder], [title], [aria-label]")) {
+                    let originals = originalAttributes.get(element);
+                    if (!originals) {
+                        originals = {};
+                        for (const attribute of ["placeholder", "title", "aria-label"]) {
+                            if (element.hasAttribute(attribute)) originals[attribute] = element.getAttribute(attribute);
+                        }
+                        originalAttributes.set(element, originals);
+                    }
+                    for (const [attribute, original] of Object.entries(originals)) {
+                        element.setAttribute(attribute, translateText(original));
+                    }
+                }
+            }
+
+            async function reverseGeocode(lat, lng) {
+                const url = new URL("https://nominatim.openstreetmap.org/reverse");
+                url.search = new URLSearchParams({
+                    format: "jsonv2",
+                    lat: String(lat),
+                    lon: String(lng),
+                    zoom: "18",
+                    "accept-language": "sq"
+                });
+                const result = await requestGeocode(url);
+                return result.display_name || "";
+            }
+
+            function mapUrl(company) {
+                if (company.locationLat !== null && company.locationLat !== undefined && company.locationLat !== "" &&
+                    company.locationLng !== null && company.locationLng !== undefined && company.locationLng !== "" &&
+                    Number.isFinite(Number(company.locationLat)) && Number.isFinite(Number(company.locationLng))) {
+                    const lat = Number(company.locationLat);
+                    const lng = Number(company.locationLng);
+                    return `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=17/${lat}/${lng}`;
+                }
+                return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(company.location || "")}`;
+            }
+
+            async function requestGeocode(url) {
+                const delay = Math.max(0, 1100 - (Date.now() - lastGeocodeRequestAt));
+                if (delay) await new Promise((resolve) => window.setTimeout(resolve, delay));
+                lastGeocodeRequestAt = Date.now();
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Shërbimi i hartës nuk u përgjigj. Provo përsëri.");
+                return response.json();
+            }
+
+            function openMapPicker(target = "registration") {
+                mapTarget = target;
+                byId("mapModal").hidden = false;
+                byId("mapResults").replaceChildren();
+                const locationId = target === "profile" ? "profileLocation" : "location";
+                const latitudeId = target === "profile" ? "profileLocationLat" : "locationLat";
+                const longitudeId = target === "profile" ? "profileLocationLng" : "locationLng";
+                const latitudeValue = byId(latitudeId).value;
+                const longitudeValue = byId(longitudeId).value;
+                const latitude = Number(latitudeValue);
+                const longitude = Number(longitudeValue);
+                pendingLocation = latitudeValue !== "" && longitudeValue !== "" &&
+                    Number.isFinite(latitude) && Number.isFinite(longitude)
+                    ? { lat: latitude, lng: longitude, name: byId(locationId).value }
+                    : null;
+                byId("confirmLocation").disabled = !pendingLocation;
+                byId("mapSearchInput").value = byId(locationId).value;
+
+                if (typeof window.L === "undefined") {
+                    setMapStatus("Harta nuk u ngarkua. Kontrollo lidhjen me internetin dhe provo përsëri.", true);
+                    return;
+                }
+                if (!locationMap) {
+                    locationMap = window.L.map("locationMap").setView([42.0, 21.4], 9);
+                    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                        maxZoom: 19,
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>'
+                    }).addTo(locationMap);
+                    locationMap.on("click", async (event) => {
+                        const { lat, lng } = event.latlng;
+                        placeMarker(lat, lng, "");
+                        setMapStatus("Po kërkohet adresa e lokacionit...");
+                        try {
+                            const name = await reverseGeocode(lat, lng);
+                            if (pendingLocation && pendingLocation.lat === lat && pendingLocation.lng === lng) {
+                                pendingLocation.name = name;
+                                setMapStatus(name || "Lokacioni u zgjodh. Mund ta përdorësh ose të kërkosh një vend.");
+                            }
+                        } catch (error) {
+                            setMapStatus(error.message, true);
+                        }
+                    });
+                }
+                window.setTimeout(() => locationMap.invalidateSize(), 80);
+                if (pendingLocation) {
+                    locationMap.setView([pendingLocation.lat, pendingLocation.lng], 16);
+                    if (locationMarker) locationMarker.setLatLng([pendingLocation.lat, pendingLocation.lng]);
+                    else locationMarker = window.L.marker([pendingLocation.lat, pendingLocation.lng]).addTo(locationMap);
+                    setMapStatus(pendingLocation.name || "Lokacioni i zgjedhur. Mund ta lëvizësh shenjuesin duke klikuar hartën.");
+                } else {
+                    setMapStatus("Kërko vendin ose kliko në hartë për ta vendosur shenjuesin.");
+                }
+            }
+
+            function placeMarker(lat, lng, name) {
+                pendingLocation = { lat, lng, name };
+                if (locationMarker) locationMarker.setLatLng([lat, lng]);
+                else locationMarker = window.L.marker([lat, lng]).addTo(locationMap);
+                byId("confirmLocation").disabled = false;
+            }
+
+            async function searchMapLocation(query) {
+                const url = new URL("https://nominatim.openstreetmap.org/search");
+                url.search = new URLSearchParams({
+                    q: query,
+                    format: "jsonv2",
+                    addressdetails: "1",
+                    limit: "5",
+                    "accept-language": "sq"
+                });
+                return requestGeocode(url);
+            }
+
+            function phoneUrl(phone, message) {
+                const digits = String(phone || "").replace(/\D/g, "");
+                return digits ? `https://wa.me/${digits}?text=${encodeURIComponent(message)}` : "";
+            }
+
+            function readImage(file) {
+                return new Promise((resolve, reject) => {
+                    if (!file) return resolve("");
+                    if (!file.type.startsWith("image/")) return reject(new Error("Zgjidh një skedar imazhi."));
+                    if (file.size > MAX_IMAGE_SIZE) return reject(new Error("Imazhi është më i madh se 500 KB."));
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(String(reader.result));
+                    reader.onerror = () => reject(new Error("Imazhi nuk mund të lexohet. Provo një skedar tjetër."));
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            function showView(view) {
+                const isSearch = view === "search";
+                searchView.hidden = !isSearch;
+                companyView.hidden = isSearch;
+                searchTab.classList.toggle("active", isSearch);
+                companyTab.classList.toggle("active", !isSearch);
+                if (!isSearch) renderDashboard();
+            }
+
+            function showEmpty(container, title, detail) {
+                container.innerHTML = `<div class="empty"><i class="fa-solid fa-box-open"></i><strong>${escapeHtml(title)}</strong>${escapeHtml(detail)}</div>`;
+                applyLanguage();
+            }
+
+            function getAllParts() {
+                return state.companies.flatMap((company) =>
+                    (company.parts || []).map((part) => ({ company, part }))
+                );
+            }
+
+            function sortMakes(makes) {
+                const preferred = ["BMW", "Volkswagen", "Mercedes-Benz", "Audi", "Opel", "Škoda", "SEAT", "Toyota"];
+                return [...new Set(makes)].sort((left, right) => {
+                    const leftPriority = preferred.indexOf(left);
+                    const rightPriority = preferred.indexOf(right);
+                    if (leftPriority !== -1 || rightPriority !== -1) {
+                        if (leftPriority === -1) return 1;
+                        if (rightPriority === -1) return -1;
+                        if (leftPriority !== rightPriority) return leftPriority - rightPriority;
+                    }
+                    return left.localeCompare(right);
+                });
+            }
+
+            function mergeVehicleValues(preferredValues, additionalValues) {
+                const seen = new Set();
+                return [...preferredValues, ...[...additionalValues].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))]
+                    .filter((value) => {
+                        const key = value.toLocaleLowerCase();
+                        if (seen.has(key)) return false;
+                        seen.add(key);
+                        return true;
+                    });
+            }
+
+            function updateVehicleSuggestions() {
+                const allParts = getAllParts().map(({ part }) => part);
+                const makes = sortMakes([...Object.keys(vehicleModels), ...allParts.map((part) => part.make)]);
+                byId("makeOptions").innerHTML = makes.map((make) => `<option value="${escapeHtml(make)}">`).join("");
+                const updateVehicleChoices = (makeId, modelId, modelListId, engineListId) => {
+                    const make = byId(makeId).value.trim();
+                    const knownMake = Object.keys(vehicleModels).find((item) =>
+                        item.toLocaleLowerCase() === make.toLocaleLowerCase()
+                    );
+                    const models = mergeVehicleValues(
+                        vehicleModels[knownMake] || [],
+                        allParts.filter((part) => part.make.toLocaleLowerCase() === make.toLocaleLowerCase())
+                            .map((part) => part.model)
+                    );
+                    byId(modelListId).innerHTML = models.map((model) => `<option value="${escapeHtml(model)}">`).join("");
+                    const model = byId(modelId).value.trim();
+                    byId(engineListId).innerHTML = getSuggestedEngines(make, model, allParts)
+                        .map((engine) => `<option value="${escapeHtml(engine)}">`).join("");
+                };
+                updateVehicleChoices("make", "model", "modelOptions", "engineOptions");
+                updateVehicleChoices("editMake", "editModel", "editModelOptions", "editEngineOptions");
+            }
+
+            function getSuggestedEngines(make, model, parts = getAllParts().map(({ part }) => part)) {
+                const normalizedMake = make.toLocaleLowerCase();
+                const normalizedModel = model.toLocaleLowerCase();
+                const knownMake = Object.keys(vehicleVariants).find((item) =>
+                    item.toLocaleLowerCase() === normalizedMake
+                );
+                const knownModel = Object.keys(vehicleVariants[knownMake] || {}).find((item) =>
+                    item.toLocaleLowerCase() === normalizedModel
+                );
+                return [...new Set([
+                    ...(vehicleVariants[knownMake]?.[knownModel] || []),
+                    ...parts.filter((part) =>
+                        part.make.toLocaleLowerCase() === normalizedMake &&
+                        part.model.toLocaleLowerCase() === normalizedModel &&
+                        part.engine
+                    ).map((part) => part.engine)
+                ])].sort((a, b) => {
+                    const leftIsNumericBadge = /^\d+$/.test(a);
+                    const rightIsNumericBadge = /^\d+$/.test(b);
+                    if (leftIsNumericBadge !== rightIsNumericBadge) return leftIsNumericBadge ? -1 : 1;
+                    return a.localeCompare(b, undefined, { numeric: true });
+                });
+            }
+
+            function renderVehicleCategories() {
+                const grid = byId("vehicleCategoryGrid");
+                const back = byId("vehicleBack");
+                const title = byId("vehicleCatalogTitle");
+                back.hidden = !selectedMake;
+                back.textContent = selectedEngine ? "← Të gjitha tipet" :
+                    selectedModel ? "← Të gjitha modelet" : "← Të gjitha markat";
+                const allParts = getAllParts();
+                if (!selectedMake) {
+                    title.textContent = "Zgjidh markën e veturës";
+                    const makes = sortMakes([...Object.keys(vehicleModels), ...allParts.map(({ part }) => part.make)]);
+                    grid.innerHTML = makes.map((make) => {
+                        const count = allParts.filter(({ part }) => part.make.toLocaleLowerCase() === make.toLocaleLowerCase()).length;
+                        return `<button class="vehicle-choice" type="button" data-vehicle-make="${escapeHtml(make)}">
+                            <span>${escapeHtml(make)}</span><small>${localizedCount(count, "pjesë", "pjesë", "дел", "делови")}</small>
+                        </button>`;
+                    }).join("");
+                    return;
+                }
+                if (!selectedModel) {
+                    title.textContent = language === "mk" ? `Модели — ${selectedMake}` : `Modelet — ${selectedMake}`;
+                    const models = mergeVehicleValues(
+                        vehicleModels[selectedMake] || [],
+                        allParts.filter(({ part }) => part.make.toLocaleLowerCase() === selectedMake.toLocaleLowerCase())
+                            .map(({ part }) => part.model)
+                    );
+                    grid.innerHTML = models.map((model) => {
+                        const count = allParts.filter(({ part }) =>
+                            part.make.toLocaleLowerCase() === selectedMake.toLocaleLowerCase() &&
+                            part.model.toLocaleLowerCase() === model.toLocaleLowerCase()
+                        ).length;
+                        return `<button class="vehicle-choice" type="button" data-vehicle-model="${escapeHtml(model)}">
+                            <span>${escapeHtml(model)}</span><small>${localizedCount(count, "pjesë", "pjesë", "дел", "делови")}</small>
+                        </button>`;
+                    }).join("");
+                    return;
+                }
+                const variants = getSuggestedEngines(selectedMake, selectedModel);
+                title.textContent = selectedEngine && selectedEngine !== "*"
+                    ? `${selectedMake} · ${selectedModel} · ${selectedEngine}`
+                    : `${selectedMake} · ${selectedModel} · ${language === "mk" ? "тип / мотор" : "tipi / motori"}`;
+                const allCount = allParts.filter(({ part }) =>
+                    part.make.toLocaleLowerCase() === selectedMake.toLocaleLowerCase() &&
+                    part.model.toLocaleLowerCase() === selectedModel.toLocaleLowerCase()
+                ).length;
+                const buttons = [`<button class="vehicle-choice${selectedEngine === "*" ? " active" : ""}" type="button" data-vehicle-engine="*">
+                    <span>${language === "mk" ? "Сите типови" : "Të gjitha tipet"}</span><small>${localizedCount(allCount, "pjesë", "pjesë", "дел", "делови")}</small>
+                </button>`];
+                for (const engine of variants) {
+                    const count = allParts.filter(({ part }) =>
+                        part.make.toLocaleLowerCase() === selectedMake.toLocaleLowerCase() &&
+                        part.model.toLocaleLowerCase() === selectedModel.toLocaleLowerCase() &&
+                        part.engine.toLocaleLowerCase() === engine.toLocaleLowerCase()
+                    ).length;
+                    buttons.push(`<button class="vehicle-choice${selectedEngine.toLocaleLowerCase() === engine.toLocaleLowerCase() ? " active" : ""}" type="button" data-vehicle-engine="${escapeHtml(engine)}">
+                        <span>${escapeHtml(engine)}</span><small>${localizedCount(count, "pjesë", "pjesë", "дел", "делови")}</small>
+                    </button>`);
+                }
+                const unspecifiedCount = allParts.filter(({ part }) =>
+                    part.make.toLocaleLowerCase() === selectedMake.toLocaleLowerCase() &&
+                    part.model.toLocaleLowerCase() === selectedModel.toLocaleLowerCase() &&
+                    !part.engine
+                ).length;
+                if (unspecifiedCount) {
+                    buttons.push(`<button class="vehicle-choice${selectedEngine === "__unspecified__" ? " active" : ""}" type="button" data-vehicle-engine="__unspecified__">
+                        <span>${language === "mk" ? "Не е наведено" : "Pa specifikim"}</span><small>${localizedCount(unspecifiedCount, "pjesë", "pjesë", "дел", "делови")}</small>
+                    </button>`);
+                }
+                grid.innerHTML = buttons.join("");
+            }
+
+            function yearLabel(part) {
+                return part.yearFrom === part.yearTo ? String(part.yearFrom) : `${part.yearFrom}–${part.yearTo}`;
+            }
+
+            function renderPartCard(company, part) {
+                const image = part.photo
+                    ? `<img class="part-image" src="${escapeHtml(part.photo)}" alt="${escapeHtml(part.name)}">`
+                    : `<div class="part-image" aria-label="Pa fotografi"><i class="fa-solid fa-gear"></i></div>`;
+                const phone = phoneUrl(company.phone, `Përshëndetje ${company.name}, a e keni ${part.name} për ${part.make} ${part.model}?`);
+                return `<article class="card">
+                    ${image}
+                    <div class="card-body">
+                        <span class="chip"><i class="fa-solid fa-calendar"></i> ${escapeHtml(yearLabel(part))}</span>
+                        <h3>${escapeHtml(part.name)}</h3>
+                        <p><i class="fa-solid fa-car"></i> ${escapeHtml(part.make)} ${escapeHtml(part.model)}${part.engine ? ` · ${escapeHtml(part.engine)}` : ""}</p>
+                        ${part.description ? `<p>${escapeHtml(part.description)}</p>` : ""}
+                        <p class="company-name"><i class="fa-solid fa-warehouse"></i> ${escapeHtml(company.name)}</p>
+                        <p><i class="fa-solid fa-location-dot"></i> ${escapeHtml(company.location)}</p>
+                    </div>
+                    <div class="card-actions">
+                        ${phone ? `<a class="action phone" href="${escapeHtml(phone)}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Kontakto</a>` : ""}
+                        <a class="action maps" href="${escapeHtml(mapUrl(company))}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-map-location-dot"></i> Harta</a>
+                    </div>
+                </article>`;
+            }
+
+            function renderCompanyCard(company) {
+                const logo = company.logo
+                    ? `<img class="part-image" src="${escapeHtml(company.logo)}" alt="Logo e ${escapeHtml(company.name)}" style="object-fit:contain;padding:20px">`
+                    : `<div class="part-image"><i class="fa-solid fa-warehouse"></i></div>`;
+                const phone = phoneUrl(company.phone, `Përshëndetje ${company.name}, po ju kontaktoj për pjesët e veturave.`);
+                return `<article class="card">
+                    ${logo}
+                    <div class="card-body">
+                        <h3>${escapeHtml(company.name)}</h3>
+                        <p><i class="fa-solid fa-user"></i> ${escapeHtml(company.owner)}</p>
+                        <p><i class="fa-solid fa-phone"></i> ${escapeHtml(company.phone)}${company.phone2 ? ` · ${escapeHtml(company.phone2)}` : ""}</p>
+                        <p><i class="fa-solid fa-location-dot"></i> ${escapeHtml(company.location)}</p>
+                        <p><i class="fa-solid fa-box"></i> ${(company.parts || []).length} pjesë të publikuara</p>
+                    </div>
+                    <div class="card-actions">
+                        ${phone ? `<a class="action phone" href="${escapeHtml(phone)}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Kontakto</a>` : ""}
+                        <a class="action maps" href="${escapeHtml(mapUrl(company))}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-map-location-dot"></i> Harta</a>
+                    </div>
+                </article>`;
+            }
+
+            function renderSearch() {
+                const query = byId("partSearch").value.trim().toLocaleLowerCase("sq");
+                renderVehicleCategories();
+                const matches = getAllParts().filter(({ company, part }) => {
+                    const text = [part.name, part.make, part.model, part.engine, part.description, part.yearFrom, part.yearTo, company.name, company.location]
+                        .filter(Boolean).join(" ").toLocaleLowerCase("sq");
+                    return text.includes(query) &&
+                        (!selectedMake || part.make.toLocaleLowerCase() === selectedMake.toLocaleLowerCase()) &&
+                        (!selectedModel || part.model.toLocaleLowerCase() === selectedModel.toLocaleLowerCase()) &&
+                        (!selectedEngine || selectedEngine === "*" ||
+                            (selectedEngine === "__unspecified__" ? !part.engine :
+                                part.engine.toLocaleLowerCase() === selectedEngine.toLocaleLowerCase())) &&
+                        (!selectedMake || Boolean(query) || Boolean(selectedEngine));
+                });
+                byId("resultsTitle").textContent = selectedModel ? `${selectedMake} ${selectedModel}` :
+                    selectedMake && !query ? "Zgjidh modelin" :
+                        selectedMake && !selectedModel ? (language === "mk" ? `Изберете модел — ${selectedMake}` : `Zgjidh modelin — ${selectedMake}`) :
+                            selectedModel && !selectedEngine ? (language === "mk" ? `Изберете тип / мотор — ${selectedModel}` : `Zgjidh tipin / motorin — ${selectedModel}`) :
+                                selectedMake ? (language === "mk" ? `Делови за ${selectedMake}` : `Pjesët për ${selectedMake}`) :
+                            query ? "Rezultatet e kërkimit" : "Zgjidh markën dhe modelin";
+                byId("resultsCount").textContent = localizedCount(matches.length, "pjesë", "pjesë", "дел", "делови");
+                if (matches.length) partsGrid.innerHTML = matches.map(({ company, part }) => renderPartCard(company, part)).join("");
+                else showEmpty(partsGrid,
+                    query ? "Nuk u gjet asnjë pjesë" : selectedMake && !selectedModel ? "Zgjidh modelin" :
+                        selectedModel && !selectedEngine ? "Zgjidh tipin / motorin" : selectedMake ? "Nuk ka ende pjesë për këtë model" : "Zgjidh markën dhe modelin",
+                    query ? "Provo me një markë, model ose emër tjetër pjese." :
+                        selectedMake && !selectedModel ? "Zgjidh një model për të parë tipet dhe motorët." :
+                            selectedModel && !selectedEngine ? "Zgjidh tipin ose motorin për të parë pjesët e përshtatshme." :
+                                selectedMake ? "Pjesët e publikuara për këtë veturë do të shfaqen këtu." :
+                                    "Hap një markë, pastaj modelin dhe tipin ose motorin për të parë pjesët.");
+
+                byId("companiesCount").textContent = localizedCount(state.companies.length, "kompani", "kompani", "компанија", "компании");
+                if (state.companies.length) companiesGrid.innerHTML = state.companies.map(renderCompanyCard).join("");
+                else showEmpty(companiesGrid, "Nuk ka ende kompani të regjistruara", "Regjistro kompaninë tënde te skeda “Kompania ime”.");
+                applyLanguage();
+            }
+
+            function renderDashboard() {
+                const company = getCurrentCompany();
+                accountPanel.hidden = Boolean(company);
+                byId("profilePanel").hidden = !company;
+                byId("inventoryPanel").hidden = !company;
+                if (!company) {
+                    applyLanguage();
+                    return;
+                }
+                byId("signedInCompany").textContent = `Hyrë si ${company.phone} · ${company.name}`;
+                byId("profileName").value = company.name;
+                byId("profileOwner").value = company.owner;
+                byId("profilePhone").value = company.phone;
+                byId("profilePhone2").value = company.phone2 || "";
+                byId("profileLocation").value = company.location;
+                byId("profileLocationLat").value = company.locationLat ?? "";
+                byId("profileLocationLng").value = company.locationLng ?? "";
+                const parts = company.parts || [];
+                byId("managedCount").textContent = localizedCount(parts.length, "pjesë", "pjesë", "дел", "делови");
+                const container = byId("managedParts");
+                if (!parts.length) {
+                    showEmpty(container, "Kjo kompani nuk ka pjesë të publikuara", "Përdor formularin më sipër për të shtuar pjesën e parë.");
+                    return;
+                }
+                container.innerHTML = parts.map((part) => `<div class="manage-card">
+                    <span>${escapeHtml(part.name)} — ${escapeHtml(part.make)} ${escapeHtml(part.model)} (${escapeHtml(yearLabel(part))})</span>
+                    <button class="secondary-button" type="button" data-edit-part="${escapeHtml(part.id)}" aria-label="Ndrysho ${escapeHtml(part.name)}"><i class="fa-solid fa-pen"></i> Ndrysho</button>
+                    <button class="secondary-button danger-button" type="button" data-delete-part="${escapeHtml(part.id)}" aria-label="Fshij ${escapeHtml(part.name)}"><i class="fa-solid fa-trash"></i> Fshij</button>
+                </div>`).join("");
+                applyLanguage();
+            }
+
+            searchTab.addEventListener("click", () => showView("search"));
+            companyTab.addEventListener("click", () => showView("company"));
+            byId("languageSelect").addEventListener("change", (event) => {
+                language = event.target.value === "mk" ? "mk" : "sq";
+                localStorage.setItem("otpadet-language", language);
+                applyLanguage();
+                renderSearch();
+                renderDashboard();
+            });
+            byId("partSearch").addEventListener("input", renderSearch);
+            byId("vehicleCategoryGrid").addEventListener("click", (event) => {
+                const makeButton = event.target.closest("[data-vehicle-make]");
+                const modelButton = event.target.closest("[data-vehicle-model]");
+                const engineButton = event.target.closest("[data-vehicle-engine]");
+                if (makeButton) {
+                    selectedMake = makeButton.dataset.vehicleMake;
+                    selectedModel = "";
+                    selectedEngine = "";
+                    renderSearch();
+                } else if (modelButton) {
+                    selectedModel = modelButton.dataset.vehicleModel;
+                    selectedEngine = "";
+                    renderSearch();
+                } else if (engineButton) {
+                    selectedEngine = engineButton.dataset.vehicleEngine;
+                    renderSearch();
+                }
+            });
+            byId("vehicleBack").addEventListener("click", () => {
+                if (selectedEngine) selectedEngine = "";
+                else if (selectedModel) selectedModel = "";
+                else selectedMake = "";
+                renderSearch();
+            });
+            byId("make").addEventListener("input", updateVehicleSuggestions);
+            byId("model").addEventListener("input", updateVehicleSuggestions);
+            byId("editMake").addEventListener("input", updateVehicleSuggestions);
+            byId("editModel").addEventListener("input", updateVehicleSuggestions);
+            byId("openMapPicker").addEventListener("click", () => openMapPicker("registration"));
+            byId("editMapPicker").addEventListener("click", () => openMapPicker("profile"));
+            byId("location").addEventListener("input", () => {
+                byId("locationLat").value = "";
+                byId("locationLng").value = "";
+            });
+            byId("profileLocation").addEventListener("input", () => {
+                byId("profileLocationLat").value = "";
+                byId("profileLocationLng").value = "";
+            });
+
+            byId("registerMode").addEventListener("click", () => {
+                companyForm.hidden = false;
+                byId("loginForm").hidden = true;
+                byId("registerMode").classList.add("active");
+                byId("loginMode").classList.remove("active");
+                byId("accountHeading").textContent = "Krijo llogarinë dhe regjistro kompaninë";
+                byId("accountDescription").textContent = "Regjistrohu me numrin e kontaktit dhe fjalëkalimin, pastaj plotëso të dhënat e kompanisë.";
+                applyLanguage();
+            });
+            byId("loginMode").addEventListener("click", () => {
+                companyForm.hidden = true;
+                byId("loginForm").hidden = false;
+                byId("loginMode").classList.add("active");
+                byId("registerMode").classList.remove("active");
+                byId("accountHeading").textContent = "Hyr në llogarinë e kompanisë";
+                byId("accountDescription").textContent = "Përdor numrin e kontaktit dhe fjalëkalimin e llogarisë.";
+                applyLanguage();
+            });
+            byId("logoutButton").addEventListener("click", async () => {
+                try {
+                    await api("/api/logout", { method: "POST", body: "{}" });
+                    currentCompany = null;
+                    renderDashboard();
+                    byId("loginMode").click();
+                } catch (error) {
+                    setMessage(byId("loginMessage"), error.message, true);
+                }
+            });
+
+            byId("loginForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const message = byId("loginMessage");
+                setMessage(message, "");
+                try {
+                    const result = await api("/api/login", {
+                        method: "POST",
+                        body: JSON.stringify({ phone: byId("loginPhone").value, password: byId("loginPassword").value })
+                    });
+                    if (result.role === "admin") {
+                        window.location.href = "admin.html";
+                        return;
+                    }
+                    currentCompany = result.company;
+                    byId("loginForm").reset();
+                    await refreshPublicData();
+                    renderDashboard();
+                } catch (error) {
+                    setMessage(message, error.message || "Hyrja dështoi.", true);
+                }
+            });
+
+            byId("mapSearchForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const query = byId("mapSearchInput").value.trim();
+                if (!query) return;
+                setMapStatus("Po kërkohet në OpenStreetMap...");
+                byId("mapResults").replaceChildren();
+                try {
+                    const results = await searchMapLocation(query);
+                    if (!results.length) {
+                        setMapStatus("Nuk u gjet vend. Provo një emër tjetër ose kliko drejtpërdrejt në hartë.");
+                        return;
+                    }
+                    byId("mapResults").innerHTML = results.map((result, index) =>
+                        `<button class="map-result" type="button" data-map-result="${index}">${escapeHtml(result.display_name)}</button>`
+                    ).join("");
+                    byId("mapResults").querySelectorAll("[data-map-result]").forEach((button) => {
+                        button.addEventListener("click", () => {
+                            const result = results[Number(button.dataset.mapResult)];
+                            const lat = Number(result.lat);
+                            const lng = Number(result.lon);
+                            placeMarker(lat, lng, result.display_name);
+                            locationMap.setView([lat, lng], 16);
+                            setMapStatus(`U zgjodh: ${result.display_name}`);
+                        });
+                    });
+                    setMapStatus(`${results.length} rezultate. Zgjidh një adresë ose vendos shenjuesin në hartë.`);
+                } catch (error) {
+                    setMapStatus(error.message || "Kërkimi në hartë dështoi.", true);
+                }
+            });
+
+            byId("closeMap").addEventListener("click", () => { byId("mapModal").hidden = true; });
+            byId("mapModal").addEventListener("click", (event) => {
+                if (event.target === byId("mapModal")) byId("mapModal").hidden = true;
+            });
+            byId("confirmLocation").addEventListener("click", () => {
+                if (!pendingLocation) return;
+                const isProfile = mapTarget === "profile";
+                const prefix = isProfile ? "profile" : "";
+                const locationId = isProfile ? "profileLocation" : "location";
+                byId(locationId).value = pendingLocation.name || `${pendingLocation.lat.toFixed(6)}, ${pendingLocation.lng.toFixed(6)}`;
+                byId(isProfile ? "profileLocationLat" : "locationLat").value = String(pendingLocation.lat);
+                byId(isProfile ? "profileLocationLng" : "locationLng").value = String(pendingLocation.lng);
+                byId("mapModal").hidden = true;
+                setMessage(byId(isProfile ? "profileMessage" : "companyMessage"), "Lokacioni u vendos në hartë.");
+            });
+
+            byId("yearType").addEventListener("change", () => {
+                const isRange = byId("yearType").value === "range";
+                byId("yearToField").hidden = !isRange;
+                byId("yearTo").required = isRange;
+                if (!isRange) byId("yearTo").value = "";
+            });
+
+            companyForm.addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const message = byId("companyMessage");
+                setMessage(message, "");
+                const form = new FormData(companyForm);
+                try {
+                    const phone = String(form.get("phone")).trim();
+                    const password = String(form.get("createPassword"));
+                    if (password !== String(form.get("confirmPassword"))) {
+                        setMessage(message, "Fjalëkalimet nuk përputhen.", true);
+                        return;
+                    }
+                    const logo = await readImage(byId("companyLogo").files[0]);
+                    const result = await api("/api/register", {
+                        method: "POST",
+                        body: JSON.stringify({
+                        name: String(form.get("companyName")).trim(),
+                        owner: String(form.get("ownerName")).trim(),
+                        phone,
+                        phone2: String(form.get("phone2")).trim(),
+                        location: String(form.get("location")).trim(),
+                        locationLat: byId("locationLat").value ? Number(byId("locationLat").value) : null,
+                        locationLng: byId("locationLng").value ? Number(byId("locationLng").value) : null,
+                        logo,
+                        password
+                        })
+                    });
+                    currentCompany = result.company;
+                    companyForm.reset();
+                    await refreshPublicData();
+                    renderDashboard();
+                    setMessage(message, "Llogaria dhe kompania u regjistruan me sukses.");
+                    byId("inventoryPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+                } catch (error) {
+                    setMessage(message, error.message || "Llogaria nuk mund të krijohej.", true);
+                }
+            });
+
+            partForm.addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const message = byId("partMessage");
+                setMessage(message, "");
+                const company = getCurrentCompany();
+                if (!company) {
+                    setMessage(message, "Hyr në llogarinë e kompanisë para se të shtosh pjesë.", true);
+                    return;
+                }
+                const form = new FormData(partForm);
+                const yearFrom = Number(form.get("yearFrom"));
+                const yearTo = form.get("yearType") === "range" ? Number(form.get("yearTo")) : yearFrom;
+                if (yearFrom < 1950 || yearFrom > yearNow + 1 || yearTo < yearFrom || yearTo > yearNow + 1) {
+                    setMessage(message, `Kontrollo vitet. Përdor vit nga 1950 deri në ${yearNow + 1}, me vitin e fundit jo më të vogël se i pari.`, true);
+                    return;
+                }
+                try {
+                    const photo = await readImage(byId("partPhoto").files[0]);
+                    await api("/api/me/parts", {
+                        method: "POST",
+                        body: JSON.stringify({
+                        make: String(form.get("make")).trim(),
+                        model: String(form.get("model")).trim(),
+                        engine: String(form.get("engine")).trim(),
+                        yearFrom,
+                        yearTo,
+                        name: String(form.get("partName")).trim(),
+                        description: String(form.get("description")).trim(),
+                        photo
+                        })
+                    });
+                    partForm.reset();
+                    byId("yearToField").hidden = true;
+                    byId("yearTo").required = false;
+                    await refreshPublicData();
+                    await refreshCurrentCompany();
+                    setMessage(message, "Pjesa u publikua me sukses.");
+                } catch (error) {
+                    setMessage(message, error.message || "Pjesa nuk mund të ruhej.", true);
+                }
+            });
+
+            byId("profileForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const company = getCurrentCompany();
+                if (!company) return;
+                const message = byId("profileMessage");
+                setMessage(message, "");
+                try {
+                    const logo = await readImage(byId("profileLogo").files[0]);
+                    await api("/api/me/company", {
+                        method: "PUT",
+                        body: JSON.stringify({
+                            name: byId("profileName").value,
+                            owner: byId("profileOwner").value,
+                            phone: byId("profilePhone").value,
+                            phone2: byId("profilePhone2").value,
+                            location: byId("profileLocation").value,
+                            locationLat: byId("profileLocationLat").value || null,
+                            locationLng: byId("profileLocationLng").value || null,
+                            logo: logo || company.logo
+                        })
+                    });
+                    byId("profileLogo").value = "";
+                    await refreshPublicData();
+                    await refreshCurrentCompany();
+                    setMessage(message, "Të dhënat e kompanisë u ruajtën.");
+                } catch (error) {
+                    setMessage(message, error.message || "Të dhënat nuk mund të ruheshin.", true);
+                }
+            });
+
+            byId("deleteAccountButton").addEventListener("click", async () => {
+                const company = getCurrentCompany();
+                if (!company || !window.confirm(`Të fshihet llogaria “${company.name}” dhe të gjitha pjesët e saj? Ky veprim nuk kthehet.`)) return;
+                try {
+                    await api("/api/me/account", { method: "DELETE" });
+                    currentCompany = null;
+                    await refreshPublicData();
+                    renderDashboard();
+                    byId("loginMode").click();
+                    setMessage(byId("loginMessage"), "Llogaria dhe të gjitha të dhënat e kompanisë u fshinë.");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                } catch (error) {
+                    setMessage(byId("profileMessage"), error.message || "Llogaria nuk mund të fshihej.", true);
+                }
+            });
+
+            byId("cancelEditPart").addEventListener("click", () => {
+                editingPartId = null;
+                byId("editPartPanel").hidden = true;
+                byId("editPartForm").reset();
+            });
+
+            byId("managedParts").addEventListener("click", async (event) => {
+                const editButton = event.target.closest("[data-edit-part]");
+                if (editButton) {
+                    const company = getCurrentCompany();
+                    const part = company && company.parts.find((item) => item.id === editButton.dataset.editPart);
+                    if (!part) return;
+                    editingPartId = part.id;
+                    byId("editMake").value = part.make;
+                    byId("editModel").value = part.model;
+                    byId("editEngine").value = part.engine || "";
+                    updateVehicleSuggestions();
+                    byId("editPartName").value = part.name;
+                    byId("editYearFrom").value = part.yearFrom;
+                    byId("editYearTo").value = part.yearTo;
+                    byId("editDescription").value = part.description || "";
+                    byId("editPhoto").value = "";
+                    byId("editPartPanel").hidden = false;
+                    byId("editPartPanel").scrollIntoView({ behavior: "smooth", block: "nearest" });
+                    return;
+                }
+                const button = event.target.closest("[data-delete-part]");
+                if (!button || !window.confirm("Të fshihet kjo pjesë?")) return;
+                try {
+                    await api(`/api/me/parts/${encodeURIComponent(button.dataset.deletePart)}`, { method: "DELETE" });
+                    await refreshPublicData();
+                    await refreshCurrentCompany();
+                    setMessage(byId("partMessage"), "Pjesa u fshi.");
+                } catch (error) {
+                    setMessage(byId("partMessage"), error.message || "Pjesa nuk mund të fshihej.", true);
+                }
+            });
+
+            byId("editPartForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const company = getCurrentCompany();
+                const part = company && company.parts.find((item) => item.id === editingPartId);
+                if (!part) return;
+                const message = byId("editPartMessage");
+                setMessage(message, "");
+                try {
+                    const photo = await readImage(byId("editPhoto").files[0]);
+                    await api(`/api/me/parts/${encodeURIComponent(part.id)}`, {
+                        method: "PUT",
+                        body: JSON.stringify({
+                            make: byId("editMake").value,
+                            model: byId("editModel").value,
+                            engine: byId("editEngine").value,
+                            name: byId("editPartName").value,
+                            yearFrom: Number(byId("editYearFrom").value),
+                            yearTo: Number(byId("editYearTo").value),
+                            description: byId("editDescription").value,
+                            photo: photo || part.photo
+                        })
+                    });
+                    editingPartId = null;
+                    byId("editPartPanel").hidden = true;
+                    byId("editPartForm").reset();
+                    await refreshPublicData();
+                    await refreshCurrentCompany();
+                    setMessage(message, "Pjesa u ndryshua.");
+                } catch (error) {
+                    setMessage(message, error.message || "Pjesa nuk mund të ndryshohej.", true);
+                }
+            });
+
+            async function initialize() {
+                try {
+                    applyLanguage();
+                    await refreshPublicData();
+                    const session = await api("/api/me");
+                    if (session.authenticated && session.role === "admin") {
+                        window.location.href = "admin.html";
+                        return;
+                    }
+                    if (session.authenticated && session.role === "company") await refreshCurrentCompany();
+                    else renderDashboard();
+                } catch (error) {
+                    console.error("Faqja nuk mundi të ngarkohej:", error);
+                    showEmpty(partsGrid, "Nuk mund të lidhemi me serverin", "Nise aplikacionin në localhost dhe rifresko faqen.");
+                    showEmpty(companiesGrid, "Serveri nuk është i disponueshëm", error.message);
+                }
+            }
+
+            initialize();
+        })();
+    </script>
+</body>
+</html>
