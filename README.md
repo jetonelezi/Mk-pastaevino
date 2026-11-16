@@ -34,6 +34,24 @@ Leja për Live Server në portin `5500` është vetëm për zhvillim dhe çaktiv
 
 ## Publikimi në internet
 
-Përdor vetëm hostim me HTTPS, cakto `NODE_ENV=production`, `ADMIN_PHONE`, `ADMIN_PASSWORD`, `OTPADET_DB` dhe `PUBLIC_ORIGIN` (origjina e saktë publike, pa slash në fund). Mbaje skedarin SQLite jashtë kopjeve publike dhe ruaj kopje rezervë. Për përdorim me më shumë se një proces/server nevojitet një shërbim sesioni i përbashkët në vend të sesioneve në memorie.
+Për hostim tradicional Node.js, përdor HTTPS dhe cakto `NODE_ENV=production`, `ADMIN_PHONE`, `ADMIN_PASSWORD`, `OTPADET_DB` dhe `PUBLIC_ORIGIN` (origjina e saktë publike, pa slash në fund). Mbaje skedarin SQLite jashtë kopjeve publike dhe ruaj kopje rezervë.
 
 Të dhënat e prototipit të vjetër, të ruajtura në `localStorage`, nuk importohen vetvetiu në bazën e re. Fut regjistrimet sërish përmes faqes ose importoji veçmas në bazën e serverit.
+
+### Firebase Firestore dhe Vercel
+
+Firestore ruan llogaritë, kompanitë dhe pjesët në koleksionet `accounts`, `companies` dhe `parts`. Kodi i deploy-it përdor Firebase Admin SDK në `api/index.js`; rregullat te `firestore.rules` bllokojnë qasjen direkte nga shfletuesi. Çelësat privatë nuk vendosen në kod.
+
+Për deploy në Vercel, konfiguro këto Environment Variables te **Project Settings → Environment Variables**:
+
+- `FIREBASE_PROJECT_ID`: ID e projektit Firebase, p.sh. `webchat-ba7e1`
+- `FIREBASE_CLIENT_EMAIL`: email-i i service account
+- `FIREBASE_PRIVATE_KEY`: çelësi privat i service account; ruaj newline-t ose përdor `\n`
+- `SESSION_SECRET`: sekret i rastësishëm me të paktën 32 karaktere
+- `ADMIN_PHONE`: numri i administratorit
+- `ADMIN_PASSWORD`: fjalëkalim unik me të paktën 12 karaktere
+- `NODE_ENV`: `production`
+
+Krijo service account key te **Firebase Console → Project settings → Service accounts → Generate new private key**. Kopjo të dhënat drejtpërdrejt te Vercel Environment Variables. Mos e ngarko skedarin JSON në GitHub dhe mos e dërgo në chat. Pas ruajtjes së variablave, bëj redeploy në Vercel.
+
+`server.cjs` mbetet për zhvillim lokal dhe ruan të dhënat në `otpadet.sqlite`; API-ja e Vercel përdor Firestore. Të dhënat ekzistuese të SQLite nuk kopjohen vetvetiu në Firestore dhe kërkojnë migrim të veçantë. Mbaji rregullat e Firestore private; Admin SDK nga serveri i Vercel i anashkalon rregullat e klientit. Kufizimi i tentativave të hyrjes në function-in e Vercel-it është i përkohshëm për instancë; para rritjes së trafikut vendos një shërbim të dedikuar për kufizim hyrjesh.

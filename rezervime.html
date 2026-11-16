@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#261c32">
+    <meta name="description" content="Dërgoni kërkesën tuaj për rezervim dasme ose syneti.">
+    <title>Kërkesë për rezervim</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #292333;
+            --muted: #777181;
+            --plum: #76546f;
+            --plum-dark: #61445b;
+            --line: #e9e3e9;
+            --surface: #fff;
+            --background: #f8f6f7;
+            --rose: #f7eef4;
+            --green: #23845d;
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: var(--background); color: var(--ink); font-family: "DM Sans", sans-serif; }
+        button, input, select, textarea { font: inherit; }
+        button, a { -webkit-tap-highlight-color: transparent; }
+        .hero { padding: 38px 20px 82px; background: radial-gradient(ellipse at 80% 10%, #76546f 0, transparent 38%), #261c32; color: #fff; }
+        .hero-inner { width: min(940px, 100%); margin: auto; }
+        .brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; font-size: 13px; font-weight: 800; letter-spacing: .12em; text-decoration: none; text-transform: uppercase; }
+        .brand-mark { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid #78657d; border-radius: 12px; color: #f4d8e8; font-size: 19px; }
+        .hero-copy { max-width: 630px; margin: 38px auto 0; text-align: center; }
+        .eyebrow { margin: 0 0 11px; color: #e1c8db; font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+        h1, h2, h3 { font-family: "Playfair Display", Georgia, serif; }
+        h1 { margin: 0; font-size: clamp(32px, 6vw, 48px); line-height: 1.15; }
+        .hero-copy > p:last-child { margin: 14px 0 0; color: #e1d8e4; font-size: 14px; line-height: 1.7; }
+        main { width: min(850px, calc(100% - 32px)); margin: -48px auto 55px; position: relative; }
+        .panel { padding: clamp(20px, 5vw, 38px); border: 1px solid var(--line); border-radius: 20px; background: var(--surface); box-shadow: 0 18px 48px rgba(43, 29, 48, .1); }
+        .type-heading { margin: 0 0 15px; font-size: 15px; font-weight: 800; text-align: center; }
+        .type-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+        .type-button { display: flex; min-height: 68px; align-items: center; justify-content: center; gap: 11px; padding: 14px; border: 1px solid var(--line); border-radius: 13px; background: #fff; color: var(--ink); font-weight: 800; cursor: pointer; transition: .18s ease; }
+        .type-button:hover { border-color: #c9adc1; background: #fcf8fb; }
+        .type-button.active { border-color: var(--plum); background: var(--rose); color: var(--plum-dark); box-shadow: inset 0 0 0 1px var(--plum); }
+        .type-icon { font-size: 21px; }
+        .form-area { margin-top: 25px; padding-top: 5px; }
+        .intro-note { margin: 0 0 21px; padding: 12px 14px; border: 1px solid #ebdfea; border-radius: 11px; background: #fcf8fb; color: #65566a; font-size: 12px; line-height: 1.6; }
+        .section-title { display: flex; align-items: center; gap: 10px; margin: 25px 0 15px; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 700 20px "Playfair Display", Georgia, serif; }
+        .section-title:first-child { margin-top: 0; }
+        .section-icon { color: var(--plum); font-family: "DM Sans", sans-serif; font-size: 19px; }
+        .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+        .field { min-width: 0; }
+        .field.full { grid-column: 1/-1; }
+        .field label, .group-label { display: block; margin: 0 0 7px; color: #41394a; font-size: 12px; font-weight: 800; }
+        .required { color: #b94a68; }
+        .field input, .field select, .field textarea { display: block; width: 100%; min-height: 45px; padding: 11px 12px; border: 1px solid #ded9e2; border-radius: 9px; outline: 0; background: #fff; color: var(--ink); font-size: 13px; }
+        .field textarea { min-height: 108px; resize: vertical; line-height: 1.55; }
+        .field input:focus, .field select:focus, .field textarea:focus { border-color: #a77c9d; box-shadow: 0 0 0 3px rgba(118, 84, 111, .11); }
+        .help { margin: 7px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+        .choice-row { display: flex; flex-wrap: wrap; gap: 9px; }
+        .choice { display: inline-flex; min-height: 40px; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid #e3dee6; border-radius: 9px; background: #fff; color: #50495a; font-size: 12px; font-weight: 700; cursor: pointer; }
+        .choice:has(input:checked) { border-color: #b695ad; background: #fbf5f9; color: var(--plum-dark); }
+        .choice input { accent-color: var(--plum); }
+        .question { margin: 19px 0 13px; }
+        .subfields { margin-top: 14px; padding: 15px; border: 1px solid #eee8ef; border-radius: 12px; background: #fcfafc; }
+        .service-list { display: grid; gap: 10px; }
+        .service-card { padding: 13px 14px; border: 1px solid #e8e2e9; border-radius: 11px; background: #fff; }
+        .service-card > .choice { padding: 0; border: 0; background: transparent; }
+        .service-description { margin: 7px 0 0 26px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+        .service-subfields { margin: 13px 0 0 26px; }
+        .submit-row { margin-top: 28px; }
+        .submit-button { display: flex; width: 100%; min-height: 52px; align-items: center; justify-content: center; gap: 10px; border: 0; border-radius: 11px; background: var(--plum); color: #fff; font-size: 14px; font-weight: 800; cursor: pointer; transition: background .18s ease, transform .18s ease; }
+        .submit-button:hover { transform: translateY(-1px); background: var(--plum-dark); }
+        .submit-button:focus-visible, .type-button:focus-visible { outline: 3px solid #c9adc1; outline-offset: 3px; }
+        .whatsapp-note { margin: 12px 0 0; color: var(--muted); font-size: 11px; line-height: 1.6; text-align: center; }
+        .status { margin: 13px 0 0; color: #9c3150; font-size: 12px; text-align: center; }
+        footer { padding: 0 20px 28px; color: #8c8590; font-size: 11px; text-align: center; }
+        [hidden] { display: none !important; }
+        @media (max-width: 560px) {
+            .hero { padding: 25px 16px 75px; }
+            .hero-copy { margin-top: 32px; }
+            main { width: calc(100% - 22px); }
+            .panel { border-radius: 16px; }
+            .fields { grid-template-columns: 1fr; gap: 13px; }
+            .field.full { grid-column: auto; }
+            .type-options { gap: 9px; }
+            .type-button { min-height: 62px; padding: 10px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="hero-inner">
+            <a class="brand" href="otpadet.html"><span class="brand-mark" aria-hidden="true">✦</span> Kërkesë për rezervim</a>
+            <div class="hero-copy">
+                <p class="eyebrow">Dita juaj, kujtimi ynë</p>
+                <h1>Le ta planifikojmë së bashku</h1>
+                <p>Zgjidhni llojin e festës dhe plotësoni të dhënat që të na dërgoni kërkesën tuaj.</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="panel" aria-labelledby="eventTypeHeading">
+            <h2 class="type-heading" id="eventTypeHeading">Për çfarë dëshironi të dërgoni kërkesë?</h2>
+            <div class="type-options" role="group" aria-label="Lloji i festës">
+                <button class="type-button" type="button" data-event-type="dasma" aria-pressed="false"><span class="type-icon" aria-hidden="true">💍</span> Dasmë</button>
+                <button class="type-button" type="button" data-event-type="syneti" aria-pressed="false"><span class="type-icon" aria-hidden="true">🎉</span> Syneti</button>
+            </div>
+
+            <form id="requestForm" class="form-area" hidden>
+                <p class="intro-note">Plotësoni të dhënat për festën tuaj. Fushat me <span class="required">*</span> janë të detyrueshme.</p>
+
+                <div id="weddingFields" hidden>
+                    <h2 class="section-title"><span class="section-icon" aria-hidden="true">☏</span> Kontakti</h2>
+                    <div class="fields">
+                        <div class="field">
+                            <label for="groomName">Emri dhe mbiemri i dhëndrit <span class="required">*</span></label>
+                            <input id="groomName" name="Emri dhe mbiemri i dhëndrit" required maxlength="120" autocomplete="name">
+                        </div>
+                        <div class="field">
+                            <label for="brideName">Emri dhe mbiemri i nuses <span class="required">*</span></label>
+                            <input id="brideName" name="Emri dhe mbiemri i nuses" required maxlength="120">
+                        </div>
+                        <div class="field">
+                            <label for="contactPhone">Numri i kontaktit <span class="required">*</span></label>
+                            <input id="contactPhone" name="Numri i kontaktit" type="tel" required maxlength="30" autocomplete="tel" placeholder="+389 7X XXX XXX">
+                        </div>
+                        <div class="field">
+                            <label for="contactEmail">Emaili <span class="required">*</span></label>
+                            <input id="contactEmail" name="Emaili" type="email" required maxlength="160" autocomplete="email" placeholder="emri@email.com">
+                        </div>
+                        <fieldset class="field full" style="border:0;padding:0;margin:0">
+                            <legend class="group-label">Si na gjetët?</legend>
+                            <div class="choice-row">
+                                <label class="choice"><input type="checkbox" name="Si na gjetët" value="Instagram"> Instagram</label>
+                                <label class="choice"><input type="checkbox" name="Si na gjetët" value="TikTok"> TikTok</label>
+                                <label class="choice"><input type="checkbox" name="Si na gjetët" value="Facebook"> Facebook</label>
+                                <label class="choice"><input type="checkbox" name="Si na gjetët" value="Rekomandim"> Rekomandim</label>
+                                <label class="choice"><input id="sourceOtherCheck" type="checkbox" name="Si na gjetët" value="Tjetër"> Tjetër</label>
+                            </div>
+                            <div class="field" id="sourceOtherField" hidden style="margin-top:11px">
+                                <label for="sourceOther">Na tregoni burimin tjetër</label>
+                                <input id="sourceOther" name="Burim tjetër" maxlength="120" placeholder="Shkruani këtu">
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <h2 class="section-title"><span class="section-icon" aria-hidden="true">💍</span> Dasma</h2>
+                    <div class="question">
+                        <span class="group-label">A keni planifikuar të bëni banket në restorant?</span>
+                        <div class="choice-row">
+                            <label class="choice"><input type="radio" name="Banket në restorant" value="Po, kemi planifikuar" checked> Po, kemi planifikuar</label>
+                            <label class="choice"><input type="radio" name="Banket në restorant" value="Jo"> Jo</label>
+                        </div>
+                        <fieldset class="subfields" id="banquetFields" style="border:0">
+                            <legend class="group-label">Të dhënat e banketit</legend>
+                            <div class="fields">
+                                <div class="field">
+                                    <label for="banquetDate">Data e banketit <span class="required">*</span></label>
+                                    <input id="banquetDate" name="Data e banketit" type="date" required>
+                                </div>
+                                <div class="field">
+                                    <label for="banquetVenue">Restoranti / salla</label>
+                                    <input id="banquetVenue" name="Restoranti / salla" maxlength="150">
+                                </div>
+                                <div class="field">
+                                    <label for="banquetTime">Koha kur fillon</label>
+                                    <input id="banquetTime" name="Koha e fillimit të banketit" type="time">
+                                </div>
+                                <div class="field">
+                                    <label for="guestCount">Numri i mysafirëve</label>
+                                    <select id="guestCount" name="Numri i mysafirëve">
+                                        <option value="">Zgjidhni numrin</option>
+                                        <option>0-50</option><option>50-100</option><option>100-150</option><option>150-200</option>
+                                        <option>200-250</option><option>250-300</option><option>300-400</option><option>400-500</option><option>500+</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="question">
+                        <span class="group-label">A keni planifikuar marrjen e nuses?</span>
+                        <div class="choice-row">
+                            <label class="choice"><input type="radio" name="Marrja e nuses" value="Po, kemi planifikuar" checked> Po, kemi planifikuar</label>
+                            <label class="choice"><input type="radio" name="Marrja e nuses" value="Jo"> Jo</label>
+                        </div>
+                        <fieldset class="subfields" id="pickupFields" style="border:0">
+                            <legend class="group-label">Të dhënat e marrjes së nuses</legend>
+                            <div class="fields">
+                                <div class="field">
+                                    <label for="groomLocation">Lokacioni i dhëndrit <span class="required">*</span></label>
+                                    <input id="groomLocation" name="Lokacioni i dhëndrit" required maxlength="200">
+                                </div>
+                                <div class="field">
+                                    <label for="brideLocation">Lokacioni i nuses <span class="required">*</span></label>
+                                    <input id="brideLocation" name="Lokacioni i nuses" required maxlength="200">
+                                </div>
+                                <div class="field">
+                                    <label for="pickupDate">Data kur fillon</label>
+                                    <input id="pickupDate" name="Data e marrjes së nuses" type="date">
+                                </div>
+                                <div class="field">
+                                    <label for="pickupTime">Ora kur fillon</label>
+                                    <input id="pickupTime" name="Ora e marrjes së nuses" type="time">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="question">
+                        <span class="group-label">A keni planifikuar natën e dhëndërisë?</span>
+                        <div class="choice-row">
+                            <label class="choice"><input type="radio" name="Nata e dhëndërisë" value="Po" checked> Po</label>
+                            <label class="choice"><input type="radio" name="Nata e dhëndërisë" value="Jo"> Jo</label>
+                        </div>
+                        <fieldset class="subfields" id="groomNightFields" style="border:0">
+                            <legend class="group-label">Të dhënat e natës së dhëndërisë</legend>
+                            <div class="fields">
+                                <div class="field">
+                                    <label for="groomNightLocation">Lokacioni</label>
+                                    <input id="groomNightLocation" name="Lokacioni i natës së dhëndërisë" maxlength="200">
+                                </div>
+                                <div class="field">
+                                    <label for="groomNightTime">Ora</label>
+                                    <input id="groomNightTime" name="Ora e natës së dhëndërisë" type="time">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="question">
+                        <span class="group-label">A keni planifikuar kanagjegjin e nuses?</span>
+                        <div class="choice-row">
+                            <label class="choice"><input type="radio" name="Kanagjegji i nuses" value="Po" checked> Po</label>
+                            <label class="choice"><input type="radio" name="Kanagjegji i nuses" value="Jo"> Jo</label>
+                        </div>
+                        <fieldset class="subfields" id="hennaFields" style="border:0">
+                            <legend class="group-label">Të dhënat e kanagjegjit</legend>
+                            <div class="fields">
+                                <div class="field">
+                                    <label for="hennaLocation">Lokacioni</label>
+                                    <input id="hennaLocation" name="Lokacioni i kanagjegjit" maxlength="200">
+                                </div>
+                                <div class="field">
+                                    <label for="hennaDate">Data</label>
+                                    <input id="hennaDate" name="Data e kanagjegjit" type="date">
+                                </div>
+                                <div class="field">
+                                    <label for="hennaTime">Ora</label>
+                                    <input id="hennaTime" name="Ora e kanagjegjit" type="time">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <h2 class="section-title"><span class="section-icon" aria-hidden="true">✧</span> Shërbime të veçanta</h2>
+                    <div class="service-list">
+                        <div class="service-card">
+                            <label class="choice"><input type="checkbox" name="Shërbime të veçanta" value="Foto sesion (Photoshooting)"> Foto sesion (Photoshooting)</label>
+                            <div class="service-subfields" id="photoshootFields" hidden>
+                                <span class="group-label">Fotosesioni ditën tjetër?</span>
+                                <div class="choice-row">
+                                    <label class="choice"><input type="radio" name="Fotosesioni ditën tjetër" value="Po" required> Po</label>
+                                    <label class="choice"><input type="radio" name="Fotosesioni ditën tjetër" value="Jo" required> Jo</label>
+                                </div>
+                                <div class="fields" id="photoshootDetails" hidden style="margin-top:12px">
+                                    <div class="field">
+                                        <label for="photoshootDate">Data <span class="required">*</span></label>
+                                        <input id="photoshootDate" name="Data e fotosesionit" type="date" required>
+                                    </div>
+                                    <div class="field">
+                                        <label for="photoshootLocation">Lokacioni (nëse e dini)</label>
+                                        <input id="photoshootLocation" name="Lokacioni i fotosesionit" maxlength="200">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <label class="choice"><input type="checkbox" name="Shërbime të veçanta" value="Love-Story trailer"> Love-Story trailer</label>
+                            <p class="service-description">Momentet e bërjes gati të dhëndrit dhe nisja për të marrë nusen.</p>
+                        </div>
+                        <div class="service-card">
+                            <label class="choice"><input type="checkbox" name="Shërbime të veçanta" value="Reels gjatë banketit"> Reels gjatë banketit</label>
+                        </div>
+                    </div>
+
+                    <h2 class="section-title"><span class="section-icon" aria-hidden="true">✎</span> Informacion shtesë</h2>
+                    <div class="field">
+                        <label for="weddingNotes">Shkruani çdo gjë tjetër që dëshironi të ndani me ne</label>
+                        <textarea id="weddingNotes" name="Informacion shtesë" maxlength="1500" placeholder="Ide, pyetje ose detaje specifike..."></textarea>
+                    </div>
+                </div>
+
+                <div id="circumcisionFields" hidden>
+                    <h2 class="section-title"><span class="section-icon" aria-hidden="true">✦</span> Të dhënat e synetisë</h2>
+                    <div class="fields">
+                        <div class="field">
+                            <label for="boyName">Emri i djalit <span class="required">*</span></label>
+                            <input id="boyName" name="Emri i djalit" required maxlength="120">
+                        </div>
+                        <div class="field">
+                            <label for="fatherName">Emri i babait <span class="required">*</span></label>
+                            <input id="fatherName" name="Emri i babait" required maxlength="120">
+                        </div>
+                        <div class="field">
+                            <label for="motherName">Emri i nënës <span class="required">*</span></label>
+                            <input id="motherName" name="Emri i nënës" required maxlength="120">
+                        </div>
+                        <div class="field">
+                            <label for="circumcisionLocation">Lokacioni</label>
+                            <input id="circumcisionLocation" name="Lokacioni" maxlength="200">
+                        </div>
+                        <div class="field">
+                            <label for="circumcisionDate">Data</label>
+                            <input id="circumcisionDate" name="Data" type="date">
+                        </div>
+                        <div class="field">
+                            <label for="circumcisionTime">Ora</label>
+                            <input id="circumcisionTime" name="Ora" type="time">
+                        </div>
+                    </div>
+                    <h2 class="section-title"><span class="section-icon" aria-hidden="true">✎</span> Informacion shtesë</h2>
+                    <div class="field">
+                        <label for="circumcisionNotes">Shkruani çdo gjë tjetër që dëshironi të ndani me ne</label>
+                        <textarea id="circumcisionNotes" name="Informacion shtesë" maxlength="1500" placeholder="Ide, pyetje ose detaje specifike..."></textarea>
+                    </div>
+                </div>
+
+                <div class="submit-row">
+                    <button class="submit-button" type="submit"><span aria-hidden="true">➤</span> Dërgo kërkesën në WhatsApp</button>
+                    <p class="whatsapp-note">Kërkesa do të hapet si mesazh i gatshëm në WhatsApp. Kontrollojeni dhe shtypni “Dërgo” për ta dërguar te ne.</p>
+                    <p class="status" id="formStatus" role="status" hidden></p>
+                </div>
+            </form>
+        </section>
+    </main>
+    <footer>Ju faleminderit që na besoni kujtimet tuaja.</footer>
+
+    <script>
+        const requestForm = document.getElementById("requestForm");
+        const weddingFields = document.getElementById("weddingFields");
+        const circumcisionFields = document.getElementById("circumcisionFields");
+        const statusMessage = document.getElementById("formStatus");
+        let selectedEvent = "";
+
+        function setSectionEnabled(section, enabled) {
+            section.hidden = !enabled;
+            section.querySelectorAll("input, select, textarea").forEach((control) => {
+                control.disabled = !enabled;
+            });
+        }
+
+        function setConditionalFields(container, enabled) {
+            container.hidden = !enabled;
+            const active = enabled && !container.closest("#weddingFields")?.hidden;
+            container.querySelectorAll("input, select, textarea").forEach((control) => {
+                control.disabled = !active;
+            });
+        }
+
+        function selectedValue(name) {
+            return requestForm.querySelector(`input[name="${name}"]:checked`)?.value || "";
+        }
+
+        document.querySelectorAll("[data-event-type]").forEach((button) => {
+            button.addEventListener("click", () => {
+                selectedEvent = button.dataset.eventType;
+                requestForm.hidden = false;
+                setSectionEnabled(weddingFields, selectedEvent === "dasma");
+                setSectionEnabled(circumcisionFields, selectedEvent === "syneti");
+                syncWeddingConditions();
+                document.querySelectorAll("[data-event-type]").forEach((option) => {
+                    const active = option === button;
+                    option.classList.toggle("active", active);
+                    option.setAttribute("aria-pressed", String(active));
+                });
+                statusMessage.hidden = true;
+            });
+        });
+
+        function syncRadioFields(radioName, containerId, activeValue) {
+            const container = document.getElementById(containerId);
+            setConditionalFields(container, selectedValue(radioName) === activeValue);
+        }
+
+        function syncWeddingConditions() {
+            syncRadioFields("Banket në restorant", "banquetFields", "Po, kemi planifikuar");
+            syncRadioFields("Marrja e nuses", "pickupFields", "Po, kemi planifikuar");
+            syncRadioFields("Nata e dhëndërisë", "groomNightFields", "Po");
+            syncRadioFields("Kanagjegji i nuses", "hennaFields", "Po");
+            setConditionalFields(document.getElementById("sourceOtherField"), sourceOtherCheck.checked);
+            syncPhotoshoot();
+        }
+
+        ["Banket në restorant", "Marrja e nuses", "Nata e dhëndërisë", "Kanagjegji i nuses"].forEach((name) => {
+            requestForm.querySelectorAll(`input[name="${name}"]`).forEach((radio) => {
+                radio.addEventListener("change", () => {
+                    const config = {
+                        "Banket në restorant": ["banquetFields", "Po, kemi planifikuar"],
+                        "Marrja e nuses": ["pickupFields", "Po, kemi planifikuar"],
+                        "Nata e dhëndërisë": ["groomNightFields", "Po"],
+                        "Kanagjegji i nuses": ["hennaFields", "Po"]
+                    }[name];
+                    syncRadioFields(name, config[0], config[1]);
+                });
+            });
+        });
+
+        const sourceOtherCheck = document.getElementById("sourceOtherCheck");
+        sourceOtherCheck.addEventListener("change", () => {
+            setConditionalFields(document.getElementById("sourceOtherField"), sourceOtherCheck.checked);
+        });
+
+        const photoshootCheck = requestForm.querySelector('input[name="Shërbime të veçanta"][value="Foto sesion (Photoshooting)"]');
+        const photoshootFields = document.getElementById("photoshootFields");
+        const photoshootDetails = document.getElementById("photoshootDetails");
+        function syncPhotoshoot() {
+            setConditionalFields(photoshootFields, photoshootCheck.checked);
+            const nextDay = selectedValue("Fotosesioni ditën tjetër") === "Po";
+            setConditionalFields(photoshootDetails, photoshootCheck.checked && nextDay);
+        }
+        photoshootCheck.addEventListener("change", syncPhotoshoot);
+        requestForm.querySelectorAll('input[name="Fotosesioni ditën tjetër"]').forEach((radio) => {
+            radio.addEventListener("change", syncPhotoshoot);
+        });
+
+        function formatDate(value) {
+            if (!value) return "";
+            const [year, month, day] = value.split("-");
+            return `${day}.${month}.${year}`;
+        }
+
+        requestForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            if (!selectedEvent || !requestForm.reportValidity()) return;
+
+            const values = new FormData(requestForm);
+            const heading = selectedEvent === "dasma" ? "DASMA" : "SYNETI";
+            const lines = [`KËRKESË PËR ${heading}`, ""];
+            const included = new Set();
+            for (const [label, rawValue] of values.entries()) {
+                if (!rawValue || included.has(label)) continue;
+                const control = Array.from(requestForm.elements).find((element) => element.name === label);
+                if (control?.type === "checkbox") {
+                    const matching = Array.from(values.getAll(label));
+                    lines.push(`${label}: ${matching.join(", ")}`);
+                    included.add(label);
+                    continue;
+                }
+                const isDate = control?.type === "date";
+                lines.push(`${label}: ${isDate ? formatDate(String(rawValue)) : rawValue}`);
+                included.add(label);
+            }
+            const message = lines.join("\n");
+            const whatsappUrl = `https://wa.me/38972722060?text=${encodeURIComponent(message)}`;
+            const whatsappWindow = window.open(whatsappUrl, "_blank");
+            if (!whatsappWindow) {
+                statusMessage.textContent = "WhatsApp nuk u hap. Lejoni dritaret e reja dhe provoni përsëri.";
+                statusMessage.hidden = false;
+            } else {
+                whatsappWindow.opener = null;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node server.cjs"
   },
+  "dependencies": {
+    "firebase-admin": "^14.5.1"
+  },
   "engines": {
     "node": ">=22.13.0"
   }
